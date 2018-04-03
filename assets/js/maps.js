@@ -38,7 +38,13 @@ testYelpApi(function(data){
 });
 
 
-setTimeout(function() {console.log(yelpResponse)}, 5000);
+setTimeout(function() {
+  console.log(yelpResponse);
+  for (var i = 0; i < yelpResponse.businesses.length; i++){
+    console.log(yelpResponse.businesses[i].coordinates)
+  }
+  console.log(yelpResponse.businesses[11].coordinates)
+}, 5000);
 
 /*testYelpApi(function(data){
   console.log(data)
