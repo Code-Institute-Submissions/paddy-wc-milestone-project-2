@@ -1,6 +1,4 @@
 
-/*Yelp api authentication 
-Generated using 'Postman' app*/
 
 jQuery.ajaxPrefilter(function(options) {
     if (options.crossDomain && jQuery.support.cors) {
@@ -9,6 +7,11 @@ jQuery.ajaxPrefilter(function(options) {
 });
 
 
+/*Yelp api authentication 
+Generated using 'Postman' app*/
+//added acess-conreol-allow-origin to enable cors-anywhere
+
+function testYelpApi(cb){
 var settings = {
   "async": true,
   "crossDomain": true,
@@ -23,11 +26,23 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-  console.log(response);
+  cb(response);
+
+});
+};
+
+var yelpResponse = {};
+
+testYelpApi(function(data){
+  yelpResponse = data;
 });
 
-testYelpApi();
 
+setTimeout(function() {console.log(yelpResponse)}, 5000);
+
+/*testYelpApi(function(data){
+  console.log(data)
+});*/
 
 
  //Search bar. 
@@ -111,4 +126,5 @@ testYelpApi();
           */
         });
       }
+ 
  
