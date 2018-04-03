@@ -1,4 +1,24 @@
 
+/*Yelp api authentication 
+Generated using 'Postman' app*/
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://api.yelp.com/v3/businesses/search?term=delis&latitude=37.786882&longitude=-122.399972",
+  "method": "GET",
+  "headers": {
+    "authorization": "Bearer UTSSHcFmhNyctmBOeWKD2eeg9GV_LRkqsdjDa3Q_WkwvGywmY0cxtFDWQt1ib4lgRiE1y9l0_uRPdU6O4fY1rn164iomb6Y7_wR9G-Ii3WPWScwM5UWBZaPSz3LCWnYx",
+    "cache-control": "no-cache",
+    "postman-token": "6d3304d0-6a57-62dc-fb3f-0b755c81c16f"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+
+
+
  
  
  //Search bar. 
