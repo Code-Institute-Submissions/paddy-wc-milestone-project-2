@@ -43,8 +43,7 @@ setTimeout(function() {
   for (var i = 0; i < yelpResponse.businesses.length; i++){
     console.log(yelpResponse.businesses[i].coordinates)
   }
-  console.log(yelpResponse.businesses[11].coordinates)
-}, 5000);
+}, 6000);
 
 /*testYelpApi(function(data){
   console.log(data)
@@ -73,6 +72,31 @@ setTimeout(function() {
         map.addListener('bounds_changed', function() {
           searchBox.setBounds(map.getBounds());
         });
+
+        var labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        var locations = [{
+            lat: 40.785091,
+            lng: -73.968285
+        }, {
+            lat: 41.084045,
+            lng: -73.874256
+        }, {
+            lat: 40.754932,
+            lng: -73.984016
+        }];
+   
+   
+        var yelpMarkers = locations.map(function(location, i) {
+            return new google.maps.Marker({
+                position: location,
+                label: labels[i % labels.length]
+            });
+        });
+        var markerCluster = new MarkerClusterer(map, yelpMarkers, {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        });
+
 
         var markers = [];
         // Listen for the event fired when the user selects a prediction and retrieve
