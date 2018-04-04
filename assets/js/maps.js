@@ -82,16 +82,23 @@ let pushToLocations = function () {
         var labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
    
-      var marker; 
+      var marker, i; 
 
-      for (let i = 0; i < locations.length; i++){
+      for (i = 0; i < locations.length; i++){
         marker = new google.maps.Marker({
           position: locations[i],
           map : map ,
           title : yelpResponse.businesses[i].name
 
-      })};
+      })
+      marker.addListener('click', function() {
+        map.setZoom(20);
+        map.setCenter(marker.getPosition());
+      });
+    };
       
+      
+ 
        /* var yelpMarkers = locations.map(function(location, i) {
             return new google.maps.Marker({
                 position: location,
