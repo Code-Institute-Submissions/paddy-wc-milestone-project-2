@@ -38,11 +38,18 @@ testYelpApi(function(data){
 });
 
 
+
+var locations = [];
+
+
 setTimeout(function() {
   console.log(yelpResponse);
   for (var i = 0; i < yelpResponse.businesses.length; i++){
-    console.log(yelpResponse.businesses[i].coordinates)
-  }
+    locations.push({ //must be called "lat" and "lng"
+    lat: yelpResponse.businesses[i].coordinates.latitude,
+   lng: yelpResponse.businesses[i].coordinates.longitude,
+   });
+  } console.log(locations);
 }, 6000);
 
 /*testYelpApi(function(data){
@@ -75,7 +82,7 @@ setTimeout(function() {
 
         var labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        var locations = [{
+       /* var locations = [{
             lat: 40.785091,
             lng: -73.968285
         }, {
@@ -84,7 +91,7 @@ setTimeout(function() {
         }, {
             lat: 40.754932,
             lng: -73.984016
-        }];
+        }];*/
    
    
         var yelpMarkers = locations.map(function(location, i) {
