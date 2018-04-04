@@ -35,6 +35,7 @@ var yelpResponse = {};
 
 var locations = [];
 
+
 testYelpApi(function(data){
   yelpResponse = data;
   pushToLocations();
@@ -91,9 +92,12 @@ let pushToLocations = function () {
           title : yelpResponse.businesses[i].name
 
       })
+      let name = yelpResponse.businesses[i].name;
       marker.addListener('click', function() {
-        map.setZoom(20);
-        map.setCenter(marker.getPosition());
+        $("#onClickContent").html(name);
+        
+        /*map.setZoom(20);
+        map.setCenter(marker.getPosition());*/
       });
     };
       
