@@ -39,11 +39,36 @@ var locations = [];
 testYelpApi(function(data){
   yelpResponse = data;
   pushToLocations();
+  pushToCards();
   initAutocomplete();
 });
 
 
+let pushToCards = function(){
+  $("#onClickContent").append(`<div class="card-group">`)
+  for (var i = 0; i < yelpResponse.businesses.length; i++){
+    $("#onClickContent").append(`
+    <div class="card card-${i}" style="width: 18rem;">
 
+    <img class="card-img-top" src="${yelpResponse.businesses[i].image_url}" alt="Card image cap">
+    <div class="card-body">
+    
+    <h5 class="card-title">${yelpResponse.businesses[i].name}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${yelpResponse.businesses[i].categories[0].title}</h6>
+
+    <p class="card-text">
+    Yelp rating: ${yelpResponse.businesses[i].rating} <br>
+    Price: ${yelpResponse.businesses[i].price} 
+    </p>
+    <a href="${yelpResponse.businesses[i].url}" target = "_blank" class="card-link">Yelp Page</a>
+
+    </div>
+    </div>
+    `)
+
+  }
+  $("#onClickContent").append(`</div>`)
+}
 
 let pushToLocations = function () {
   console.log(yelpResponse);
@@ -92,9 +117,9 @@ let pushToLocations = function () {
           title : yelpResponse.businesses[i].name
 
       })
-      let name = yelpResponse.businesses[i].name;
+      let yelpObject = JSON.stringify(yelpResponse.businesses[i]);
       marker.addListener('click', function() {
-        $("#onClickContent").html(name);
+        $("#onClickContent").html(yelpObject);
         
         /*map.setZoom(20);
         map.setCenter(marker.getPosition());*/
