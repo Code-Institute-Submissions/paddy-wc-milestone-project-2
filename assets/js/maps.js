@@ -33,16 +33,18 @@ $.ajax(settings).done(function (response) {
 
 var yelpResponse = {};
 
+var locations = [];
+
 testYelpApi(function(data){
   yelpResponse = data;
+  pushToLocations();
+  initAutocomplete();
 });
 
 
 
-var locations = [];
 
-
-setTimeout(function() {
+let pushToLocations = function () {
   console.log(yelpResponse);
   for (var i = 0; i < yelpResponse.businesses.length; i++){
     locations.push({ //must be called "lat" and "lng"
@@ -50,7 +52,17 @@ setTimeout(function() {
    lng: yelpResponse.businesses[i].coordinates.longitude,
    });
   } console.log(locations);
-}, 6000);
+};
+
+/*setTimeout(function() {
+  console.log(yelpResponse);
+  for (var i = 0; i < yelpResponse.businesses.length; i++){
+    locations.push({ //must be called "lat" and "lng"
+    lat: yelpResponse.businesses[i].coordinates.latitude,
+   lng: yelpResponse.businesses[i].coordinates.longitude,
+   });
+  } console.log(locations);
+}, 6000);*/
 
 /*testYelpApi(function(data){
   console.log(data)
