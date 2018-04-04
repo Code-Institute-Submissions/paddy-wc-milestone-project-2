@@ -1,5 +1,5 @@
 
-
+//enables cors in get request
 jQuery.ajaxPrefilter(function(options) {
     if (options.crossDomain && jQuery.support.cors) {
         options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
@@ -54,19 +54,6 @@ let pushToLocations = function () {
   } console.log(locations);
 };
 
-/*setTimeout(function() {
-  console.log(yelpResponse);
-  for (var i = 0; i < yelpResponse.businesses.length; i++){
-    locations.push({ //must be called "lat" and "lng"
-    lat: yelpResponse.businesses[i].coordinates.latitude,
-   lng: yelpResponse.businesses[i].coordinates.longitude,
-   });
-  } console.log(locations);
-}, 6000);*/
-
-/*testYelpApi(function(data){
-  console.log(data)
-});*/
 
 
  //Search bar. 
@@ -94,27 +81,37 @@ let pushToLocations = function () {
 
         var labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-       /* var locations = [{
-            lat: 40.785091,
-            lng: -73.968285
-        }, {
-            lat: 41.084045,
-            lng: -73.874256
-        }, {
-            lat: 40.754932,
-            lng: -73.984016
-        }];*/
    
-   
-        var yelpMarkers = locations.map(function(location, i) {
+      var marker; 
+
+      for (let i = 0; i < locations.length; i++){
+        marker = new google.maps.Marker({
+          position: locations[i],
+          map : map ,
+          title : yelpResponse.businesses[i].name
+
+      })};
+      
+       /* var yelpMarkers = locations.map(function(location, i) {
             return new google.maps.Marker({
                 position: location,
-                label: labels[i % labels.length]
-            });
-        });
-        var markerCluster = new MarkerClusterer(map, yelpMarkers, {
-            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        });
+                label: labels[i % labels.length],
+                animation: google.maps.Animation.DROP,
+                title:"Hello World!"
+            })
+
+        }); */
+
+     
+
+/*
+//my code for adding click events to marker clustrt
+google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+  map.setZoom(50);
+  map.setCenter(marker.getPosition());
+});
+      
+*/
 
 
         var markers = [];
@@ -156,6 +153,12 @@ let pushToLocations = function () {
               position: place.geometry.location
             }));
 
+
+
+          
+
+            
+
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
@@ -166,14 +169,8 @@ let pushToLocations = function () {
           map.fitBounds(bounds);
           
           
-          //My code
-          /*
-          function testYelpApi(){
-              
-          }
-          
-          */
+
         });
-      }
+      };
  
  
