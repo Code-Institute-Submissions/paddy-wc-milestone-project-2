@@ -11,6 +11,12 @@ var originalLat = 53.3498053;
 var originalLng = -6.2603097;
 
 
+var foodAndDrink = "food,bars";
+
+var activities = "arts,active,tours";
+
+var accommodation  = "guesthouses,campgrounds,hostels,hotels";
+
 
 var generateNewMap = function (latitude, longitude) {
   return new google.maps.Map(document.getElementById('map'), {
@@ -27,11 +33,11 @@ var generateNewMap = function (latitude, longitude) {
 Generated using 'Postman' app*/
 //added acess-conreol-allow-origin to enable cors-anywhere
 
-var testYelpApi = function ( latitude, longitude, cb){
+var testYelpApi = function ( latitude, longitude, filterTerm, cb){
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": `https://api.yelp.com/v3/businesses/search?term=delis&latitude=${latitude}&longitude=${longitude}`,
+  "url": `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${filterTerm}`,
   "method": "GET",
   "headers": {
     "authorization": "Bearer UTSSHcFmhNyctmBOeWKD2eeg9GV_LRkqsdjDa3Q_WkwvGywmY0cxtFDWQt1ib4lgRiE1y9l0_uRPdU6O4fY1rn164iomb6Y7_wR9G-Ii3WPWScwM5UWBZaPSz3LCWnYx",
@@ -51,7 +57,7 @@ var yelpResponse = {};
 var locations = [];
 
 
-testYelpApi(originalLat, originalLng, function(data){
+testYelpApi(originalLat, originalLng, activities,  function(data){
   yelpResponse = data;
   pushToLocations();
   pushToCards();
@@ -68,7 +74,7 @@ let pushToCards = function(){
     $("#onClickContent").append(`
     <div class="card card-${i}" style="width: 18rem;">
 
-    <img class="card-img-top" src="${yelpResponse.businesses[i].image_url}" alt="Card image cap">
+    <img class="card-img-top" src="${yelpResponse.businesses[i].image_url}" alt="Business Image">
     <div class="card-body">
     
     <h5 class="card-title">${yelpResponse.businesses[i].name}</h5>
@@ -159,7 +165,7 @@ let pushToLocations = function () {
         var newLng = newPosition.lng();
        
   
-        testYelpApi(newLat, newLng, function (data) {
+        testYelpApi(newLat, newLng, activities, function (data) {
             
   
           yelpResponse = data;
