@@ -6,16 +6,18 @@ jQuery.ajaxPrefilter(function(options) {
     }
 });
 
+var originalLat = 53.3498053;
+
+var originalLng = -6.2603097;
 
 
 
-
-function newFunction() {
+var generateNewMap = function (latitude, longitude) {
   return new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
     center: {
-      lat: 53.3498053,
-      lng: -6.2603097
+      lat: latitude,
+      lng: longitude
     },
     mapTypeId: 'roadmap'
   });
@@ -25,11 +27,11 @@ function newFunction() {
 Generated using 'Postman' app*/
 //added acess-conreol-allow-origin to enable cors-anywhere
 
-function testYelpApi(cb){
+var testYelpApi = function ( latitude, longitude, cb){
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://api.yelp.com/v3/businesses/search?term=delis&latitude=53.3498053&longitude=-6.2603097",
+  "url": `https://api.yelp.com/v3/businesses/search?term=delis&latitude=${latitude}&longitude=${longitude}`,
   "method": "GET",
   "headers": {
     "authorization": "Bearer UTSSHcFmhNyctmBOeWKD2eeg9GV_LRkqsdjDa3Q_WkwvGywmY0cxtFDWQt1ib4lgRiE1y9l0_uRPdU6O4fY1rn164iomb6Y7_wR9G-Ii3WPWScwM5UWBZaPSz3LCWnYx",
@@ -49,7 +51,7 @@ var yelpResponse = {};
 var locations = [];
 
 
-testYelpApi(function(data){
+testYelpApi(originalLat, originalLng, function(data){
   yelpResponse = data;
   pushToLocations();
   pushToCards();
@@ -102,7 +104,7 @@ let pushToLocations = function () {
  
    function initMap() {
        
-    var map = newFunction();
+    var map = generateNewMap(originalLat, originalLng);
 
 
 
@@ -110,7 +112,7 @@ let pushToLocations = function () {
  
 
       function restOfMaps (){
-        var map = newFunction();
+        var map = generateNewMap(originalLat, originalLng);
 
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
