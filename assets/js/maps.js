@@ -137,21 +137,7 @@ let pushToLocations = function () {
    
       var marker, i; 
 
-      for (i = 0; i < locations.length; i++){
-        marker = new google.maps.Marker({
-          position: locations[i],
-          map : map ,
-          title : yelpResponse.businesses[i].name
-
-      })
-      let yelpObject = JSON.stringify(yelpResponse.businesses[i]);
-      marker.addListener('click', function() {
-        $("#onClickContent").html(yelpObject);
-        
-        /*map.setZoom(20);
-        map.setCenter(marker.getPosition());*/
-      });
-    };
+      
 
 
 
