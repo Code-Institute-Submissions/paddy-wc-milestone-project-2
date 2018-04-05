@@ -7,6 +7,20 @@ jQuery.ajaxPrefilter(function(options) {
 });
 
 
+
+
+
+function newFunction() {
+  return new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: {
+      lat: 53.3498053,
+      lng: -6.2603097
+    },
+    mapTypeId: 'roadmap'
+  });
+}
+
 /*Yelp api authentication 
 Generated using 'Postman' app*/
 //added acess-conreol-allow-origin to enable cors-anywhere
@@ -27,7 +41,6 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
   cb(response);
-
 });
 };
 
@@ -40,7 +53,9 @@ testYelpApi(function(data){
   yelpResponse = data;
   pushToLocations();
   pushToCards();
-  initAutocomplete();
+  // initAutocomplete();
+  restOfMaps();
+
 });
 
 
@@ -85,15 +100,17 @@ let pushToLocations = function () {
  //Search bar. 
  // Orginal code from: https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
  
-   function initAutocomplete() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-           zoom: 15,
-         center: {
-             lat: 53.3498053,
-             lng: -6.2603097
-         },
-          mapTypeId: 'roadmap'
-        });
+   function initMap() {
+       
+    var map = newFunction();
+
+
+
+      };
+ 
+
+      function restOfMaps (){
+        var map = newFunction();
 
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
@@ -207,6 +224,5 @@ google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
           
 
         });
-      };
- 
+      }
  
