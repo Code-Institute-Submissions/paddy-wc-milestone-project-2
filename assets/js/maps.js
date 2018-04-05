@@ -13,7 +13,7 @@ var originalLng = -6.2603097;
 
 var foodAndDrink = "food,bars";
 
-var activities = "arts,active,tours";
+var activities = "streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours";
 
 var accommodation  = "guesthouses,campgrounds,hostels,hotels";
 
@@ -62,7 +62,7 @@ testYelpApi(originalLat, originalLng, activities,  function(data){
   pushToLocations();
   pushToCards();
   // initAutocomplete();
-  restOfMaps();
+  restOfMaps(activities);
 
 });
 
@@ -119,7 +119,7 @@ let pushToLocations = function () {
       };
  
 
-      function restOfMaps (){
+      function restOfMaps (filterTerm){
         var map = generateNewMap(originalLat, originalLng);
 
         // Create the search box and link it to the UI element.
@@ -165,7 +165,7 @@ let pushToLocations = function () {
         var newLng = newPosition.lng();
        
   
-        testYelpApi(newLat, newLng, activities, function (data) {
+        testYelpApi(newLat, newLng, filterTerm, function (data) {
             
   
           yelpResponse = data;
