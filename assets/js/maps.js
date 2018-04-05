@@ -62,6 +62,7 @@ testYelpApi(originalLat, originalLng, function(data){
 
 
 let pushToCards = function(){
+  $("#onClickContent").empty();
   $("#onClickContent").append(`<div class="card-group">`)
   for (var i = 0; i < yelpResponse.businesses.length; i++){
     $("#onClickContent").append(`
@@ -88,6 +89,7 @@ let pushToCards = function(){
 }
 
 let pushToLocations = function () {
+  locations = [];
   console.log(yelpResponse);
   for (var i = 0; i < yelpResponse.businesses.length; i++){
     locations.push({ //must be called "lat" and "lng"
@@ -144,6 +146,58 @@ let pushToLocations = function () {
         map.setCenter(marker.getPosition());*/
       });
     };
+
+
+
+
+    map.addListener("tilesloaded",  function() {
+  
+  
+        var newPosition = map.getCenter();
+  
+        var newLat = newPosition.lat();
+        var newLng = newPosition.lng();
+       
+  
+        testYelpApi(newLat, newLng, function (data) {
+            
+  
+          yelpResponse = data;
+          pushToLocations();
+          pushToCards();
+          // initAutocomplete();
+          
+  
+          for (i = 0; i < locations.length; i++) {
+  
+  
+            marker = new google.maps.Marker({
+              position: locations[i],
+              map: map,
+        
+            })
+            let yelpObject = JSON.stringify(yelpResponse.businesses[i]);
+            marker.addListener('click', function () {
+              $("#onClickContent").html(yelpObject);
+        
+              /*map.setZoom(20);
+              map.setCenter(marker.getPosition());*/
+            });
+          };
+        
+  
+        });
+  
+  
+      });
+
+
+
+
+
+
+
+    
       
       
  
