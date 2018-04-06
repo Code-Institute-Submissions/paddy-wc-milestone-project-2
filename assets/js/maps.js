@@ -7,10 +7,9 @@ jQuery.ajaxPrefilter(function (options) {
 
 
 
-
 //initial centre of map
-var originalLat = 53.3498053;
-var originalLng = -6.2603097;
+var currentLat = 53.3498053;
+var currentLng = -6.2603097;
 
 
 //filters terms for yep search. 
@@ -112,6 +111,18 @@ var generateNewMap = function (latitude, longitude) {
 //Part of functions.  Need to be global in scope.
 var yelpResponse = {};
 var locations = [];
+var markersArray = []; //enables clear markers
+
+
+//clear markers functionality 
+$(".clearMarkersButton").click(function () {
+  markersArray.forEach(function (marker) {
+    marker.setMap(null);
+  });
+
+});
+
+
 
 //Adds details of yelp results to sidebar cards
 let pushToCards = function () {
@@ -144,7 +155,6 @@ let pushToCards = function () {
 //Adds coordinates of yelp results to locations array
 let pushToLocations = function () {
   locations = [];
-  console.log(yelpResponse);
   for (var i = 0; i < yelpResponse.businesses.length; i++) {
     locations.push({ //must be called "lat" and "lng"
       lat: yelpResponse.businesses[i].coordinates.latitude,
@@ -154,12 +164,15 @@ let pushToLocations = function () {
   console.log(locations);
 };
 
+
+
 //generates initial map with search bar
 function initMap() {
-  var map = generateNewMap(originalLat, originalLng);
+  var map = generateNewMap(currentLat, currentLng);
   mapInteraction(activities, map);
   createSearchBar(map);
 };
+
 
 //Enables user interaction:
 //filter yelp results via buttons 
@@ -167,7 +180,8 @@ function initMap() {
 function mapInteraction(filterTerm, map) {
 
   var marker;
-//filter buttons functionality
+
+  //filter buttons functionality
   $(".foodAndDrinkButton").click(function () {
     addYelpMarkers(map, foodAndDrink, marker);
   });
@@ -178,11 +192,15 @@ function mapInteraction(filterTerm, map) {
     addYelpMarkers(map, accommodation, marker);
   });
 
+
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
   map.addListener("tilesloaded", function () {
     addYelpMarkers(map, filterTerm, marker);
+
   });
+
+
 
 }
 
@@ -191,24 +209,39 @@ function addYelpMarkers(map, filterTerm, marker) {
 
   //gets lat and lng values for current map location
   var newPosition = map.getCenter();
-  var newLat = newPosition.lat();
-  var newLng = newPosition.lng();
+  currentLat = newPosition.lat();
+  currentLng = newPosition.lng();
 
   //sends GET request to yelp. Places results on map and on cards
-  getYelpData(newLat, newLng, filterTerm, function (data) {
+  getYelpData(currentLat, currentLng, filterTerm, function (data) {
     yelpResponse = data;
     pushToLocations();
     pushToCards();
+
+
+
+
     for (let i = 0; i < locations.length; i++) {
+
       marker = new google.maps.Marker({
         position: locations[i],
         map: map,
       });
+
+      markersArray.push(marker);
+      console.log(markersArray);
+
+
+
+
       let yelpObject = JSON.stringify(yelpResponse.businesses[i]);
       marker.addListener('click', function () {
         $("#onClickContent").html(yelpObject);
       });
-    };
+    }
+
+
+
   });
 };
 
