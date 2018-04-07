@@ -184,6 +184,8 @@ let pushToLocations = function () {
 //generates initial map with search bar
 function initMap() {
   var map = generateNewMap(currentLat, currentLng);
+  
+
   mapInteraction(activities, map);
   createSearchBar(map);
 };
@@ -195,6 +197,8 @@ function initMap() {
 function mapInteraction(filterTerm, map) {
 
   var marker;
+
+
 
   //filter buttons functionality
   $(".foodAndDrinkButton").click(function () {
@@ -210,6 +214,7 @@ function mapInteraction(filterTerm, map) {
     addYelpMarkers(map, marker);
   });
 
+  
 
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
@@ -217,6 +222,8 @@ function mapInteraction(filterTerm, map) {
     addYelpMarkers(map, filterTerm, marker);
 
   });
+
+  
 
 
 
@@ -227,6 +234,9 @@ function mapInteraction(filterTerm, map) {
 function addYelpMarkers(map, marker) {
 
 
+  var markerCluster = new MarkerClusterer(map, markersArray, {
+    imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+  });
 
 
   //gets lat and lng values for current map location
@@ -250,9 +260,6 @@ function addYelpMarkers(map, marker) {
       iconToUse = foodIcon;
     }
 
-    var markerCluster = new MarkerClusterer(map, markersArray, {
-      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    });
 
     for (let i = 0; i < locations.length; i++) {
 
