@@ -120,7 +120,13 @@ var generateNewMap = function (latitude, longitude) {
 //Part of functions.  Need to be global in scope.
 var yelpResponse = {};
 var locations = [];
-var markersArray = []; //enables clear markers
+
+//enables clear markers
+var markersArray = [];
+
+//to check array entries against to prevent duplicates 
+//final google marker clusters must use an array not a set
+var markersSet = new Set([]);
 
 
 //clear markers functionality 
@@ -234,26 +240,36 @@ function addYelpMarkers(map, marker) {
     pushToLocations();
     pushToCards();
 
-  var iconToUse;
+    var iconToUse;
 
-  if (globalSearchQuery === activities){
-    iconToUse = activitiesIcon;
-  } else if (globalSearchQuery === accommodation){
-    iconToUse = accommodationIcon;
-  } else {
-    iconToUse = foodIcon;
-  }
+    if (globalSearchQuery === activities) {
+      iconToUse = activitiesIcon;
+    } else if (globalSearchQuery === accommodation) {
+      iconToUse = accommodationIcon;
+    } else {
+      iconToUse = foodIcon;
+    }
 
     for (let i = 0; i < locations.length; i++) {
 
       marker = new google.maps.Marker({
         position: locations[i],
         map: map,
-       icon: iconToUse
+        icon: iconToUse
       });
 
-      markersArray.push(marker);
-      console.log(markersArray);
+      //only adds markers to the array if they are not  duplicates 
+      markersSet.add(locations[i].lat);
+      if ((markersSet.size) > markersArray.length) {
+        markersArray.push(marker);
+      }
+
+
+
+      var markerCluster = new MarkerClusterer(map, markersArray, {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+      });
+
 
 
 
@@ -268,15 +284,3 @@ function addYelpMarkers(map, marker) {
 
   });
 };
-
-
-//creates marker clusters. May want to enable later
-/* var yelpMarkers = locations.map(function(location, i) {
-     return new google.maps.Marker({
-         position: location,
-         label: labels[i % labels.length],
-         animation: google.maps.Animation.DROP,
-         title:"Hello World!"
-     })
-
- }); */
