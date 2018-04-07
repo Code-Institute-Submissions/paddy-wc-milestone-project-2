@@ -12,10 +12,14 @@ var currentLat = 53.3498053;
 var currentLng = -6.2603097;
 
 
+
 //filters terms for yep search. 
 var foodAndDrink = "food,bars";
 var activities = "streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours";
 var accommodation = "guesthouses,campgrounds,hostels,hotels";
+
+//current filter. Set as activities for map intilzation
+var globalSearchQuery = activities;
 
 //icons to appear as markers on map
 var foodIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGUSURBVFhH7ZHNLgRBEIDnLk5Ewns42O4hJBsx3ct6F/8n3sjPFRfi6iXs9MYKFw4SQVVvzVhVme3t5SLmSzqZqv6quqY7qakpcFZ/jLOovKynMBgLCiF2UfnvDUBhEO7HxoKgwOB+bCwICgzux8aCoMDgfmwsCAoM7sfGgqDA4H5sLAgKDO7HxgJn9IuXms0JSlXSW29Moptb9UypBL8xd7+azmLsjLqGnlf4jTnuC0C49QNkjWVKVYKOd6GGUklu1AUdskWpEmfVnt8z6pxSEpj4iKRjSlWSG33qBzDqkFJJnqWL/Zx+dTbdhluawwXxDuZyq987ppGSLnGbCzPQ8Mk3ydQupQXg7HvHqseOXZqmtAf/FA/q738tnxvSs6RjdRtu4I2KTvCq8b39m7fSFdg783vgdFvpBpV9A55gDWovy8PhaTBH22GwMVzZQ9FALKN6rqUt6ZUUPoVx3LXnp7pGH8Bb3xSN/DdcP+6RNpQfDTDIuI3qAeoB/u4ARWFokV7JqJ5g8JBhi/RKRvVq/jtJ8glPy0/Jm9T3zgAAAABJRU5ErkJggg=="
@@ -25,11 +29,12 @@ var accommodationIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgC
 //Get request for yelp API. Generated using "postman" app
 //enter filterTerm from above
 //added acess-conreol-allow-origin to enable cors-anywhere
-var getYelpData = function (latitude, longitude, filterTerm, cb) {
+var getYelpData = function (latitude, longitude, cb) {
+
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${filterTerm}`,
+    "url": `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${globalSearchQuery}`,
     "method": "GET",
     "headers": {
       "authorization": "Bearer UTSSHcFmhNyctmBOeWKD2eeg9GV_LRkqsdjDa3Q_WkwvGywmY0cxtFDWQt1ib4lgRiE1y9l0_uRPdU6O4fY1rn164iomb6Y7_wR9G-Ii3WPWScwM5UWBZaPSz3LCWnYx",
@@ -187,13 +192,16 @@ function mapInteraction(filterTerm, map) {
 
   //filter buttons functionality
   $(".foodAndDrinkButton").click(function () {
-    addYelpMarkers(map, foodAndDrink, marker);
+    globalSearchQuery = foodAndDrink;
+    addYelpMarkers(map, marker);
   });
   $(".activitiesButton").click(function () {
-    addYelpMarkers(map, activities, marker);
+    globalSearchQuery = activities;
+    addYelpMarkers(map, marker);
   });
   $(".accommodationButton").click(function () {
-    addYelpMarkers(map, accommodation, marker);
+    globalSearchQuery = accommodation;
+    addYelpMarkers(map, marker);
   });
 
 
@@ -206,10 +214,14 @@ function mapInteraction(filterTerm, map) {
 
 
 
+
 }
 
 //Called when user filters results or changes location 
-function addYelpMarkers(map, filterTerm, marker) {
+function addYelpMarkers(map, marker) {
+
+
+
 
   //gets lat and lng values for current map location
   var newPosition = map.getCenter();
@@ -217,16 +229,16 @@ function addYelpMarkers(map, filterTerm, marker) {
   currentLng = newPosition.lng();
 
   //sends GET request to yelp. Places results on map and on cards
-  getYelpData(currentLat, currentLng, filterTerm, function (data) {
+  getYelpData(currentLat, currentLng, function (data) {
     yelpResponse = data;
     pushToLocations();
     pushToCards();
 
   var iconToUse;
 
-  if (filterTerm === activities){
+  if (globalSearchQuery === activities){
     iconToUse = activitiesIcon;
-  } else if (filterTerm === accommodation){
+  } else if (globalSearchQuery === accommodation){
     iconToUse = accommodationIcon;
   } else {
     iconToUse = foodIcon;
