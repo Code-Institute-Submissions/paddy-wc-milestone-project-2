@@ -250,11 +250,14 @@ function addYelpMarkers(map, marker) {
       iconToUse = foodIcon;
     }
 
+    var markerCluster = new MarkerClusterer(map, markersArray, {
+      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    });
+
     for (let i = 0; i < locations.length; i++) {
 
       marker = new google.maps.Marker({
         position: locations[i],
-        map: map,
         icon: iconToUse
       });
 
@@ -263,16 +266,6 @@ function addYelpMarkers(map, marker) {
       if ((markersSet.size) > markersArray.length) {
         markersArray.push(marker);
       }
-
-
-
-      var markerCluster = new MarkerClusterer(map, markersArray, {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-      });
-
-
-
-
 
       let yelpObject = JSON.stringify(yelpResponse.businesses[i]);
       marker.addListener('click', function () {
