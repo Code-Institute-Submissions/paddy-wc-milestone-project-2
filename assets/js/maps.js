@@ -17,6 +17,10 @@ var foodAndDrink = "food,bars";
 var activities = "streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours";
 var accommodation = "guesthouses,campgrounds,hostels,hotels";
 
+//icons to appear as markers on map
+var foodIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGUSURBVFhH7ZHNLgRBEIDnLk5Ewns42O4hJBsx3ct6F/8n3sjPFRfi6iXs9MYKFw4SQVVvzVhVme3t5SLmSzqZqv6quqY7qakpcFZ/jLOovKynMBgLCiF2UfnvDUBhEO7HxoKgwOB+bCwICgzux8aCoMDgfmwsCAoM7sfGgqDA4H5sLAgKDO7HxgJn9IuXms0JSlXSW29Moptb9UypBL8xd7+azmLsjLqGnlf4jTnuC0C49QNkjWVKVYKOd6GGUklu1AUdskWpEmfVnt8z6pxSEpj4iKRjSlWSG33qBzDqkFJJnqWL/Zx+dTbdhluawwXxDuZyq987ppGSLnGbCzPQ8Mk3ydQupQXg7HvHqseOXZqmtAf/FA/q738tnxvSs6RjdRtu4I2KTvCq8b39m7fSFdg783vgdFvpBpV9A55gDWovy8PhaTBH22GwMVzZQ9FALKN6rqUt6ZUUPoVx3LXnp7pGH8Bb3xSN/DdcP+6RNpQfDTDIuI3qAeoB/u4ARWFokV7JqJ5g8JBhi/RKRvVq/jtJ8glPy0/Jm9T3zgAAAABJRU5ErkJggg=="
+var activitiesIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEwSURBVFhH7ZRNjoJAEIV75b5xNnMVXRqPYzzFjMlcAAmcwGP4cxRdmgzOHuu1T4PaYJCuMSZ8yUvIK6hX3TSYjqYUC9M7pNFPntotdMiiGTyW9UGgqLjRjGV98szuEPqb2IHswBDX2AmW9TkPgPCXDIDtRuiVUvvFsj7uEGb2G6uGcP0vh/Bu1RXi7eHxhfnE23WQ73/MoCUtDLZ0ntRo6SFBU4bFtDBU7Dyp0dJDQhKGTWjBm9BLaOkhq12dwvojWjJAf+Q8qdHSQ4L2CPubf3zSMrg+DRXtaelQFwQPtfJgwanbat+rCY4EVB42eKxdDmdw6j43eK5W+jyDIwGVPxx4rlb6QbVGmm3YtI3WbNccT7OnxHbNadugG+B9Bzg/GFps/xjfwyHE9h0dNxhzBBwzDTiJaG//AAAAAElFTkSuQmCC";
+var accommodationIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADzSURBVFhH7ZZBEsIgDEV7iToeuBzDoXfRlbpS76MNhk75oaTthB1vhhkCL/ksumjXaJQ4X1zfj8OdFu35eBVyTt49aG3xi/zD3es0ui8t2peGBt+7z+xP+8OPWIbToDi498M7N3QZnvoHHoHhVKcB6SPSu5y/4xGhEcL5andQ6S5LaFgJj+BQLQD9nDMTvt4N4nLofn948rEkDiy+kiHnqM9HElUAzH3zgYDqo1C7FmgN1rVAFQBz33wgoPoo1K4FWoN1LVAFwNw3HwioPgq1a4HWYF0LVAEw980HAqofhdqL4yTTz8It12C6vLtyXKPBdN0PrrhxMdGEPKgAAAAASUVORK5CYII=";
 
 //Get request for yelp API. Generated using "postman" app
 //enter filterTerm from above
@@ -218,14 +222,22 @@ function addYelpMarkers(map, filterTerm, marker) {
     pushToLocations();
     pushToCards();
 
+  var iconToUse;
 
-
+  if (filterTerm === activities){
+    iconToUse = activitiesIcon;
+  } else if (filterTerm === accommodation){
+    iconToUse = accommodationIcon;
+  } else {
+    iconToUse = foodIcon;
+  }
 
     for (let i = 0; i < locations.length; i++) {
 
       marker = new google.maps.Marker({
         position: locations[i],
         map: map,
+       icon: iconToUse
       });
 
       markersArray.push(marker);
