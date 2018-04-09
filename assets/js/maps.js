@@ -6,11 +6,9 @@ jQuery.ajaxPrefilter(function (options) {
 });
 
 
-
 //initial centre of map
 var currentLat = 53.3498053;
 var currentLng = -6.2603097;
-
 
 
 //filters terms for yep search. 
@@ -27,7 +25,6 @@ var activitiesIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYA
 var accommodationIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADzSURBVFhH7ZZBEsIgDEV7iToeuBzDoXfRlbpS76MNhk75oaTthB1vhhkCL/ksumjXaJQ4X1zfj8OdFu35eBVyTt49aG3xi/zD3es0ui8t2peGBt+7z+xP+8OPWIbToDi498M7N3QZnvoHHoHhVKcB6SPSu5y/4xGhEcL5andQ6S5LaFgJj+BQLQD9nDMTvt4N4nLofn948rEkDiy+kiHnqM9HElUAzH3zgYDqo1C7FmgN1rVAFQBz33wgoPoo1K4FWoN1LVAFwNw3HwioPgq1a4HWYF0LVAEw980HAqofhdqL4yTTz8It12C6vLtyXKPBdN0PrrhxMdGEPKgAAAAASUVORK5CYII=";
 
 //Get request for yelp API. Generated using "postman" app
-//enter filterTerm from above
 //added acess-conreol-allow-origin to enable cors-anywhere
 var getYelpData = function (latitude, longitude, cb) {
 
@@ -126,15 +123,17 @@ var markersArray = [];
 
 //to check array entries against to prevent duplicates 
 //final google marker clusters must use an array not a set
-var markersSet = new Set([]);
+let markersSet = new Set([]);
 
 
-//clear markers functionality 
+//clears markers. Also clears marker cluster as part of addYelpMarkers function
 $(".clearMarkersButton").click(function () {
-  markersArray.forEach(function (marker) {
-    marker.setMap(null);
-  });
-
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(null);
+    
+  }
+  markersArray.length = 0;
+  markersSet.clear();
 });
 
 
@@ -176,7 +175,6 @@ let pushToLocations = function () {
       lng: yelpResponse.businesses[i].coordinates.longitude,
     });
   }
-  console.log(locations);
 };
 
 
@@ -194,7 +192,7 @@ function initMap() {
 //Enables user interaction:
 //filter yelp results via buttons 
 //receive new yelp result upon location change
-function mapInteraction(filterTerm, map) {
+function mapInteraction(bug, map) {
 
   var marker;
 
@@ -219,23 +217,24 @@ function mapInteraction(filterTerm, map) {
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
   map.addListener("tilesloaded", function () {
-    addYelpMarkers(map, filterTerm, marker);
+    addYelpMarkers(map, marker);
 
   });
 
   
-
-
-
-
 }
 
 //Called when user filters results or changes location 
 function addYelpMarkers(map, marker) {
 
 
-  var markerCluster = new MarkerClusterer(map, markersArray, {
+  let markerCluster = new MarkerClusterer(map, markersArray, {
     imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+  });
+
+  // Clears marker clusters. Needs to be same scope as declaration of markerCluster
+  $(".clearMarkersButton").click(function () {
+ markerCluster.clearMarkers();
   });
 
 
