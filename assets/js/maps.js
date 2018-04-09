@@ -134,6 +134,13 @@ $(".clearMarkersButton").click(function () {
   }
   markersArray.length = 0;
   markersSet.clear();
+  yelpCardsSet.clear();
+  for (var member in fullYelp) delete fullYelp[member];
+
+  //clears card results and resets pushToCards iterators
+  $("#onClickContent .card-group").empty();
+  iCardBody = 0;
+  iFullYelp = 0;
 });
 
 //iterators used in pushToCards
