@@ -136,22 +136,30 @@ $(".clearMarkersButton").click(function () {
   markersSet.clear();
 });
 
-//placed outside function so to not reset when function is called
-let pushToCardsIterator = 0;
-let fullYelp = {};
+//iterators used in pushToCards
+//placed outside function to avoid resting 
 let iFullYelp = 0;
+let iCardBody = 0;
+
+
+//holds yelp data to be pushed to cards
+//values only pushed to fullYelp object if they can be entered into set. Prevents duplicates
+let fullYelp = {};
 let yelpCardsSet = new Set ([]);
-
-
 
 
 //Adds details of yelp results to sidebar cards
 let pushToCards = function () {
  
+
  for (let z = 0; z < yelpResponse.businesses.length; z++){
+
+  //iff value is added to yelpCardsSet it is added to fullYelp
    yelpCardsSet.add(yelpResponse.businesses[z].id);
    if (yelpCardsSet.size > Object.keys(fullYelp).length){
      fullYelp[iFullYelp] =yelpResponse.businesses[z];
+
+     //Using iFullYelp iterator ensures that no index values are skiped
      iFullYelp ++;
      console.log(iFullYelp);
    }
@@ -160,100 +168,29 @@ let pushToCards = function () {
  console.log(fullYelp);
  
 
+  for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
+    $("#onClickContent .card-group").append(`
+    <div class="card card-${iCardBody}" style="width: 18rem;">
 
-
-
-  
-/*
- // $.extend(true, fullYelp, yelpResponse.businesses);
-
- let currentIndex = yelpObjectIterator;
-
- console.log(yelpResponse);
- console.log(yelpCardsSet);
- while  (yelpLoopCounter < (currentIndex + yelpResponse.businesses.length)){
-
-  console.log("Am i running???");
-
-  console.log("index value to add: " + (currentIndex));
- // currentIndex = yelpObjectIterator;
-  yelpCardsSet.add(yelpResponse.businesses[yelpObjectIterator-currentIndex].id);
-
-
-  if ( yelpCardsSet.size > Object.keys(fullYelp).length) {
-    
-  fullYelp[yelpObjectIterator] = yelpResponse.businesses[yelpObjectIterator];
-
-  yelpObjectIterator++;
-  yelpLoopCounter++ 
-  console.log("current index: "+currentIndex);
-  console.log("yelpObjectIterator: " + yelpObjectIterator);
-  console.log("EARLY IF loop counter: " + yelpLoopCounter);
-
-
- }else {
-  yelpLoopCounter++;
-   console.log("EARLY ELSE loop counter: " + yelpLoopCounter);
-
-   
-
-  
- };
-
-}; currentIndex = yelpObjectIterator;
-
-console.log("card set size = " +  yelpCardsSet.size);
-console.log(" LATER current index: "+currentIndex);
-console.log("yelp loop counter: " + yelpLoopCounter);
-
-
-
-
- console.log(fullYelp);
-
-
- */
-
-
-
-
- //$("#onClickContent").empty();
-  $("#onClickContent").append(`<div class="card-group">`)
-  for (pushToCardsIterator; pushToCardsIterator < yelpResponse.businesses.length; pushToCardsIterator++) {
-    $("#onClickContent").append(`
-    <div class="card card-${pushToCardsIterator}" style="width: 18rem;">
-
-    <img class="card-img-top" src="${yelpResponse.businesses[pushToCardsIterator].image_url}" alt="Business Image">
+    <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
     <div class="card-body">
     
-    <h5 class="card-title">${yelpResponse.businesses[pushToCardsIterator].name}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${yelpResponse.businesses[pushToCardsIterator].categories[0].title}</h6>
+    <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${fullYelp[iCardBody].categories[0].title}</h6>
 
     <p class="card-text">
-    Yelp rating: ${yelpResponse.businesses[pushToCardsIterator].rating} <br>
-    Price: ${yelpResponse.businesses[pushToCardsIterator].price} 
+    Yelp rating: ${fullYelp[iCardBody].rating} <br>
+    Price: ${fullYelp[iCardBody].price} 
     </p>
-    <a href="${yelpResponse.businesses[pushToCardsIterator].url}" target = "_blank" class="card-link">Yelp Page</a>
+    <a href="${fullYelp[iCardBody].url}" target = "_blank" class="card-link">Yelp Page</a>
 
     </div>
     </div>
     `)
 
   }
-  $("#onClickContent").append(`</div>`)
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -273,7 +210,6 @@ let pushToLocations = function () {
 //generates initial map with search bar
 function initMap() {
   var map = generateNewMap(currentLat, currentLng);
-
 
   mapInteraction(activities, map);
   createSearchBar(map);
@@ -384,11 +320,6 @@ function addYelpMarkers(map, marker) {
 
       });
     }
-
-    // console.log(markersArray);
-    // console.log(markersSet);
-
-
 
   });
 };
