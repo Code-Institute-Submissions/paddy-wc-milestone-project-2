@@ -152,32 +152,32 @@ let iCardBody = 0;
 //holds yelp data to be pushed to cards
 //values only pushed to fullYelp object if they can be entered into set. Prevents duplicates
 let fullYelp = {};
-let yelpCardsSet = new Set ([]);
+let yelpCardsSet = new Set([]);
 
 
 //Adds details of yelp results to sidebar cards
 let pushToCards = function () {
- 
 
- for (let z = 0; z < yelpResponse.businesses.length; z++){
 
-  //iff value is added to yelpCardsSet it is added to fullYelp
-   yelpCardsSet.add(yelpResponse.businesses[z].id);
-   if (yelpCardsSet.size > Object.keys(fullYelp).length){
-     fullYelp[iFullYelp] =yelpResponse.businesses[z];
+  for (let z = 0; z < yelpResponse.businesses.length; z++) {
 
-     //Using iFullYelp iterator ensures that no index values are skiped
-     iFullYelp ++;
-     console.log(iFullYelp);
-   }
- }
- console.log(yelpCardsSet);
- console.log(fullYelp);
- 
+    //iff value is added to yelpCardsSet it is added to fullYelp
+    yelpCardsSet.add(yelpResponse.businesses[z].id);
+    if (yelpCardsSet.size > Object.keys(fullYelp).length) {
+      fullYelp[iFullYelp] = yelpResponse.businesses[z];
+
+      //Using iFullYelp iterator ensures that no index values are skiped
+      iFullYelp++;
+      console.log(iFullYelp);
+    }
+  }
+  console.log(yelpCardsSet);
+  console.log(fullYelp);
+
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
     $("#onClickContent .card-group").append(`
-    <div class="card card-${iCardBody}" style="width: 18rem;">
+    <div class="card card-${iCardBody}">
 
     <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
     <div class="card-body">
@@ -319,7 +319,9 @@ function addYelpMarkers(map, marker) {
         let cardToTarget = `.card-${markerIndex}`;
         console.log(cardToTarget);
 
-        $(cardToTarget).css("background-color", "red");
+        $(".card").removeAttr("id");
+        $(cardToTarget).attr('id', 'highlightCard');
+
         $("#cards-col").animate({
           scrollTop: $(cardToTarget).offset().top
         }, 2000);
