@@ -136,27 +136,104 @@ $(".clearMarkersButton").click(function () {
   markersSet.clear();
 });
 
+//placed outside function so to not reset when function is called
+let pushToCardsIterator = 0;
+let fullYelp = {};
+let iFullYelp = 0;
+let yelpCardsSet = new Set ([]);
+
+
 
 
 //Adds details of yelp results to sidebar cards
 let pushToCards = function () {
-  $("#onClickContent").empty();
-  $("#onClickContent").append(`<div class="card-group">`)
-  for (var i = 0; i < yelpResponse.businesses.length; i++) {
-    $("#onClickContent").append(`
-    <div class="card card-${i}" style="width: 18rem;">
+ 
+ for (let z = 0; z < yelpResponse.businesses.length; z++){
+   yelpCardsSet.add(yelpResponse.businesses[z].id);
+   if (yelpCardsSet.size > Object.keys(fullYelp).length){
+     fullYelp[iFullYelp] =yelpResponse.businesses[z];
+     iFullYelp ++;
+     console.log(iFullYelp);
+   }
+ }
+ console.log(yelpCardsSet);
+ console.log(fullYelp);
+ 
 
-    <img class="card-img-top" src="${yelpResponse.businesses[i].image_url}" alt="Business Image">
+
+
+
+  
+/*
+ // $.extend(true, fullYelp, yelpResponse.businesses);
+
+ let currentIndex = yelpObjectIterator;
+
+ console.log(yelpResponse);
+ console.log(yelpCardsSet);
+ while  (yelpLoopCounter < (currentIndex + yelpResponse.businesses.length)){
+
+  console.log("Am i running???");
+
+  console.log("index value to add: " + (currentIndex));
+ // currentIndex = yelpObjectIterator;
+  yelpCardsSet.add(yelpResponse.businesses[yelpObjectIterator-currentIndex].id);
+
+
+  if ( yelpCardsSet.size > Object.keys(fullYelp).length) {
+    
+  fullYelp[yelpObjectIterator] = yelpResponse.businesses[yelpObjectIterator];
+
+  yelpObjectIterator++;
+  yelpLoopCounter++ 
+  console.log("current index: "+currentIndex);
+  console.log("yelpObjectIterator: " + yelpObjectIterator);
+  console.log("EARLY IF loop counter: " + yelpLoopCounter);
+
+
+ }else {
+  yelpLoopCounter++;
+   console.log("EARLY ELSE loop counter: " + yelpLoopCounter);
+
+   
+
+  
+ };
+
+}; currentIndex = yelpObjectIterator;
+
+console.log("card set size = " +  yelpCardsSet.size);
+console.log(" LATER current index: "+currentIndex);
+console.log("yelp loop counter: " + yelpLoopCounter);
+
+
+
+
+ console.log(fullYelp);
+
+
+ */
+
+
+
+
+ //$("#onClickContent").empty();
+  $("#onClickContent").append(`<div class="card-group">`)
+  for (pushToCardsIterator; pushToCardsIterator < yelpResponse.businesses.length; pushToCardsIterator++) {
+    $("#onClickContent").append(`
+    <div class="card card-${pushToCardsIterator}" style="width: 18rem;">
+
+    <img class="card-img-top" src="${yelpResponse.businesses[pushToCardsIterator].image_url}" alt="Business Image">
     <div class="card-body">
     
-    <h5 class="card-title">${yelpResponse.businesses[i].name}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${yelpResponse.businesses[i].categories[0].title}</h6>
+    <h5 class="card-title">${yelpResponse.businesses[pushToCardsIterator].name}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${yelpResponse.businesses[pushToCardsIterator].categories[0].title}</h6>
 
     <p class="card-text">
-    Yelp rating: ${yelpResponse.businesses[i].rating} <br>
-    Price: ${yelpResponse.businesses[i].price} 
+    Yelp rating: ${yelpResponse.businesses[pushToCardsIterator].rating} <br>
+    Price: ${yelpResponse.businesses[pushToCardsIterator].price} 
     </p>
-    <a href="${yelpResponse.businesses[i].url}" target = "_blank" class="card-link">Yelp Page</a>
+    <a href="${yelpResponse.businesses[pushToCardsIterator].url}" target = "_blank" class="card-link">Yelp Page</a>
 
     </div>
     </div>
@@ -165,6 +242,20 @@ let pushToCards = function () {
   }
   $("#onClickContent").append(`</div>`)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Adds coordinates of yelp results to locations array
 let pushToLocations = function () {
@@ -199,100 +290,105 @@ function mapInteraction(bug, map) {
   addYelpMarkers(map, marker);
 
 
-    //filter buttons functionality
-    $(".foodAndDrinkButton").click(function () {
-      globalSearchQuery = foodAndDrink;
-      addYelpMarkers(map, marker);
-    });
-    $(".activitiesButton").click(function () {
-      globalSearchQuery = activities;
-      addYelpMarkers(map, marker);
-    });
-    $(".accommodationButton").click(function () {
-      globalSearchQuery = accommodation;
-      addYelpMarkers(map, marker);
-    });
+  //filter buttons functionality
+  $(".foodAndDrinkButton").click(function () {
+    globalSearchQuery = foodAndDrink;
+    addYelpMarkers(map, marker);
+  });
+  $(".activitiesButton").click(function () {
+    globalSearchQuery = activities;
+    addYelpMarkers(map, marker);
+  });
+  $(".accommodationButton").click(function () {
+    globalSearchQuery = accommodation;
+    addYelpMarkers(map, marker);
+  });
 
 
 
-    //adds yelp markers when tiles are loaded
-    //occurs after initial map is loaded and when location is changed
-    map.addListener("tilesloaded", function () {
-      addYelpMarkers(map, marker);
+  //adds yelp markers when tiles are loaded
+  //occurs after initial map is loaded and when location is changed
+  map.addListener("tilesloaded", function () {
+    addYelpMarkers(map, marker);
 
-    });
-
-
-  }
-
-  //Called when user filters results or changes location 
-  function addYelpMarkers(map, marker) {
+  });
 
 
-    let markerCluster = new MarkerClusterer(map, markersArray, {
-      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    });
+}
 
-    // Clears marker clusters. Needs to be same scope as declaration of markerCluster
-    $(".clearMarkersButton").click(function () {
-      markerCluster.clearMarkers();
-    });
+//Called when user filters results or changes location 
+function addYelpMarkers(map, marker) {
 
 
-    //gets lat and lng values for current map location
-    var newPosition = map.getCenter();
-    currentLat = newPosition.lat();
-    currentLng = newPosition.lng();
+  let markerCluster = new MarkerClusterer(map, markersArray, {
+    imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+  });
 
-    //sends GET request to yelp. Places results on map and on cards
-    getYelpData(currentLat, currentLng, function (data) {
-      yelpResponse = data;
-      pushToLocations();
-      pushToCards();
+  // Clears marker clusters. Needs to be same scope as declaration of markerCluster
+  $(".clearMarkersButton").click(function () {
+    markerCluster.clearMarkers();
+  });
 
-      var iconToUse;
 
-      if (globalSearchQuery === activities) {
-        iconToUse = activitiesIcon;
-      } else if (globalSearchQuery === accommodation) {
-        iconToUse = accommodationIcon;
-      } else {
-        iconToUse = foodIcon;
+  //gets lat and lng values for current map location
+  var newPosition = map.getCenter();
+  currentLat = newPosition.lat();
+  currentLng = newPosition.lng();
+
+  //sends GET request to yelp. Places results on map and on cards
+  getYelpData(currentLat, currentLng, function (data) {
+    // $(yelpResponse).extend(data.businesses[0]);
+    //console.log(yelpResponse);
+    yelpResponse = data;
+    //console.log(yelpResponse);
+    pushToLocations();
+    pushToCards();
+
+    var iconToUse;
+
+    if (globalSearchQuery === activities) {
+      iconToUse = activitiesIcon;
+    } else if (globalSearchQuery === accommodation) {
+      iconToUse = accommodationIcon;
+    } else {
+      iconToUse = foodIcon;
+    }
+
+
+    for (let i = 0; i < locations.length; i++) {
+
+      marker = new google.maps.Marker({
+        position: locations[i],
+        icon: iconToUse
+      });
+
+      //only adds markers to the array if they are not  duplicates 
+      markersSet.add(locations[i].lat);
+      if ((markersSet.size) > markersArray.length) {
+        markersArray.push(marker);
       }
 
 
-      for (let i = 0; i < locations.length; i++) {
 
-        marker = new google.maps.Marker({
-          position: locations[i],
-          icon: iconToUse
-        });
+      marker.addListener('click', function () {
+        let markerIndex = markersArray.indexOf(this);
+        console.log(markerIndex);
+        let cardToTarget = `.card-${markerIndex}`;
+        console.log(cardToTarget);
 
-        //only adds markers to the array if they are not  duplicates 
-        markersSet.add(locations[i].lat);
-        if ((markersSet.size) > markersArray.length) {
-          markersArray.push(marker);
-        }
-
+        $(cardToTarget).css("background-color", "red");
+        $("#cards-col").animate({
+          scrollTop: $(cardToTarget).offset().top
+        }, 2000);
 
 
-        marker.addListener('click', function () {
-          let markerIndex = markersArray.indexOf(this);
-          console.log(markerIndex);
-          let cardToTarget = `.card-${markerIndex}`;
-          console.log(cardToTarget);
+      });
+    }
 
-          $(cardToTarget).css("background-color" , "red");
+    // console.log(markersArray);
+    // console.log(markersSet);
 
 
 
-        });
-      }
-
-      console.log(markersArray);
-      console.log(markersSet);
-
-
-
-    });
-  };
+  });
+};
