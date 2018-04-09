@@ -323,9 +323,16 @@ function addYelpMarkers(map, marker) {
         $(cardToTarget).attr('id', 'highlightCard');
 
         $("#cards-col").animate({
+          scrollTop: $(cardToTarget).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
+          scrollLeft: 0
+        }, 1500);
+
+
+        /*
+        $("#cards-col").animate({
           scrollTop: $(cardToTarget).offset().top
         }, 2000);
-
+*/
 
       });
     }
