@@ -130,7 +130,7 @@ let markersSet = new Set([]);
 $(".clearMarkersButton").click(function () {
   for (var i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
-    
+
   }
   markersArray.length = 0;
   markersSet.clear();
@@ -182,7 +182,7 @@ let pushToLocations = function () {
 //generates initial map with search bar
 function initMap() {
   var map = generateNewMap(currentLat, currentLng);
-  
+
 
   mapInteraction(activities, map);
   createSearchBar(map);
@@ -196,90 +196,103 @@ function mapInteraction(bug, map) {
 
   var marker;
 
+  addYelpMarkers(map, marker);
 
 
-  //filter buttons functionality
-  $(".foodAndDrinkButton").click(function () {
-    globalSearchQuery = foodAndDrink;
-    addYelpMarkers(map, marker);
-  });
-  $(".activitiesButton").click(function () {
-    globalSearchQuery = activities;
-    addYelpMarkers(map, marker);
-  });
-  $(".accommodationButton").click(function () {
-    globalSearchQuery = accommodation;
-    addYelpMarkers(map, marker);
-  });
-
-  
-
-  //adds yelp markers when tiles are loaded
-  //occurs after initial map is loaded and when location is changed
-  map.addListener("tilesloaded", function () {
-    addYelpMarkers(map, marker);
-
-  });
-
-  
-}
-
-//Called when user filters results or changes location 
-function addYelpMarkers(map, marker) {
+    //filter buttons functionality
+    $(".foodAndDrinkButton").click(function () {
+      globalSearchQuery = foodAndDrink;
+      addYelpMarkers(map, marker);
+    });
+    $(".activitiesButton").click(function () {
+      globalSearchQuery = activities;
+      addYelpMarkers(map, marker);
+    });
+    $(".accommodationButton").click(function () {
+      globalSearchQuery = accommodation;
+      addYelpMarkers(map, marker);
+    });
 
 
-  let markerCluster = new MarkerClusterer(map, markersArray, {
-    imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-  });
 
-  // Clears marker clusters. Needs to be same scope as declaration of markerCluster
-  $(".clearMarkersButton").click(function () {
- markerCluster.clearMarkers();
-  });
+    //adds yelp markers when tiles are loaded
+    //occurs after initial map is loaded and when location is changed
+    map.addListener("tilesloaded", function () {
+      addYelpMarkers(map, marker);
 
-
-  //gets lat and lng values for current map location
-  var newPosition = map.getCenter();
-  currentLat = newPosition.lat();
-  currentLng = newPosition.lng();
-
-  //sends GET request to yelp. Places results on map and on cards
-  getYelpData(currentLat, currentLng, function (data) {
-    yelpResponse = data;
-    pushToLocations();
-    pushToCards();
-
-    var iconToUse;
-
-    if (globalSearchQuery === activities) {
-      iconToUse = activitiesIcon;
-    } else if (globalSearchQuery === accommodation) {
-      iconToUse = accommodationIcon;
-    } else {
-      iconToUse = foodIcon;
-    }
+    });
 
 
-    for (let i = 0; i < locations.length; i++) {
+  }
 
-      marker = new google.maps.Marker({
-        position: locations[i],
-        icon: iconToUse
-      });
+  //Called when user filters results or changes location 
+  function addYelpMarkers(map, marker) {
 
-      //only adds markers to the array if they are not  duplicates 
-      markersSet.add(locations[i].lat);
-      if ((markersSet.size) > markersArray.length) {
-        markersArray.push(marker);
+
+    let markerCluster = new MarkerClusterer(map, markersArray, {
+      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    });
+
+    // Clears marker clusters. Needs to be same scope as declaration of markerCluster
+    $(".clearMarkersButton").click(function () {
+      markerCluster.clearMarkers();
+    });
+
+
+    //gets lat and lng values for current map location
+    var newPosition = map.getCenter();
+    currentLat = newPosition.lat();
+    currentLng = newPosition.lng();
+
+    //sends GET request to yelp. Places results on map and on cards
+    getYelpData(currentLat, currentLng, function (data) {
+      yelpResponse = data;
+      pushToLocations();
+      pushToCards();
+
+      var iconToUse;
+
+      if (globalSearchQuery === activities) {
+        iconToUse = activitiesIcon;
+      } else if (globalSearchQuery === accommodation) {
+        iconToUse = accommodationIcon;
+      } else {
+        iconToUse = foodIcon;
       }
 
-      let yelpObject = JSON.stringify(yelpResponse.businesses[i]);
-      marker.addListener('click', function () {
-        $("#onClickContent").html(yelpObject);
-      });
-    }
+
+      for (let i = 0; i < locations.length; i++) {
+
+        marker = new google.maps.Marker({
+          position: locations[i],
+          icon: iconToUse
+        });
+
+        //only adds markers to the array if they are not  duplicates 
+        markersSet.add(locations[i].lat);
+        if ((markersSet.size) > markersArray.length) {
+          markersArray.push(marker);
+        }
 
 
 
-  });
-};
+        marker.addListener('click', function () {
+          let markerIndex = markersArray.indexOf(this);
+          console.log(markerIndex);
+          let cardToTarget = `.card-${markerIndex}`;
+          console.log(cardToTarget);
+
+          $(cardToTarget).css("background-color" , "red");
+
+
+
+        });
+      }
+
+      console.log(markersArray);
+      console.log(markersSet);
+
+
+
+    });
+  };
