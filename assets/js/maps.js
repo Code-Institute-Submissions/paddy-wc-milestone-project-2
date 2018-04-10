@@ -102,6 +102,29 @@ function createSearchBar(map) {
       }
     });
     map.fitBounds(bounds);
+
+
+    //my code. Clears markers and cards if searchBox is used
+    if (markers.length >0){
+
+      console.log("if test")
+      for (var i = 0; i < markersArray.length; i++) {
+        markersArray[i].setMap(null);
+    
+      }
+      markersArray.length = 0;
+      markersArrayViewOnMap.forEach(function (marker) {
+        marker.setMap(null);
+      });
+      markersSet.clear();
+      yelpCardsSet.clear();
+      for (var member in fullYelp) delete fullYelp[member];
+    
+      //clears card results and resets pushToCards iterators
+      $("#onClickContent .card-group").empty();
+      iCardBody = 0;
+      iFullYelp = 0;
+    }
   });
 }
 
@@ -224,7 +247,7 @@ let pushToCards = function (map) {
     <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
 
     <p class="card-text">
-    Yelp rating: ${fullYelp[iCardBody].rating} <br>
+    Yelp rating: ${fullYelp[iCardBody].rating}/5<br>
     Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
     </p>
     <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
