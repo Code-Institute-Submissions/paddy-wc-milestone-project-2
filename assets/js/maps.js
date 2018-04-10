@@ -158,6 +158,11 @@ let yelpCardsSet = new Set([]);
 //Adds details of yelp results to sidebar cards
 let pushToCards = function () {
 
+ 
+  
+
+
+
 
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
 
@@ -196,6 +201,8 @@ let pushToCards = function () {
     `)
 
   }
+
+ 
 
 }
 
@@ -237,14 +244,18 @@ function mapInteraction(bug, map) {
   $(".foodAndDrinkButton").click(function () {
     globalSearchQuery = foodAndDrink;
     addYelpMarkers(map, marker);
-  });
+    scrollToNewFilterResults();
+  })
+
   $(".activitiesButton").click(function () {
     globalSearchQuery = activities;
     addYelpMarkers(map, marker);
+    scrollToNewFilterResults();
   });
   $(".accommodationButton").click(function () {
     globalSearchQuery = accommodation;
     addYelpMarkers(map, marker);
+    scrollToNewFilterResults();
   });
 
 
@@ -258,6 +269,20 @@ function mapInteraction(bug, map) {
 
 
 }
+
+//called when filter button pressed
+//scrolls to new cards
+//timeout allows for delay in GET request
+function scrollToNewFilterResults() {
+  setTimeout(function() {
+  cardToScrollTo = `.card-${iFullYelp - yelpResponse.businesses.length}`;
+  console.log(cardToScrollTo);
+  $("#cards-col").animate({
+    scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
+    scrollLeft: 0
+  }, 1000);
+}, 2000);
+};
 
 //Called when user filters results or changes location 
 function addYelpMarkers(map, marker) {
@@ -327,12 +352,6 @@ function addYelpMarkers(map, marker) {
           scrollLeft: 0
         }, 1500);
 
-
-        /*
-        $("#cards-col").animate({
-          scrollTop: $(cardToTarget).offset().top
-        }, 2000);
-*/
 
       });
     }
