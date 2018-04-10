@@ -107,7 +107,7 @@ function createSearchBar(map) {
     //my code. Clears markers and cards if searchBox is used
     if (markers.length >0){
 
-      console.log("if test")
+
       for (var i = 0; i < markersArray.length; i++) {
         markersArray[i].setMap(null);
     
@@ -280,8 +280,9 @@ let pushToLocations = function () {
 function initMap() {
    map = generateNewMap(currentLat, currentLng);
 
-  mapInteraction(map);
+ 
   createSearchBar(map);
+  mapInteraction(map);
 };
 
 
@@ -346,7 +347,6 @@ function scrollToNewFilterResults() {
     scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
     scrollLeft: 0
   }, 1000);
-  console.log("iFullYelp after function: " + iFullYelp);
 }, 2000);
 
 
@@ -373,10 +373,9 @@ function addYelpMarkers(map, marker) {
 
   //sends GET request to yelp. Places results on map and on cards
   getYelpData(currentLat, currentLng, function (data) {
-    // $(yelpResponse).extend(data.businesses[0]);
-    //console.log(yelpResponse);
+
     yelpResponse = data;
-    //console.log(yelpResponse);
+   
     pushToLocations();
     pushToCards(map);
 
@@ -389,28 +388,32 @@ function addYelpMarkers(map, marker) {
     } else {
       iconToUse = foodIcon;
     }
+    
+    console.log(yelpResponse);
+
 
 
     for (let i = 0; i < locations.length; i++) {
+      
 
       marker = new google.maps.Marker({
         position: locations[i],
-        icon: iconToUse
+        icon: iconToUse,
+        map: map
       });
 
-      //only adds markers to the array if they are not  duplicates 
-      markersSet.add(locations[i].lat);
-      if ((markersSet.size) > markersArray.length) {
-        markersArray.push(marker);
-      }
+     
+     //only adds markers to the array if they are not  duplicates 
+     markersSet.add(locations[i].lat);
+     if ((markersSet.size) > markersArray.length) {
+       markersArray.push(marker);
+     }
 
 
 
       marker.addListener('click', function () {
         let markerIndex = markersArray.indexOf(this);
-        //console.log(markerIndex);
         let cardToTarget = `.card-${markerIndex}`;
-       // console.log(cardToTarget);
 
         $(".card").removeAttr("id");
         $(cardToTarget).attr('id', 'highlightCard');
