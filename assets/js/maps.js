@@ -39,13 +39,14 @@ var getYelpData = function (latitude, longitude, cb) {
       "access-control-allow-origin": "*",
       "cache-control": "no-cache",
       "postman-token": "c6fca5f7-e9ee-017f-8b66-d13a9884ec6d"
-    }
-  }
-
+    }, error: function(xhr, status, error){
+      alert("Error! Failed to retrieve data. " + xhr.status + " error");
+  }}
 
   $.ajax(settings).done(function (response) {
     cb(response);
   });
+  
 };
 
 
