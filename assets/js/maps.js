@@ -6,6 +6,7 @@ jQuery.ajaxPrefilter(function (options) {
 });
 
 
+
 //initial centre of map
 var currentLat = 53.3498053;
 var currentLng = -6.2603097;
@@ -155,15 +156,24 @@ let fullYelp = {};
 let yelpCardsSet = new Set([]);
 
 
+
+let viewOnMap = function( latitude, longitude) {
+  let viewOnMapLatLng = new google.maps.LatLng(latitude, longitude);
+
+  let marker  = new google.maps.Marker({
+    position: viewOnMapLatLng,
+    map: map,
+  })
+
+  map.setCenter(viewOnMapLatLng);
+  map.setZoom(17);
+};
+
+
+
 //Adds details of yelp results to sidebar cards
-let pushToCards = function () {
-
+let pushToCards = function (map) {
  
-  
-
-
-
-
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
 
     //iff value is added to yelpCardsSet it is added to fullYelp
@@ -173,11 +183,11 @@ let pushToCards = function () {
 
       //Using iFullYelp iterator ensures that no index values are skiped
       iFullYelp++;
-      console.log(iFullYelp);
+     // console.log(iFullYelp);
     }
   }
-  console.log(yelpCardsSet);
-  console.log(fullYelp);
+//console.log(yelpCardsSet);
+ // console.log(fullYelp);
 
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
@@ -194,7 +204,8 @@ let pushToCards = function () {
     Yelp rating: ${fullYelp[iCardBody].rating} <br>
     Price: ${fullYelp[iCardBody].price} 
     </p>
-    <a href="${fullYelp[iCardBody].url}" target = "_blank" class="card-link">Yelp Page</a>
+    <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
+    <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
 
     </div>
     </div>
@@ -223,7 +234,7 @@ let pushToLocations = function () {
 
 //generates initial map with search bar
 function initMap() {
-  var map = generateNewMap(currentLat, currentLng);
+   map = generateNewMap(currentLat, currentLng);
 
   mapInteraction(activities, map);
   createSearchBar(map);
@@ -238,6 +249,9 @@ function mapInteraction(bug, map) {
   var marker;
 
   addYelpMarkers(map, marker);
+
+
+  
 
 
   //filter buttons functionality
@@ -269,6 +283,8 @@ function mapInteraction(bug, map) {
 
 
 }
+
+
 
 //called when filter button pressed
 //scrolls to new cards
@@ -310,7 +326,7 @@ function addYelpMarkers(map, marker) {
     yelpResponse = data;
     //console.log(yelpResponse);
     pushToLocations();
-    pushToCards();
+    pushToCards(map);
 
     var iconToUse;
 
@@ -340,9 +356,9 @@ function addYelpMarkers(map, marker) {
 
       marker.addListener('click', function () {
         let markerIndex = markersArray.indexOf(this);
-        console.log(markerIndex);
+        //console.log(markerIndex);
         let cardToTarget = `.card-${markerIndex}`;
-        console.log(cardToTarget);
+       // console.log(cardToTarget);
 
         $(".card").removeAttr("id");
         $(cardToTarget).attr('id', 'highlightCard');
