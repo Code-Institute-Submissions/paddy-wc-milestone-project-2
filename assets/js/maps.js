@@ -195,6 +195,22 @@ let pushToCards = function (map) {
   }
 
 
+  let ifUndefinedReturnNA = function (valueToCheck) {
+    if (valueToCheck == null){
+      return "N/A"
+    }else {
+      return valueToCheck;
+    }
+  }
+
+
+//must enter fullYelp[iCardBody].categories as argument 
+  let showAllCategories = function (business){
+    let categoriesArray = [];
+    for (let i = 0; i < business.length; i ++){
+    categoriesArray.push(" " + business[i].title );  
+    } return categoriesArray;
+  }
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
     $("#onClickContent .card-group").append(`
@@ -204,11 +220,11 @@ let pushToCards = function (map) {
     <div class="card-body">
     
     <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${fullYelp[iCardBody].categories[0].title}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
 
     <p class="card-text">
     Yelp rating: ${fullYelp[iCardBody].rating} <br>
-    Price: ${fullYelp[iCardBody].price} 
+    Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
     </p>
     <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
     <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
