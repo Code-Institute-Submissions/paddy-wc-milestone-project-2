@@ -233,9 +233,7 @@ let pushToCards = function (map) {
     </div>
     `)
 
-  }
-
- 
+  } 
 
 }
 
@@ -258,7 +256,7 @@ let pushToLocations = function () {
 function initMap() {
    map = generateNewMap(currentLat, currentLng);
 
-  mapInteraction(activities, map);
+  mapInteraction(map);
   createSearchBar(map);
 };
 
@@ -266,7 +264,7 @@ function initMap() {
 //Enables user interaction:
 //filter yelp results via buttons 
 //receive new yelp result upon location change
-function mapInteraction(bug, map) {
+function mapInteraction(map) {
 
   var marker;
 
