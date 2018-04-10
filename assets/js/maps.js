@@ -191,11 +191,9 @@ let pushToCards = function (map) {
 
       //Using iFullYelp iterator ensures that no index values are skiped
       iFullYelp++;
-     // console.log(iFullYelp);
     }
   }
-//console.log(yelpCardsSet);
- // console.log(fullYelp);
+
 
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
@@ -298,14 +296,22 @@ function mapInteraction(bug, map) {
 //scrolls to new cards
 //timeout allows for delay in GET request
 function scrollToNewFilterResults() {
+
+  //the index of the last card before the function is called
+  let indexOfFirstNewCard = iFullYelp;
+
+
   setTimeout(function() {
-  cardToScrollTo = `.card-${iFullYelp - yelpResponse.businesses.length}`;
+  cardToScrollTo = `.card-${indexOfFirstNewCard - 1}`; //-1 fixes bug where card is undefined 
   console.log(cardToScrollTo);
   $("#cards-col").animate({
     scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
     scrollLeft: 0
   }, 1000);
+  console.log("iFullYelp after function: " + iFullYelp);
 }, 2000);
+
+
 };
 
 //Called when user filters results or changes location 
