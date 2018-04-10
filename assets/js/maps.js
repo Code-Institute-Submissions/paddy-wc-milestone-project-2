@@ -134,6 +134,9 @@ $(".clearMarkersButton").click(function () {
 
   }
   markersArray.length = 0;
+  markersArrayViewOnMap.forEach(function (marker) {
+    marker.setMap(null);
+  });
   markersSet.clear();
   yelpCardsSet.clear();
   for (var member in fullYelp) delete fullYelp[member];
@@ -155,8 +158,11 @@ let iCardBody = 0;
 let fullYelp = {};
 let yelpCardsSet = new Set([]);
 
+//all viewOnMap markers pushed to this array
+//cleared when clear markers button is clicked
+let markersArrayViewOnMap = [];
 
-
+//called when "view on map" link on card is clicked
 let viewOnMap = function( latitude, longitude) {
   let viewOnMapLatLng = new google.maps.LatLng(latitude, longitude);
 
@@ -164,6 +170,8 @@ let viewOnMap = function( latitude, longitude) {
     position: viewOnMapLatLng,
     map: map,
   })
+
+  markersArrayViewOnMap.push(marker);
 
   map.setCenter(viewOnMapLatLng);
   map.setZoom(17);
