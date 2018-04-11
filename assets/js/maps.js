@@ -1,3 +1,5 @@
+
+
 //enables cors in get request
 jQuery.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
@@ -310,11 +312,20 @@ function mapInteraction(map) {
     scrollToNewFilterResults();
   });
   $(".accommodationButton").click(function () {
-    globalSearchQuery = accommodation;
-    addYelpMarkers(map, marker);
-    scrollToNewFilterResults();
+    blabla().then(function(){
+          scrollToNewFilterResults();
+
+    })
   });
 
+
+  function blabla(){
+    return new Promise(function(resolve, reject){
+        globalSearchQuery = accommodation;
+        addYelpMarkers(map, marker);
+       resolve();
+    });
+  }
 
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed

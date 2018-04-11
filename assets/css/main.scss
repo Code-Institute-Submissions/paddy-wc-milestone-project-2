@@ -71,8 +71,7 @@ header .list-inline-item:not(:last-child) {
 }
 
 #filter-button-pressed {
-  -webkit-filter: opacity(0.3);
-  filter: opacity(0.3);
+  text-decoration: underline;
 }
 
 .filter-button-text {
