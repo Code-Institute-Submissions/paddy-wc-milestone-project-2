@@ -17,18 +17,23 @@ header {
 }
 
 .header-title {
-  font-size: 12px;
   text-align: center;
+  font-size: 5vh;
 }
 
 .header-subtitle {
-  font-size: 12px;
   text-align: center;
+  font-size: 3vh;
+  text-align: right;
 }
 
 .filter-button-text {
-  font-size: 12px;
   text-align: center;
+  font-size: 3vh;
+}
+
+.clearMarkersButton .filter-button-text {
+  font-size: 2vh;
 }
 
 /*
@@ -62,26 +67,32 @@ body .card-group > .card {
 
 .title-col {
   background-color: #929191;
+  color: #F1EFEF;
 }
 
 .subtitle-col {
   background-color: #929191;
+  color: #F1EFEF;
 }
 
 .accommodationButton {
   background-color: #90ccf4;
+  color: #FAFDFF;
 }
 
 .activitiesButton {
   background-color: #f78888;
+  color: #FFD6D6;
 }
 
 .foodAndDrinkButton {
   background-color: #f3d250;
+  color: #FFF9E3;
 }
 
 .clearMarkersButton {
   background-color: #5DA2D5;
+  color: #B9DBF5;
 }
 
 #cards-col {

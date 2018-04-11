@@ -1,7 +1,6 @@
 
 
 @mixin headerItem(){
-  font-size: 12px;
   text-align: center;
   
  
@@ -12,16 +11,22 @@
 }
 
 $title-background-color: #929191;
+$title-font-color: #F1EFEF;
 
 $subtitle-background-color: #929191;
+$subtitle-font-color: #F1EFEF;
 
 $activities-background-color:#f78888;
+$activities-font-color:#FFD6D6;
 
 $food-and-drink-background-color: #f3d250;
+$food-and-drink-font-color: #FFF9E3;
 
 $accommodation-background-color:#90ccf4;
+$accommodation-font-color:#FAFDFF;
 
 $clear-search-results-background-color: #5DA2D5;
+$clear-search-font-color:#B9DBF5;
 
 
 #map-col {
@@ -52,15 +57,24 @@ align-items: center;
 
 .header-title{
 @include headerItem();
+font-size: 5vh;
 }
 
 .header-subtitle {
   @include headerItem();
+  font-size: 3vh;
+  text-align: right;
+
 }
 
 .filter-button-text {
   @include headerItem();
+  font-size:3vh;
  
+}
+
+.clearMarkersButton .filter-button-text {
+  font-size: 2vh;
 }
 
 /*
@@ -99,26 +113,34 @@ body .card-group>.card{
 
 .title-col {
   background-color: $title-background-color;
+  color: $title-font-color;
+
 }
 
 .subtitle-col{
-  background-color: $subtitle-background-color
+  background-color: $subtitle-background-color;
+  color: $subtitle-font-color;
 }
 
 .accommodationButton{
   background-color: $accommodation-background-color;
+  color: $accommodation-font-color;
 }
 
 .activitiesButton{
-  background-color: $activities-background-color
+  background-color: $activities-background-color;
+  color: $activities-font-color;
 }
 
 .foodAndDrinkButton {
   background-color: $food-and-drink-background-color;
+  color: $food-and-drink-font-color;
 }
 
 .clearMarkersButton{
   background-color: $clear-search-results-background-color;
+  color: $clear-search-font-color;
+  ;
 }
 
 #cards-col {
