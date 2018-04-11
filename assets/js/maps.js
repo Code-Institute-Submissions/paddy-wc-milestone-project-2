@@ -362,11 +362,7 @@ function addYelpMarkers(map, marker) {
 
 
 
-  // Clears marker clusters. Needs to be same scope as declaration of markerCluster
-  $(".clearMarkersButton").click(function () {
-    markerCluster.clearMarkers();
-  });
-
+ 
 
   //gets lat and lng values for current map location
   var newPosition = map.getCenter();
@@ -421,7 +417,13 @@ function addYelpMarkers(map, marker) {
     let markerCluster = new MarkerClusterer(map, markersArray, {
       imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     });
-   
+
+    
+
+    // Clears marker clusters. Needs to be same scope as declaration of markerCluster
+  $(".clearMarkersButton").click(function () {
+    markerCluster.clearMarkers();
+  });
 
   });
 };
