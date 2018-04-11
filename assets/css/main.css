@@ -2,16 +2,32 @@
   padding: 0;
 }
 
+header {
+  height: 10vh;
+}
+
+#header-list {
+  align-items: center;
+  height: 10vh;
+}
+
 .header-title {
   font-size: 12px;
+  text-align: center;
 }
 
 .header-subtitle {
   font-size: 12px;
+  text-align: center;
 }
 
 .filter-button-text {
   font-size: 12px;
+  text-align: center;
+}
+
+.title-col, .subtitle-col, .filter-col {
+  height: 100%;
 }
 
 header .list-inline {
@@ -33,15 +49,39 @@ body .card-group > .card {
   width: 100%;
 }
 
+.title-col {
+  background-color: red;
+}
+
+.subtitle-col {
+  background-color: blue;
+}
+
+.accommodationButton {
+  background-color: green;
+}
+
+.activitiesButton {
+  background-color: yellow;
+}
+
+.foodAndDrinkButton {
+  background-color: purple;
+}
+
+.clearMarkersButton {
+  background-color: brown;
+}
+
 #cards-col {
   padding: 0;
-  max-height: 100vh;
   overflow-y: scroll;
+  height: 90vh;
 }
 
 #map {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
 }
 
 .card-img-top {

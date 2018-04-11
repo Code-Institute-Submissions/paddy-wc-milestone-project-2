@@ -22,34 +22,43 @@
     <header>
         <div class="container-fluid">
             <div class="row ">
-                <div class="list-inline clearfix ">
+                <div class="list-inline clearfix " id = "header-list">
 
                     <li class="col-4 title-col list-inline-item  ">
-<h1 class = "header-title"> Tavel Website</h1>
-<h2 class = "header-subtitle">Click buttons to filter. Also try this or that or this that.</h2>
+                     
+                            <h1 class="header-title"> Tavel Website</h1>
+                
                     </li>
 
-                    <li class="col-2 filter-col activitiesButton list-inline-item  ">
-                        <h2 class="filter-button-text">
+                    <li class="col-4 subtitle-col list-inline-item  ">
+                     
+                      
+                            <h2 class="header-subtitle"> Click buttons to filter. Also try this or that or this that.</h2>
+                
+                    </li>
+
+
+                        <li class=" activitiesButton col-1 filter-col list-inline-item  ">
+                            <h2 class="filter-button-text">
                                 Things to Do
+                            </h2>
+                    </li>
+
+                    <li class="col-1 filter-col foodAndDrinkButton list-inline-item ">
+                        <h2 class="filter-button-text">
+                            Bars and Restaurants
                         </h2>
                     </li>
 
-                    <li class="col-2 filter-col foodAndDrinkButton list-inline-item ">
+                    <li class="col-1 filter-col accommodationButton list-inline-item ">
                         <h2 class="filter-button-text">
-                                Bars and Restaurants
+                            Accommodation
                         </h2>
                     </li>
 
-                    <li class="col-2 filter-col accommodationButton list-inline-item ">
+                    <li class="col-1 filter-col clearMarkersButton list-inline-item ">
                         <h2 class="filter-button-text">
-                                Accommodation
-                        </h2>
-                    </li>
-
-                    <li class="col-2 filter-col clearMarkersButton list-inline-item ">
-                        <h2 class="filter-button-text">
-                                Clear Search Results
+                            Clear Search Results
                         </h2>
                     </li>
 
@@ -67,7 +76,7 @@
                 <div class="col-9" id="map-col">
                     <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
-                <!--
+                    <!--
                     <button type="button" class="btn foodAndDrinkButton btn-primary">Bars and Restaurants</button>
                     <button type="button" class="btn accommodationButton btn-secondary">Accommodation</button>
                     <button type="button" class="btn activitiesButton btn-success">Things to Do</button>

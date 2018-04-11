@@ -1,10 +1,47 @@
+
+
+@mixin headerItem(){
+  font-size: 12px;
+  text-align: center;
+  
+ 
+}
+
+@mixin headerHeight(){
+  height: 10vh;
+}
+
+$title-background-color: red;
+
+$subtitle-background-color: blue;
+
+$activities-background-color: yellow;
+
+$accommodation-background-color: green;
+
+$food-and-drink-background-color:purple;
+
+$clear-search-results-background-color: brown;
+
+
 #map-col {
   padding: 0; 
 
 }
 
-@mixin headerItem(){
-  font-size: 12px;
+
+header {
+ @include headerHeight();
+}
+
+
+@mixin bodyHeight(){
+  height: 90vh;
+}
+
+#header-list{
+align-items: center;
+@include headerHeight();
 }
 
 .header-title{
@@ -17,6 +54,16 @@
 
 .filter-button-text {
   @include headerItem();
+ 
+}
+
+
+
+
+
+
+.title-col, .subtitle-col, .filter-col {
+  height: 100%;
 }
 
 header .list-inline {
@@ -27,6 +74,8 @@ header .list-inline {
 
 header .list-inline-item:not(:last-child) {
   margin-right: 0;
+
+ 
 }
 
 #highlightCard{
@@ -39,15 +88,39 @@ body .card-group>.card{
 }
 
 
+.title-col {
+  background-color: $title-background-color;
+}
+
+.subtitle-col{
+  background-color: $subtitle-background-color
+}
+
+.accommodationButton{
+  background-color: $accommodation-background-color;
+}
+
+.activitiesButton{
+  background-color: $activities-background-color
+}
+
+.foodAndDrinkButton {
+  background-color: $food-and-drink-background-color;
+}
+
+.clearMarkersButton{
+  background-color: $clear-search-results-background-color;
+}
+
 #cards-col {
-  padding: 0; 
-  max-height: 100vh;    
+  padding: 0;  
  overflow-y: scroll;
+ @include bodyHeight();
 }
 
 #map {
     width: 100%;
-    height: 100vh;
+   @include bodyHeight();
 }
 
   .card-img-top {
