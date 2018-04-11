@@ -1,3 +1,5 @@
+
+
 //enables cors in get request
 jQuery.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
@@ -271,7 +273,7 @@ let pushToLocations = function () {
       lat: yelpResponse.businesses[i].coordinates.latitude,
       lng: yelpResponse.businesses[i].coordinates.longitude,
     });
-  }  console.log(locations);
+  }  
 
 };
 
@@ -411,21 +413,8 @@ function addYelpMarkers(map, marker) {
 
    
 
-
-      marker.addListener('click', function () {
-        let markerIndex = markersArray.indexOf(this);
-        let cardToTarget = `.card-${markerIndex}`;
-
-        $(".card").removeAttr("id");
-        $(cardToTarget).attr('id', 'highlightCard');
-
-        $("#cards-col").animate({
-          scrollTop: $(cardToTarget).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
-          scrollLeft: 0
-        }, 1500);
-
-
-      });
+    //scrolls to that marker's card
+      marker.addListener('click', viewMarkerCard());
      
     }
 
@@ -436,3 +425,19 @@ function addYelpMarkers(map, marker) {
 
   });
 };
+
+//called when card is clicked
+//highlights and scrolls to that marker's card
+//unhighlights other cards
+function viewMarkerCard() {
+  return function () {
+    let markerIndex = markersArray.indexOf(this);
+    let cardToTarget = `.card-${markerIndex}`;
+    $(".card").removeAttr("id");
+    $(cardToTarget).attr('id', 'highlightCard');
+    $("#cards-col").animate({
+      scrollTop: $(cardToTarget).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
+      scrollLeft: 0
+    }, 1500);
+  };
+}

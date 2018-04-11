@@ -3,6 +3,32 @@
 
 }
 
+@mixin headerItem(){
+  font-size: 12px;
+}
+
+.header-title{
+@include headerItem();
+}
+
+.header-subtitle {
+  @include headerItem();
+}
+
+.filter-button-text {
+  @include headerItem();
+}
+
+header .list-inline {
+  width: 100%;
+  display: flex;
+  margin-bottom: 0;
+}
+
+header .list-inline-item:not(:last-child) {
+  margin-right: 0;
+}
+
 #highlightCard{
   background-color: red;
 }

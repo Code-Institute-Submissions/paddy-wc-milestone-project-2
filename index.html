@@ -12,43 +12,91 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="assets/js/script.js"></script>
 
-    
+
 
     <title>Travel Information</title>
 </head>
 
 <body>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-9" id = "map-col">
-                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-                <button type="button" class="btn foodAndDrinkButton btn-primary">Bars and Restaurants</button>
+    <header>
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="list-inline clearfix ">
+
+                    <li class="col-4 title-col list-inline-item  ">
+<h1 class = "header-title"> Tavel Website</h1>
+<h2 class = "header-subtitle">Click buttons to filter. Also try this or that or this that.</h2>
+                    </li>
+
+                    <li class="col-2 filter-col activitiesButton list-inline-item  ">
+                        <h2 class="filter-button-text">
+                                Things to Do
+                        </h2>
+                    </li>
+
+                    <li class="col-2 filter-col foodAndDrinkButton list-inline-item ">
+                        <h2 class="filter-button-text">
+                                Bars and Restaurants
+                        </h2>
+                    </li>
+
+                    <li class="col-2 filter-col accommodationButton list-inline-item ">
+                        <h2 class="filter-button-text">
+                                Accommodation
+                        </h2>
+                    </li>
+
+                    <li class="col-2 filter-col clearMarkersButton list-inline-item ">
+                        <h2 class="filter-button-text">
+                                Clear Search Results
+                        </h2>
+                    </li>
+
+
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <article class="main">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-9" id="map-col">
+                    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+                <!--
+                    <button type="button" class="btn foodAndDrinkButton btn-primary">Bars and Restaurants</button>
                     <button type="button" class="btn accommodationButton btn-secondary">Accommodation</button>
                     <button type="button" class="btn activitiesButton btn-success">Things to Do</button>
                     <button type="button" class="btn clearMarkersButton btn-success">Clear Search Results</button>
-                <div id="map"></div>
-            </div>
+                -->
 
-            <div class="col-3" id= "cards-col">
-                    
-
-                <div id="onClickContent">
-                    <div class="card-group"></div>
+                    <div id="map"></div>
                 </div>
+
+                <div class="col-3" id="cards-col">
+
+
+                    <div id="onClickContent">
+                        <div class="card-group"></div>
+                    </div>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js" async defer> </script>
-    <!--<script src="assets/js/markerclusterer.js" async defer></script>-->
-    <script type="text/javascript" src="/assets/js/maps.js"></script>
-    <script  src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAZ-nfbu9bsVB29awywU0R0Ox69If1oAJE&callback=initMap" async defer> </script>
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js" async defer>
+        </script>
+        <!--<script src="assets/js/markerclusterer.js" async defer></script>-->
+        <script type="text/javascript" src="/assets/js/maps.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAZ-nfbu9bsVB29awywU0R0Ox69If1oAJE&callback=initMap" async defer>
+        </script>
 
 
-
-    <!--For autofil search bar on map-->
+    </article>
 
 </body>
 
