@@ -271,7 +271,8 @@ let pushToLocations = function () {
       lat: yelpResponse.businesses[i].coordinates.latitude,
       lng: yelpResponse.businesses[i].coordinates.longitude,
     });
-  }
+  }  console.log(locations);
+
 };
 
 
@@ -292,6 +293,7 @@ function initMap() {
 function mapInteraction(map) {
 
   var marker;
+
 
   addYelpMarkers(map, marker);
 
@@ -321,7 +323,7 @@ function mapInteraction(map) {
 
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
-  map.addListener("tilesloaded", function () {
+ map.addListener("tilesloaded", function () {
     addYelpMarkers(map, marker);
 
   });
@@ -356,9 +358,7 @@ function scrollToNewFilterResults() {
 function addYelpMarkers(map, marker) {
 
 
-  let markerCluster = new MarkerClusterer(map, markersArray, {
-    imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-  });
+
 
   // Clears marker clusters. Needs to be same scope as declaration of markerCluster
   $(".clearMarkersButton").click(function () {
@@ -399,16 +399,17 @@ function addYelpMarkers(map, marker) {
       marker = new google.maps.Marker({
         position: locations[i],
         icon: iconToUse,
-        map: map
       });
+
 
      
      //only adds markers to the array if they are not  duplicates 
      markersSet.add(locations[i].lat);
      if ((markersSet.size) > markersArray.length) {
        markersArray.push(marker);
-     }
+     };
 
+   
 
 
       marker.addListener('click', function () {
@@ -425,7 +426,13 @@ function addYelpMarkers(map, marker) {
 
 
       });
+     
     }
+
+    let markerCluster = new MarkerClusterer(map, markersArray, {
+      imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    });
+   
 
   });
 };
