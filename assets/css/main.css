@@ -6,6 +6,11 @@ header {
   height: 10vh;
 }
 
+#filter-button-pressed {
+  -webkit-filter: opacity(0.3);
+  filter: opacity(0.3);
+}
+
 #header-list {
   align-items: center;
   height: 10vh;
@@ -26,6 +31,12 @@ header {
   text-align: center;
 }
 
+/*
+.filter-col{
+  box-shadow: 0 9px #999;
+  
+}
+*/
 .title-col, .subtitle-col, .filter-col {
   height: 100%;
 }

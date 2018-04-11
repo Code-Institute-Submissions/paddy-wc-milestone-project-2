@@ -34,6 +34,12 @@ header {
  @include headerHeight();
 }
 
+#filter-button-pressed {
+  -webkit-filter: opacity(0.3);
+  filter: opacity(0.3);
+
+}
+
 
 @mixin bodyHeight(){
   height: 90vh;
@@ -57,9 +63,12 @@ align-items: center;
  
 }
 
-
-
-
+/*
+.filter-col{
+  box-shadow: 0 9px #999;
+  
+}
+*/
 
 
 .title-col, .subtitle-col, .filter-col {
