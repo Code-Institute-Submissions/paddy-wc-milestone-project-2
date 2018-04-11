@@ -1,14 +1,15 @@
-
-
-@mixin headerItem(){
+@mixin headerItem() {
   text-align: center;
-  
- 
 }
 
-@mixin headerHeight(){
+@mixin headerHeight() {
   height: 10vh;
 }
+
+@mixin bodyHeight() {
+  height: 90vh;
+}
+
 
 $title-background-color: #929191;
 $title-font-color: #F1EFEF;
@@ -29,65 +30,16 @@ $clear-search-results-background-color: #5DA2D5;
 $clear-search-font-color:#B9DBF5;
 
 
-#map-col {
-  padding: 0; 
-
-}
-
-
 header {
- @include headerHeight();
-}
-
-#filter-button-pressed {
-  -webkit-filter: opacity(0.3);
-  filter: opacity(0.3);
-
+  @include headerHeight();
 }
 
 
-@mixin bodyHeight(){
-  height: 90vh;
+#header-list {
+  align-items: center;
+  @include headerHeight();
 }
 
-#header-list{
-align-items: center;
-@include headerHeight();
-}
-
-.header-title{
-@include headerItem();
-font-size: 5vh;
-}
-
-.header-subtitle {
-  @include headerItem();
-  font-size: 3vh;
-  text-align: right;
-
-}
-
-.filter-button-text {
-  @include headerItem();
-  font-size:3vh;
- 
-}
-
-.clearMarkersButton .filter-button-text {
-  font-size: 2vh;
-}
-
-/*
-.filter-col{
-  box-shadow: 0 9px #999;
-  
-}
-*/
-
-
-.title-col, .subtitle-col, .filter-col {
-  height: 100%;
-}
 
 header .list-inline {
   width: 100%;
@@ -97,37 +49,57 @@ header .list-inline {
 
 header .list-inline-item:not(:last-child) {
   margin-right: 0;
-
- 
 }
 
-#highlightCard{
-  background-color: red;
+
+.title-col,
+.subtitle-col,
+.filter-col {
+  height: 100%;
 }
 
-body .card-group>.card{
-  flex: none;
-  width: 100%;
+
+.header-title {
+  @include headerItem();
+  font-size: 5vh;
 }
 
+.header-subtitle {
+  @include headerItem();
+  font-size: 3vh;
+  text-align: right;
+}
+
+#filter-button-pressed {
+  -webkit-filter: opacity(0.3);
+  filter: opacity(0.3);
+}
+
+.filter-button-text {
+  @include headerItem();
+  font-size: 3vh;
+}
+
+.clearMarkersButton .filter-button-text {
+  font-size: 2vh;
+}
 
 .title-col {
   background-color: $title-background-color;
   color: $title-font-color;
-
 }
 
-.subtitle-col{
+.subtitle-col {
   background-color: $subtitle-background-color;
   color: $subtitle-font-color;
 }
 
-.accommodationButton{
+.accommodationButton {
   background-color: $accommodation-background-color;
   color: $accommodation-font-color;
 }
 
-.activitiesButton{
+.activitiesButton {
   background-color: $activities-background-color;
   color: $activities-font-color;
 }
@@ -137,27 +109,44 @@ body .card-group>.card{
   color: $food-and-drink-font-color;
 }
 
-.clearMarkersButton{
+.clearMarkersButton {
   background-color: $clear-search-results-background-color;
   color: $clear-search-font-color;
   ;
 }
 
-#cards-col {
-  padding: 0;  
- overflow-y: scroll;
- @include bodyHeight();
+#map-col {
+  padding: 0;
 }
+
 
 #map {
-    width: 100%;
-   @include bodyHeight();
+  width: 100%;
+  @include bodyHeight();
 }
 
-  .card-img-top {
-    max-height: 12em;
-  }
-  
-  .card-body {
-      text-align: center;
-  }
+
+
+#highlightCard {
+  background-color: red;
+}
+
+body .card-group>.card {
+  flex: none;
+  width: 100%;
+}
+
+
+#cards-col {
+  padding: 0;
+  overflow-y: scroll;
+  @include bodyHeight();
+}
+
+.card-img-top {
+  max-height: 12em;
+}
+
+.card-body {
+  text-align: center;
+}

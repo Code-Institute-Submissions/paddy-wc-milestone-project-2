@@ -1,13 +1,9 @@
-
-
 //enables cors in get request
 jQuery.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
     options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
   }
 });
-
-
 
 //initial centre of map
 var currentLat = 53.3498053;
@@ -41,14 +37,16 @@ var getYelpData = function (latitude, longitude, cb) {
       "access-control-allow-origin": "*",
       "cache-control": "no-cache",
       "postman-token": "c6fca5f7-e9ee-017f-8b66-d13a9884ec6d"
-    }, error: function(xhr, status, error){
+    },
+    error: function (xhr, status, error) {
       alert("Error! Failed to retrieve data. " + xhr.status + " error");
-  }}
+    }
+  }
 
   $.ajax(settings).done(function (response) {
     cb(response);
   });
-  
+
 };
 
 
@@ -107,12 +105,12 @@ function createSearchBar(map) {
 
 
     //my code. Clears markers and cards if searchBox is used
-    if (markers.length >0){
+    if (markers.length > 0) {
 
 
       for (var i = 0; i < markersArray.length; i++) {
         markersArray[i].setMap(null);
-    
+
       }
       markersArray.length = 0;
       markersArrayViewOnMap.forEach(function (marker) {
@@ -121,7 +119,7 @@ function createSearchBar(map) {
       markersSet.clear();
       yelpCardsSet.clear();
       for (var member in fullYelp) delete fullYelp[member];
-    
+
       //clears card results and resets pushToCards iterators
       $("#onClickContent .card-group").empty();
       iCardBody = 0;
@@ -189,10 +187,10 @@ let yelpCardsSet = new Set([]);
 let markersArrayViewOnMap = [];
 
 //called when "view on map" link on card is clicked
-let viewOnMap = function( latitude, longitude) {
+let viewOnMap = function (latitude, longitude) {
   let viewOnMapLatLng = new google.maps.LatLng(latitude, longitude);
 
-  let marker  = new google.maps.Marker({
+  let marker = new google.maps.Marker({
     position: viewOnMapLatLng,
     map: map,
   })
@@ -207,7 +205,7 @@ let viewOnMap = function( latitude, longitude) {
 
 //Adds details of yelp results to sidebar cards
 let pushToCards = function (map) {
- 
+
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
 
     //iff value is added to yelpCardsSet it is added to fullYelp
@@ -222,20 +220,21 @@ let pushToCards = function (map) {
 
 
   let ifUndefinedReturnNA = function (valueToCheck) {
-    if (valueToCheck == null){
+    if (valueToCheck == null) {
       return "N/A"
-    }else {
+    } else {
       return valueToCheck;
     }
   }
 
 
-//must enter fullYelp[iCardBody].categories as argument 
-  let showAllCategories = function (business){
+  //must enter fullYelp[iCardBody].categories as argument 
+  let showAllCategories = function (business) {
     let categoriesArray = [];
-    for (let i = 0; i < business.length; i ++){
-    categoriesArray.push(" " + business[i].title );  
-    } return categoriesArray;
+    for (let i = 0; i < business.length; i++) {
+      categoriesArray.push(" " + business[i].title);
+    }
+    return categoriesArray;
   }
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
@@ -259,7 +258,7 @@ let pushToCards = function (map) {
     </div>
     `)
 
-  } 
+  }
 
 }
 
@@ -273,7 +272,7 @@ let pushToLocations = function () {
       lat: yelpResponse.businesses[i].coordinates.latitude,
       lng: yelpResponse.businesses[i].coordinates.longitude,
     });
-  }  
+  }
 
 };
 
@@ -281,9 +280,9 @@ let pushToLocations = function () {
 
 //generates initial map with search bar
 function initMap() {
-   map = generateNewMap(currentLat, currentLng);
+  map = generateNewMap(currentLat, currentLng);
 
- 
+
   createSearchBar(map);
   mapInteraction(map);
 };
@@ -296,12 +295,7 @@ function mapInteraction(map) {
 
   var marker;
 
-
   addYelpMarkers(map, marker);
-
-
-  
-
 
   //filter buttons functionality
   $(".foodAndDrinkButton").click(function () {
@@ -322,14 +316,12 @@ function mapInteraction(map) {
   });
 
 
-
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
- map.addListener("tilesloaded", function () {
+  map.addListener("tilesloaded", function () {
     addYelpMarkers(map, marker);
 
   });
-
 
 }
 
@@ -344,25 +336,20 @@ function scrollToNewFilterResults() {
   let indexOfFirstNewCard = iFullYelp;
 
 
-  setTimeout(function() {
-  cardToScrollTo = `.card-${indexOfFirstNewCard - 1}`; //-1 fixes bug where card is undefined 
-  console.log(cardToScrollTo);
-  $("#cards-col").animate({
-    scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
-    scrollLeft: 0
-  }, 1000);
-}, 2000);
+  setTimeout(function () {
+    cardToScrollTo = `.card-${indexOfFirstNewCard - 1}`; //-1 fixes bug where card is undefined 
+    console.log(cardToScrollTo);
+    $("#cards-col").animate({
+      scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
+      scrollLeft: 0
+    }, 1000);
+  }, 2000);
 
 
 };
 
 //Called when user filters results or changes location 
 function addYelpMarkers(map, marker) {
-
-
-
-
- 
 
   //gets lat and lng values for current map location
   var newPosition = map.getCenter();
@@ -373,7 +360,7 @@ function addYelpMarkers(map, marker) {
   getYelpData(currentLat, currentLng, function (data) {
 
     yelpResponse = data;
-   
+
     pushToLocations();
     pushToCards(map);
 
@@ -386,44 +373,37 @@ function addYelpMarkers(map, marker) {
     } else {
       iconToUse = foodIcon;
     }
-    
+
     console.log(yelpResponse);
 
-
-
     for (let i = 0; i < locations.length; i++) {
-      
 
       marker = new google.maps.Marker({
         position: locations[i],
         icon: iconToUse,
       });
 
+      //only adds markers to the array if they are not  duplicates 
+      markersSet.add(locations[i].lat);
+      if ((markersSet.size) > markersArray.length) {
+        markersArray.push(marker);
+      };
 
-     
-     //only adds markers to the array if they are not  duplicates 
-     markersSet.add(locations[i].lat);
-     if ((markersSet.size) > markersArray.length) {
-       markersArray.push(marker);
-     };
-
-   
-
-    //scrolls to that marker's card
+      //scrolls to that marker's card
       marker.addListener('click', viewMarkerCard());
-     
+
     }
 
     let markerCluster = new MarkerClusterer(map, markersArray, {
       imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     });
 
-    
+
 
     // Clears marker clusters. Needs to be same scope as declaration of markerCluster
-  $(".clearMarkersButton").click(function () {
-    markerCluster.clearMarkers();
-  });
+    $(".clearMarkersButton").click(function () {
+      markerCluster.clearMarkers();
+    });
 
   });
 };
