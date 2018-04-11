@@ -50,27 +50,27 @@ body .card-group > .card {
 }
 
 .title-col {
-  background-color: red;
+  background-color: #929191;
 }
 
 .subtitle-col {
-  background-color: blue;
+  background-color: #929191;
 }
 
 .accommodationButton {
-  background-color: green;
+  background-color: #90ccf4;
 }
 
 .activitiesButton {
-  background-color: yellow;
+  background-color: #f78888;
 }
 
 .foodAndDrinkButton {
-  background-color: purple;
+  background-color: #f3d250;
 }
 
 .clearMarkersButton {
-  background-color: brown;
+  background-color: #5DA2D5;
 }
 
 #cards-col {
