@@ -47,16 +47,24 @@ header .list-inline {
   margin-bottom: 0;
 }
 
+
 header .list-inline-item:not(:last-child) {
   margin-right: 0;
 }
 
 
+
 .title-col,
 .subtitle-col,
 .filter-col {
+  
   height: 100%;
+  display: flex !important;//to overide bootstrap styles 
+  justify-content: center;
+  flex-direction: column;
 }
+
+
 
 
 .header-title {
