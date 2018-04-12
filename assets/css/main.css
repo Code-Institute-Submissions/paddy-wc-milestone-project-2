@@ -1,6 +1,19 @@
 header {
   height: 15vh;
   font-family: "Maitree", serif;
+  display: none !important;
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  header {
+    display: inline-block !important;
+  }
+}
+
+@media (min-width: 922px) {
+  header {
+    display: inline-block !important;
+  }
 }
 
 #header-list {
@@ -127,9 +140,22 @@ body .card-group > .card {
 }
 
 #cards-col {
+  height: 85vh;
   padding: 0;
   overflow-y: scroll;
-  height: 85vh;
+  display: none;
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  #cards-col {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 922px) {
+  #cards-col {
+    display: inline-block;
+  }
 }
 
 .card {

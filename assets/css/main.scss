@@ -10,6 +10,20 @@
   height: 85vh;
 }
 
+$tablet-width: 768px;
+$desktop-width: 922px;
+
+@mixin tablet {
+  @media (min-width: $tablet-width) and (max-width: $desktop-width - 1px){
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop-width){
+    @content;
+  }
+}
 
 
 
@@ -37,6 +51,17 @@ $other-header-font:   'Maitree', serif;
 header{
   @include header-height();
   font-family: $other-header-font;
+
+  display: none !important;
+
+  @include tablet(){
+    display: inline-block !important;
+  }
+
+  
+  @include desktop(){
+    display: inline-block !important;
+  }
 }
 
 
@@ -174,9 +199,19 @@ body .card-group>.card {
 
 
 #cards-col {
+  @include body-height();
   padding: 0;
   overflow-y: scroll;
-  @include body-height();
+  display: none;
+
+  @include tablet(){
+    display: inline-block;
+  }
+
+  
+  @include desktop(){
+    display: inline-block;
+  }
 }
 
 .card{
