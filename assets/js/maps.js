@@ -209,6 +209,8 @@ let viewOnMap = function (latitude, longitude) {
 };
 
 
+let infoWindowArray = [];
+
 
 //Adds details of yelp results to sidebar cards
 let pushToCards = function (map) {
@@ -242,6 +244,40 @@ let pushToCards = function (map) {
     return categoriesArray;
   }
 
+
+
+
+if (isOnMobileDevice){
+
+  for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
+    
+    infoWindowArray.push(
+    (`
+    <div class="card card-${iCardBody}">
+
+    <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
+    <div class="card-body">
+    
+    <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
+
+    <p class="card-text">
+    Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
+    Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
+    </p>
+    <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
+    <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
+
+    </div>
+    </div>
+    `));
+  }
+
+  console.log(infoWindowArray);
+
+
+
+}else{
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
     $("#cards-content .card-group").append(`
     <div class="card card-${iCardBody}">
@@ -263,6 +299,10 @@ let pushToCards = function (map) {
     </div>
     `)
   }
+}
+
+
+
 }
 
 
