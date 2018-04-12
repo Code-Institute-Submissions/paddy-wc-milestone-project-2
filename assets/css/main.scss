@@ -192,7 +192,7 @@ header .list-inline-item:not(:last-child) {
   background-color:#daad86 !important; //overrides default card background color
 }
 
-body .card-group>.card {
+body .card-group>.aside-card {
   flex: none;
   width: 100%;
 }
@@ -214,17 +214,21 @@ body .card-group>.card {
   }
 }
 
-.card{
+.aside-card {
   background-color:#fbeec1 !important; //overrides bootstrap
-  font-family: 'Old Standard TT', serif;
-  font-family: 'Overlock', cursive;
 
 
 
 }
 
-.card-img-top {
+.card .card-img-top {
   max-height: 12em;
+}
+
+.infobox-card {
+  max-width: 50vw;
+  border: none !important; //overrides bootstrap 
+ margin-left: 10px;
 }
 
 .card-title{
@@ -239,4 +243,6 @@ body .card-group>.card {
 
 .card-body {
   text-align: center;
+  font-family: 'Overlock', cursive;
+
 }

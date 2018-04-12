@@ -134,7 +134,7 @@ header .list-inline-item:not(:last-child) {
   background-color: #daad86 !important;
 }
 
-body .card-group > .card {
+body .card-group > .aside-card {
   flex: none;
   width: 100%;
 }
@@ -158,14 +158,18 @@ body .card-group > .card {
   }
 }
 
-.card {
+.aside-card {
   background-color: #fbeec1 !important;
-  font-family: 'Old Standard TT', serif;
-  font-family: 'Overlock', cursive;
 }
 
-.card-img-top {
+.card .card-img-top {
   max-height: 12em;
+}
+
+.infobox-card {
+  max-width: 50vw;
+  border: none !important;
+  margin-left: 10px;
 }
 
 .card-title {
@@ -180,4 +184,5 @@ body .card-group > .card {
 
 .card-body {
   text-align: center;
+  font-family: 'Overlock', cursive;
 }

@@ -260,7 +260,7 @@ if (isOnMobileDevice){
     
     infoWindowArray.push(
     (`
-    <div class="card card-${iCardBody}">
+    <div class="card infobox-card card-${iCardBody}">
 
     <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
     <div class="card-body">
@@ -286,7 +286,7 @@ if (isOnMobileDevice){
 }else{
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
     $("#cards-content .card-group").append(`
-    <div class="card card-${iCardBody}">
+    <div class="card aside-card card-${iCardBody}">
 
     <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
     <div class="card-body">
@@ -464,6 +464,7 @@ function addYelpMarkersAndCards(map, marker) {
 
   //adds an infobox to every new marker
   //called on mobile devices 
+  //code structure from: https://stackoverflow.com/questions/11106671/google-maps-api-multiple-markers-with-infowindows
   function addInfoboxes(i) {
     {
       let infoWindowContent = infoWindowArray[i];
