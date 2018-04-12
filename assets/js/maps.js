@@ -300,30 +300,30 @@ function mapInteraction(map) {
   addYelpMarkers(map, marker);
 
   //filter buttons functionality
+  //adds new yelp markers and cards then scrolls to first new card
   $(".foodAndDrinkButton").click(function () {
-    globalSearchQuery = foodAndDrink;
-    addYelpMarkers(map, marker);
-    scrollToNewFilterResults();
-  })
+    addYelpMarkersPromise(foodAndDrink).then(function(){
+      scrollToNewFilterResults();
+});
+  });
 
   $(".activitiesButton").click(function () {
-    globalSearchQuery = activities;
-    addYelpMarkers(map, marker);
-    scrollToNewFilterResults();
+    addYelpMarkersPromise(activities).then(function(){
+      scrollToNewFilterResults();
+});
   });
   $(".accommodationButton").click(function () {
-    blabla().then(function(){
+    addYelpMarkersPromise(accommodation).then(function(){
           scrollToNewFilterResults();
-
-    })
+    });
   });
 
-
-  function blabla(){
+//used in filter buttons
+  function addYelpMarkersPromise(filterTerm){
     return new Promise(function(resolve, reject){
-        globalSearchQuery = accommodation;
+        globalSearchQuery = filterTerm;
         addYelpMarkers(map, marker);
-       resolve();
+        resolve();
     });
   }
 
@@ -345,18 +345,14 @@ function scrollToNewFilterResults() {
 
   //the index of the last card before the function is called
   let indexOfFirstNewCard = iFullYelp;
-
-
-  setTimeout(function () {
-    cardToScrollTo = `.card-${indexOfFirstNewCard - 1}`; //-1 fixes bug where card is undefined 
+ 
+    cardToScrollTo = `.card-${indexOfFirstNewCard-1}`; //-1 fixes bug where card is undefined 
     console.log(cardToScrollTo);
     $("#cards-col").animate({
       scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
       scrollLeft: 0
     }, 1000);
-  }, 2000);
-
-
+ 
 };
 
 //Called when user filters results or changes location 
