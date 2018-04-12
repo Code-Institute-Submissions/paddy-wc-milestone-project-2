@@ -9,6 +9,13 @@ jQuery.ajaxPrefilter(function (options) {
 var currentLat = 53.3498053;
 var currentLng = -6.2603097;
 
+var isOnMobileDevice;
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+ isOnMobileDevice = true;
+}else {
+  isOnMobileDevice = false;
+};
 
 //filters terms for yelp search. 
 var foodAndDrink = "food,bars";
@@ -149,6 +156,10 @@ let markersSet = new Set([]);
 
 //clears markers. Also clears marker cluster as part of addYelpMarkers function
 $(".clear-markers-button").click(function () {
+
+
+  
+
   for (var i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
 
@@ -369,7 +380,7 @@ function addYelpMarkersAndCards(map, marker) {
       iconToUse = foodIcon;
     }
 
-    console.log(yelpResponse);
+   // console.log(yelpResponse);
 
     for (let i = 0; i < locations.length; i++) {
 
