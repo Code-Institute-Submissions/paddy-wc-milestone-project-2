@@ -1,5 +1,3 @@
-
-
 //enables cors in get request
 jQuery.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
@@ -67,9 +65,7 @@ function createSearchBar(map) {
   // more details for that place.
   searchBox.addListener('places_changed', function () {
     var places = searchBox.getPlaces();
-    //if (places.length == 0) {
-    //return;
-    // }
+
     // Clear out the old markers.
     markers.forEach(function (marker) {
       marker.setMap(null);
@@ -109,10 +105,8 @@ function createSearchBar(map) {
     //my code. Clears markers and cards if searchBox is used
     if (markers.length > 0) {
 
-
       for (var i = 0; i < markersArray.length; i++) {
         markersArray[i].setMap(null);
-
       }
       markersArray.length = 0;
       markersArrayViewOnMap.forEach(function (marker) {
@@ -123,7 +117,7 @@ function createSearchBar(map) {
       for (var member in fullYelp) delete fullYelp[member];
 
       //clears card results and resets pushToCards iterators
-      $("#onClickContent .card-group").empty();
+      $("#cards-content .card-group").empty();
       iCardBody = 0;
       iFullYelp = 0;
     }
@@ -154,7 +148,7 @@ let markersSet = new Set([]);
 
 
 //clears markers. Also clears marker cluster as part of addYelpMarkers function
-$(".clearMarkersButton").click(function () {
+$(".clear-markers-button").click(function () {
   for (var i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
 
@@ -168,7 +162,7 @@ $(".clearMarkersButton").click(function () {
   for (var member in fullYelp) delete fullYelp[member];
 
   //clears card results and resets pushToCards iterators
-  $("#onClickContent .card-group").empty();
+  $("#cards-content .card-group").empty();
   iCardBody = 0;
   iFullYelp = 0;
 });
@@ -220,7 +214,6 @@ let pushToCards = function (map) {
     }
   }
 
-
   let ifUndefinedReturnNA = function (valueToCheck) {
     if (valueToCheck == null) {
       return "N/A"
@@ -228,7 +221,6 @@ let pushToCards = function (map) {
       return valueToCheck;
     }
   }
-
 
   //must enter fullYelp[iCardBody].categories as argument 
   let showAllCategories = function (business) {
@@ -240,7 +232,7 @@ let pushToCards = function (map) {
   }
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
-    $("#onClickContent .card-group").append(`
+    $("#cards-content .card-group").append(`
     <div class="card card-${iCardBody}">
 
     <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
@@ -259,9 +251,7 @@ let pushToCards = function (map) {
     </div>
     </div>
     `)
-
   }
-
 }
 
 
@@ -297,32 +287,32 @@ function mapInteraction(map) {
 
   var marker;
 
-  addYelpMarkers(map, marker);
+  addYelpMarkersAndCards(map, marker);
 
   //filter buttons functionality
   //adds new yelp markers and cards then scrolls to first new card
-  $(".foodAndDrinkButton").click(function () {
-    addYelpMarkersPromise(foodAndDrink).then(function(){
+  $(".food-and-drink-button").click(function () {
+    addYelpMarkersAndCardsPromise(foodAndDrink).then(function(){
       scrollToNewFilterResults();
 });
   });
 
-  $(".activitiesButton").click(function () {
-    addYelpMarkersPromise(activities).then(function(){
+  $(".activities-button").click(function () {
+    addYelpMarkersAndCardsPromise(activities).then(function(){
       scrollToNewFilterResults();
 });
   });
-  $(".accommodationButton").click(function () {
-    addYelpMarkersPromise(accommodation).then(function(){
+  $(".accommodation-button").click(function () {
+    addYelpMarkersAndCardsPromise(accommodation).then(function(){
           scrollToNewFilterResults();
     });
   });
 
 //used in filter buttons
-  function addYelpMarkersPromise(filterTerm){
+  function addYelpMarkersAndCardsPromise(filterTerm){
     return new Promise(function(resolve, reject){
         globalSearchQuery = filterTerm;
-        addYelpMarkers(map, marker);
+        addYelpMarkersAndCards(map, marker);
         resolve();
     });
   }
@@ -330,10 +320,8 @@ function mapInteraction(map) {
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
   map.addListener("tilesloaded", function () {
-    addYelpMarkers(map, marker);
-
+    addYelpMarkersAndCards(map, marker);
   });
-
 }
 
 
@@ -356,7 +344,7 @@ function scrollToNewFilterResults() {
 };
 
 //Called when user filters results or changes location 
-function addYelpMarkers(map, marker) {
+function addYelpMarkersAndCards(map, marker) {
 
   //gets lat and lng values for current map location
   var newPosition = map.getCenter();
@@ -398,20 +386,16 @@ function addYelpMarkers(map, marker) {
 
       //scrolls to that marker's card
       marker.addListener('click', viewMarkerCard());
-
     }
 
     let markerCluster = new MarkerClusterer(map, markersArray, {
       imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     });
 
-
-
     // Clears marker clusters. Needs to be same scope as declaration of markerCluster
-    $(".clearMarkersButton").click(function () {
+    $(".clear-markers-button").click(function () {
       markerCluster.clearMarkers();
     });
-
   });
 };
 
@@ -423,7 +407,7 @@ function viewMarkerCard() {
     let markerIndex = markersArray.indexOf(this);
     let cardToTarget = `.card-${markerIndex}`;
     $(".card").removeAttr("id");
-    $(cardToTarget).attr('id', 'highlightCard');
+    $(cardToTarget).attr('id', 'highlight-card');
     $("#cards-col").animate({
       scrollTop: $(cardToTarget).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
       scrollLeft: 0

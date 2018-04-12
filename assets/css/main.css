@@ -1,17 +1,21 @@
 header {
-  height: 10vh; }
+  height: 10vh;
+}
 
 #header-list {
   align-items: center;
-  height: 10vh; }
+  height: 10vh;
+}
 
 header .list-inline {
   width: 100%;
   display: flex;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+}
 
 header .list-inline-item:not(:last-child) {
-  margin-right: 0; }
+  margin-right: 0;
+}
 
 .title-col,
 .subtitle-col,
@@ -19,74 +23,91 @@ header .list-inline-item:not(:last-child) {
   height: 100%;
   display: flex !important;
   justify-content: center;
-  flex-direction: column; }
+  flex-direction: column;
+}
 
 .header-title {
   text-align: center;
-  font-size: 5vh; }
+  font-size: 5vh;
+}
 
 .header-subtitle {
   text-align: center;
   font-size: 3vh;
-  text-align: right; }
+  text-align: right;
+}
 
 #filter-button-pressed {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .filter-button-text {
   text-align: center;
-  font-size: 3vh; }
+  font-size: 3vh;
+}
 
-.clearMarkersButton .filter-button-text {
-  font-size: 2vh; }
+.clear-markers-button .filter-button-text {
+  font-size: 2vh;
+}
 
 .title-col {
   background-color: #929191;
-  color: #F1EFEF; }
+  color: #F1EFEF;
+}
 
 .subtitle-col {
   background-color: #929191;
-  color: #F1EFEF; }
+  color: #F1EFEF;
+}
 
-.accommodationButton {
+.accommodation-button {
   background-color: #90ccf4;
-  color: #FAFDFF; }
+  color: #FAFDFF;
+}
 
-.activitiesButton {
+.activities-button {
   background-color: #f78888;
-  color: #FFD6D6; }
+  color: #FFD6D6;
+}
 
-.foodAndDrinkButton {
+.food-and-drink-button {
   background-color: #f3d250;
-  color: #FFF9E3; }
+  color: #FFF9E3;
+}
 
-.clearMarkersButton {
+.clear-markers-button {
   background-color: #5DA2D5;
-  color: #B9DBF5; }
+  color: #B9DBF5;
+}
 
 #map-col {
-  padding: 0; }
+  padding: 0;
+}
 
 #map {
   width: 100%;
-  height: 90vh; }
+  height: 90vh;
+}
 
-#highlightCard {
-  background-color: red; }
+#highlight-card {
+  background-color: red;
+}
 
 body .card-group > .card {
   flex: none;
-  width: 100%; }
+  width: 100%;
+}
 
 #cards-col {
   padding: 0;
   overflow-y: scroll;
-  height: 90vh; }
+  height: 90vh;
+}
 
 .card-img-top {
-  max-height: 12em; }
+  max-height: 12em;
+}
 
 .card-body {
-  text-align: center; }
-
-/*# sourceMappingURL=main.css.map */
+  text-align: center;
+}

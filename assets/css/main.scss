@@ -87,7 +87,7 @@ header .list-inline-item:not(:last-child) {
   font-size: 3vh;
 }
 
-.clearMarkersButton .filter-button-text {
+.clear-markers-button .filter-button-text {
   font-size: 2vh;
 }
 
@@ -101,22 +101,22 @@ header .list-inline-item:not(:last-child) {
   color: $subtitle-font-color;
 }
 
-.accommodationButton {
+.accommodation-button {
   background-color: $accommodation-background-color;
   color: $accommodation-font-color;
 }
 
-.activitiesButton {
+.activities-button {
   background-color: $activities-background-color;
   color: $activities-font-color;
 }
 
-.foodAndDrinkButton {
+.food-and-drink-button {
   background-color: $food-and-drink-background-color;
   color: $food-and-drink-font-color;
 }
 
-.clearMarkersButton {
+.clear-markers-button {
   background-color: $clear-search-results-background-color;
   color: $clear-search-font-color;
   ;
@@ -134,7 +134,7 @@ header .list-inline-item:not(:last-child) {
 
 
 
-#highlightCard {
+#highlight-card {
   background-color: red;
 }
 
