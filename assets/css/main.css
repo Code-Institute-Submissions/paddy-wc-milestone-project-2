@@ -1,5 +1,6 @@
 header {
   height: 15vh;
+  font-family: "Maitree", serif;
 }
 
 #header-list {
@@ -29,6 +30,7 @@ header .list-inline-item:not(:last-child) {
 .header-title {
   text-align: center;
   font-size: 3vh;
+  font-family: "EB Garamond", serif;
 }
 
 #instructions-list {
@@ -51,6 +53,8 @@ header .list-inline-item:not(:last-child) {
 .filter-button-text {
   text-align: center;
   font-size: 3vh;
+  font-family: "EB Garamond", serif;
+  font-weight: 700;
 }
 
 .clear-markers-button .filter-button-text {
@@ -113,6 +117,16 @@ body .card-group > .card {
 
 .card-img-top {
   max-height: 12em;
+}
+
+.card-title {
+  font-family: "EB Garamond", serif;
+  font-weight: 700;
+}
+
+.card-subtitle {
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
 }
 
 .card-body {

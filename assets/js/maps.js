@@ -209,7 +209,7 @@ let pushToCards = function (map) {
     if (yelpCardsSet.size > Object.keys(fullYelp).length) {
       fullYelp[iFullYelp] = yelpResponse.businesses[z];
 
-      //Using iFullYelp iterator ensures that no index values are skiped
+      //Using iFullYelp iterator ensures that no index values are skipped
       iFullYelp++;
     }
   }
