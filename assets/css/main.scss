@@ -61,7 +61,8 @@ header .list-inline-item:not(:last-child) {
 
 .title-col,
 .buttons-prefix-col,
-.filter-col {
+.filter-col , 
+.clear-button-col{
   
   height: 100%;
   display: flex !important;//to override bootstrap styles 
@@ -121,24 +122,33 @@ header .list-inline-item:not(:last-child) {
 .accommodation-button {
   background-color: $accommodation-background-color;
   color: $accommodation-font-color;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .activities-button {
   background-color: $activities-background-color;
   color: $activities-font-color;
-  
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .food-and-drink-button {
   background-color: $food-and-drink-background-color;
   color: $food-and-drink-font-color;
-
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .clear-markers-button {
   background-color: $clear-search-results-background-color;
   color: $clear-search-font-color;
-  ;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 #map-col {

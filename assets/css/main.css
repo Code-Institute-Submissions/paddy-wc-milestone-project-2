@@ -20,7 +20,8 @@ header .list-inline-item:not(:last-child) {
 
 .title-col,
 .buttons-prefix-col,
-.filter-col {
+.filter-col,
+.clear-button-col {
   height: 100%;
   display: flex !important;
   justify-content: center;
@@ -76,9 +77,17 @@ header .list-inline-item:not(:last-child) {
   color: #FAFDFF;
 }
 
+.accommodation-button:hover {
+  cursor: pointer;
+}
+
 .activities-button {
   background-color: #f78888;
   color: #FFD6D6;
+}
+
+.activities-button:hover {
+  cursor: pointer;
 }
 
 .food-and-drink-button {
@@ -86,9 +95,17 @@ header .list-inline-item:not(:last-child) {
   color: #FFF9E3;
 }
 
+.food-and-drink-button:hover {
+  cursor: pointer;
+}
+
 .clear-markers-button {
   background-color: #5DA2D5;
   color: #B9DBF5;
+}
+
+.clear-markers-button:hover {
+  cursor: pointer;
 }
 
 #map-col {
