@@ -101,7 +101,7 @@ header .list-inline-item:not(:last-child) {
 }
 
 #highlight-card {
-  background-color: red;
+  background-color: #daad86 !important;
 }
 
 body .card-group > .card {

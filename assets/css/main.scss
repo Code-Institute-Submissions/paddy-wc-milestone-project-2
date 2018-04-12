@@ -156,7 +156,7 @@ header .list-inline-item:not(:last-child) {
 
 
 #highlight-card {
-  background-color: red;
+  background-color:#daad86 !important; //overrides default card background color
 }
 
 body .card-group>.card {
