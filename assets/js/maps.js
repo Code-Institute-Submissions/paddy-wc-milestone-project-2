@@ -11,11 +11,7 @@ var currentLng = -6.2603097;
 
 var isOnMobileDevice;
 
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
- isOnMobileDevice = true;
-}else {
-  isOnMobileDevice = false;
-};
+checkDevice();
 
 //filters terms for yelp search. 
 var foodAndDrink = "food,bars";
@@ -56,6 +52,17 @@ var getYelpData = function (latitude, longitude, cb) {
 
 };
 
+//checks if user in on a mobile device
+//needs to be called every time if(onMobileDevice) is used
+function checkDevice() {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    isOnMobileDevice = true;
+  }
+  else {
+    isOnMobileDevice = false;
+  }
+  ;
+}
 
 //creates search bar
 //Code from Google API documentation. Extracted to global function for bug fixing. 
@@ -213,7 +220,7 @@ let infoWindowArray = [];
 
 
 //Adds details of yelp results to sidebar cards
-let pushToCards = function (map) {
+let pushToCardsOrInfoboxes = function (map) {
 
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
 
@@ -404,10 +411,12 @@ function addYelpMarkersAndCards(map, marker) {
   //sends GET request to yelp. Places results on map and on cards
   getYelpData(currentLat, currentLng, function (data) {
 
+    checkDevice();
+
     yelpResponse = data;
 
     pushToLocations();
-    pushToCards(map);
+    pushToCardsOrInfoboxes(map);
 
     var iconToUse;
 
@@ -434,22 +443,13 @@ function addYelpMarkersAndCards(map, marker) {
         markersArray.push(marker);
       };
 
-
-      if (isOnMobileDevice){
-       let  infoWindowContent = infoWindowArray[i];
-       let infoWindow = new google.maps.InfoWindow();
-       google.maps.event.addListener(marker,'click', (function(marker,InfoWindow,infoWindow){ 
-        return function() {
-          infoWindow.setContent(infoWindowContent);
-          infoWindow.open(map,marker);
-       };
-       })(marker,infoWindowContent,infoWindow));
-      } else {
+//click on marker functionality 
+//on mobile devices view infobox
+//otherwise view card
+      if (isOnMobileDevice)addInfoboxes(i); else {
       //scrolls to that marker's card
       marker.addListener('click', viewMarkerCard());
       }
-
-
     }
 
     let markerCluster = new MarkerClusterer(map, markersArray, {
@@ -461,6 +461,21 @@ function addYelpMarkersAndCards(map, marker) {
       markerCluster.clearMarkers();
     });
   });
+
+  //adds an infobox to every new marker
+  //called on mobile devices 
+  function addInfoboxes(i) {
+    {
+      let infoWindowContent = infoWindowArray[i];
+      let infoWindow = new google.maps.InfoWindow();
+      google.maps.event.addListener(marker, 'click', (function (marker, InfoWindow, infoWindow) {
+        return function () {
+          infoWindow.setContent(infoWindowContent);
+          infoWindow.open(map, marker);
+        };
+      })(marker, infoWindowContent, infoWindow));
+    }
+  }
 };
 
 //called when card is clicked
