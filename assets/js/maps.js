@@ -265,7 +265,6 @@ if (isOnMobileDevice){
     Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
     Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
     </p>
-    <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
     <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
 
     </div>
@@ -435,8 +434,22 @@ function addYelpMarkersAndCards(map, marker) {
         markersArray.push(marker);
       };
 
+
+      if (isOnMobileDevice){
+       let  infoWindowContent = infoWindowArray[i];
+       let infoWindow = new google.maps.InfoWindow();
+       google.maps.event.addListener(marker,'click', (function(marker,InfoWindow,infoWindow){ 
+        return function() {
+          infoWindow.setContent(infoWindowContent);
+          infoWindow.open(map,marker);
+       };
+       })(marker,infoWindowContent,infoWindow));
+      } else {
       //scrolls to that marker's card
       marker.addListener('click', viewMarkerCard());
+      }
+
+
     }
 
     let markerCluster = new MarkerClusterer(map, markersArray, {
