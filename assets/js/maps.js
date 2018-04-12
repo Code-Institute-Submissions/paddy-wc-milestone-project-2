@@ -15,7 +15,7 @@ var foodAndDrink = "food,bars";
 var activities = "streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours";
 var accommodation = "guesthouses,campgrounds,hostels,hotels";
 
-//current filter. Set as activities for map intilzation
+//current filter. Set as activities for map initialization
 var globalSearchQuery = activities;
 
 //icons to appear as markers on map
@@ -24,7 +24,7 @@ var activitiesIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYA
 var accommodationIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADzSURBVFhH7ZJBEsIgDEV7Cc9NPZOuhHGhnsSy1wZDp/ODpO2EHW+GKYGXHxYdOp0a5/v75MJ0o0V7Pv4LOaOfPK0tfpVfWHyMIX7Smve10OSH+Fr8eX/4ETCcQlOwC/FZCoXhi0/f3Y/A4VSvB+Aj1nclP5+xXic1wnC+2j2odlckNfwZnsHQ9X6LX3IW0t+7QYTQXb7zU+BjSQ6svpLh0EM+H0lUATD3zQMB1UehdS3QGqxrgSoA5r55IKD6KLSuBVqDdS1QBcDcNw8EVB+F1rVAa7CuBaoAmPvmgYDqZ6H14nGS+fKKsvVyPl54XKfDDMMXWMm4mZ6PJSUAAAAASUVORK5CYII=";
 
 //Get request for yelp API. Generated using "postman" app
-//added acess-conreol-allow-origin to enable cors-anywhere
+//added access-control-allow-origin to enable cors-anywhere
 var getYelpData = function (latitude, longitude, cb) {
 
   var settings = {
@@ -401,7 +401,7 @@ function addYelpMarkersAndCards(map, marker) {
 
 //called when card is clicked
 //highlights and scrolls to that marker's card
-//unhighlights other cards
+//removes highlighting of other cards
 function viewMarkerCard() {
   return function () {
     let markerIndex = markersArray.indexOf(this);
