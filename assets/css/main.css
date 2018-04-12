@@ -115,6 +115,12 @@ body .card-group > .card {
   height: 85vh;
 }
 
+.card {
+  background-color: #fbeec1 !important;
+  font-family: 'Old Standard TT', serif;
+  font-family: 'Overlock', cursive;
+}
+
 .card-img-top {
   max-height: 12em;
 }

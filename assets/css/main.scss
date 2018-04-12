@@ -171,6 +171,15 @@ body .card-group>.card {
   @include bodyHeight();
 }
 
+.card{
+  background-color:#fbeec1 !important; //overrides bootstrap
+  font-family: 'Old Standard TT', serif;
+  font-family: 'Overlock', cursive;
+
+
+
+}
+
 .card-img-top {
   max-height: 12em;
 }

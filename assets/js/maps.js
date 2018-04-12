@@ -242,7 +242,7 @@ let pushToCards = function (map) {
     <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
 
     <p class="card-text">
-    Yelp rating: ${fullYelp[iCardBody].rating}/5<br>
+    Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
     Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
     </p>
     <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
