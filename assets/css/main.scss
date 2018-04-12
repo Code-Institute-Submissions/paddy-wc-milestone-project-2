@@ -3,19 +3,19 @@
 }
 
 @mixin headerHeight() {
-  height: 10vh;
+  height: 15vh;
 }
 
 @mixin bodyHeight() {
-  height: 90vh;
+  height: 85vh;
 }
 
 
 $title-background-color: #929191;
 $title-font-color: #F1EFEF;
 
-$subtitle-background-color: #929191;
-$subtitle-font-color: #F1EFEF;
+$buttons-prefix-background-color: #929191;
+$buttons-prefix-font-color: #F1EFEF;
 
 $activities-background-color:#f78888;
 $activities-font-color:#FFD6D6;
@@ -55,26 +55,31 @@ header .list-inline-item:not(:last-child) {
 
 
 .title-col,
-.subtitle-col,
+.buttons-prefix-col,
 .filter-col {
   
   height: 100%;
-  display: flex !important;//to overide bootstrap styles 
+  display: flex !important;//to override bootstrap styles 
   justify-content: center;
   flex-direction: column;
 }
 
 
 
-
 .header-title {
   @include headerItem();
-  font-size: 5vh;
+  font-size: 3vh;
 }
 
-.header-subtitle {
+#instructions-list{
+ text-align: left;
+  font-size: 0.8vw;
+  margin-top: 1em;
+}
+
+.buttons-prefix-text {
   @include headerItem();
-  font-size: 3vh;
+  font-size: 2vh;
   text-align: right;
 }
 
@@ -97,9 +102,9 @@ header .list-inline-item:not(:last-child) {
   color: $title-font-color;
 }
 
-.subtitle-col {
-  background-color: $subtitle-background-color;
-  color: $subtitle-font-color;
+.buttons-prefix-col {
+  background-color: $buttons-prefix-background-color;
+  color: $buttons-prefix-font-color;
 }
 
 .accommodation-button {
