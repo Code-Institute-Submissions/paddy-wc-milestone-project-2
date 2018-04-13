@@ -191,6 +191,24 @@ let iFullYelp = 0;
 let iCardBody = 0;
 
 
+let ifUndefinedReturnNA = function (valueToCheck) {
+  if (valueToCheck == null) {
+    return "N/A"
+  } else {
+    return valueToCheck;
+  }
+}
+
+//must enter fullYelp[iCardBody].categories as argument 
+let showAllCategories = function (business) {
+  let categoriesArray = [];
+  for (let i = 0; i < business.length; i++) {
+    categoriesArray.push(" " + business[i].title);
+  }
+  return categoriesArray;
+}
+
+
 //holds yelp data to be pushed to cards
 //values only pushed to fullYelp object if they can be entered into set. Prevents duplicates
 let fullYelp = {};
@@ -216,7 +234,16 @@ let viewOnMap = function (latitude, longitude) {
 };
 
 
-let infoWindowArray = [];
+//used in mobile functions
+let infowindowArray = [];
+let infowindowSet = new Set ([]);
+
+//full iterator for infowindow array
+//used in addInfoboxes(i)
+//global to ensure it is not reset 
+//except when markers are cleared
+let totalIInfowindowArray = 0;
+
 
 
 //Adds details of yelp results to sidebar cards
@@ -234,31 +261,20 @@ let pushToCardsOrInfoboxes = function (map) {
     }
   }
 
-  let ifUndefinedReturnNA = function (valueToCheck) {
-    if (valueToCheck == null) {
-      return "N/A"
-    } else {
-      return valueToCheck;
-    }
-  }
-
-  //must enter fullYelp[iCardBody].categories as argument 
-  let showAllCategories = function (business) {
-    let categoriesArray = [];
-    for (let i = 0; i < business.length; i++) {
-      categoriesArray.push(" " + business[i].title);
-    }
-    return categoriesArray;
-  }
+ 
 
 
 
-
+//adds each response to infoboxArray user is on a mobile device
 if (isOnMobileDevice){
 
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
+
+    infowindowSet.add(fullYelp[iCardBody].id);
+
+    if (infowindowSet.size > infowindowArray.length){
     
-    infoWindowArray.push(
+    infowindowArray.push(
     (`
     <div class="card infobox-card card-${iCardBody}">
 
@@ -277,12 +293,13 @@ if (isOnMobileDevice){
     </div>
     </div>
     `));
-  }
+    }
 
-  console.log(infoWindowArray);
+}
 
 
-
+//if user is not on mobile device
+//push each response to a card
 }else{
   for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
     $("#cards-content .card-group").append(`
@@ -306,9 +323,6 @@ if (isOnMobileDevice){
     `)
   }
 }
-
-
-
 }
 
 
@@ -344,7 +358,7 @@ function mapInteraction(map) {
 
   var marker;
 
-  addYelpMarkersAndCards(map, marker);
+ // addYelpMarkersAndCards(map, marker);
 
   //filter buttons functionality
   //adds new yelp markers and cards then scrolls to first new card
@@ -382,7 +396,6 @@ function mapInteraction(map) {
 }
 
 
-
 //called when filter button pressed
 //scrolls to new cards
 //timeout allows for delay in GET request
@@ -399,6 +412,7 @@ function scrollToNewFilterResults() {
     }, 1000);
  
 };
+
 
 //Called when user filters results or changes location 
 function addYelpMarkersAndCards(map, marker) {
@@ -428,7 +442,6 @@ function addYelpMarkersAndCards(map, marker) {
       iconToUse = foodIcon;
     }
 
-   // console.log(yelpResponse);
 
     for (let i = 0; i < locations.length; i++) {
 
@@ -441,16 +454,21 @@ function addYelpMarkersAndCards(map, marker) {
       markersSet.add(locations[i].lat);
       if ((markersSet.size) > markersArray.length) {
         markersArray.push(marker);
+        totalIInfowindowArray++; //used in addinfoboxes. Ensures iterator is not reset
       };
+
+
 
 //click on marker functionality 
 //on mobile devices view infobox
 //otherwise view card
-      if (isOnMobileDevice)addInfoboxes(i); else {
+      if (isOnMobileDevice){addInfoboxes(i)
+      } else {
       //scrolls to that marker's card
       marker.addListener('click', viewMarkerCard());
       }
     }
+
 
     let markerCluster = new MarkerClusterer(map, markersArray, {
       imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
@@ -464,10 +482,10 @@ function addYelpMarkersAndCards(map, marker) {
 
   //adds an infobox to every new marker
   //called on mobile devices 
-  //code structure from: https://stackoverflow.com/questions/11106671/google-maps-api-multiple-markers-with-infowindows
+  //code structure partly from: https://stackoverflow.com/questions/11106671/google-maps-api-multiple-markers-with-infowindows
   function addInfoboxes(i) {
-    {
-      let infoWindowContent = infoWindowArray[i];
+
+      let infoWindowContent = infowindowArray[totalIInfowindowArray-1]; //-1 because totalIInfowindowArray++ happens before function is called
       let infoWindow = new google.maps.InfoWindow();
       google.maps.event.addListener(marker, 'click', (function (marker, InfoWindow, infoWindow) {
         return function () {
@@ -475,7 +493,8 @@ function addYelpMarkersAndCards(map, marker) {
           infoWindow.open(map, marker);
         };
       })(marker, infoWindowContent, infoWindow));
-    }
+   
+    console.log("total i: " + totalIInfowindowArray)
   }
 };
 
