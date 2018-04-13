@@ -22,6 +22,18 @@ $desktop-width: 922px;
  }
 }
 
+@mixin responsive-font-size($smallFont, $tabletFont, $desktopFont){
+  @include bootstrapSmall(){
+    font-size: calc(#{$smallFont}vmin + #{$smallFont}vmax);
+  }
+  @include tablet(){
+    font-size: calc(#{$tabletFont}vmin + #{$tabletFont}vmax);
+  }
+  @include desktop(){
+    font-size: calc(#{$desktopFont}vmin + #{$desktopFont}vmax);
+  }
+}
+
 @mixin header-item() {
   text-align: center;
 }
@@ -105,23 +117,25 @@ header .buttons-prefix-col,
 
 .header-title {
   @include header-item();
-  font-size: 3vh;
+ 
   font-family: $title-font;
 
-
+  @include responsive-font-size(1.3, 1.5, 1.5 )
 
 }
 
 #instructions-list{
  text-align: left;
-  font-size: 0.8vw;
-  margin-top: 1em;
+ margin-top: 1em;
+@include responsive-font-size(0.4, 0.5, 0.5 )
 }
 
 .buttons-prefix-text {
   @include header-item();
-  font-size: 2vh;
   text-align: right;
+ 
+@include responsive-font-size(0.6, 0.7, 0.8 );
+
 }
 
 #filter-button-pressed {
@@ -131,9 +145,11 @@ header .buttons-prefix-col,
 
 .filter-button-text {
   @include header-item();
-  font-size: 3vh;
   font-family: $title-font;
   font-weight: 700;
+
+  font-size: calc(1.2vmin + 1.2vmax); //only mobile devices
+  @include responsive-font-size(0.8, 1 ,1.2 )
 }
 
 .clear-markers-button .filter-button-text {
@@ -153,9 +169,17 @@ header .buttons-prefix-col,
 .accommodation-button {
   background-color: $accommodation-background-color;
   color: $accommodation-font-color;
+
+    
+  padding-left: 2% !important ;//prevents overflow on mobile
+
+  @include bootstrapSmall(){
+    padding-left: 15px !important; //undoes the above change
+  }
   &:hover{
     cursor: pointer;
   }
+ 
 }
 
 .activities-button {
@@ -172,6 +196,7 @@ header .buttons-prefix-col,
   &:hover{
     cursor: pointer;
   }
+ 
 }
 
 .clear-markers-button {

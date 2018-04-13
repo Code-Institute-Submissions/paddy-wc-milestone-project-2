@@ -39,20 +39,71 @@ header .buttons-prefix-col,
 
 .header-title {
   text-align: center;
-  font-size: 3vh;
   font-family: "EB Garamond", serif;
+}
+
+@media (min-width: 540px) {
+  .header-title {
+    font-size: calc(1.3vmin + 1.3vmax);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  .header-title {
+    font-size: calc(1.5vmin + 1.5vmax);
+  }
+}
+
+@media (min-width: 922px) {
+  .header-title {
+    font-size: calc(1.5vmin + 1.5vmax);
+  }
 }
 
 #instructions-list {
   text-align: left;
-  font-size: 0.8vw;
   margin-top: 1em;
+}
+
+@media (min-width: 540px) {
+  #instructions-list {
+    font-size: calc(0.4vmin + 0.4vmax);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  #instructions-list {
+    font-size: calc(0.5vmin + 0.5vmax);
+  }
+}
+
+@media (min-width: 922px) {
+  #instructions-list {
+    font-size: calc(0.5vmin + 0.5vmax);
+  }
 }
 
 .buttons-prefix-text {
   text-align: center;
-  font-size: 2vh;
   text-align: right;
+}
+
+@media (min-width: 540px) {
+  .buttons-prefix-text {
+    font-size: calc(0.6vmin + 0.6vmax);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  .buttons-prefix-text {
+    font-size: calc(0.7vmin + 0.7vmax);
+  }
+}
+
+@media (min-width: 922px) {
+  .buttons-prefix-text {
+    font-size: calc(0.8vmin + 0.8vmax);
+  }
 }
 
 #filter-button-pressed {
@@ -62,9 +113,27 @@ header .buttons-prefix-col,
 
 .filter-button-text {
   text-align: center;
-  font-size: 3vh;
   font-family: "EB Garamond", serif;
   font-weight: 700;
+  font-size: calc(1.2vmin + 1.2vmax);
+}
+
+@media (min-width: 540px) {
+  .filter-button-text {
+    font-size: calc(0.8vmin + 0.8vmax);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  .filter-button-text {
+    font-size: calc(1vmin + 1vmax);
+  }
+}
+
+@media (min-width: 922px) {
+  .filter-button-text {
+    font-size: calc(1.2vmin + 1.2vmax);
+  }
 }
 
 .clear-markers-button .filter-button-text {
@@ -84,6 +153,13 @@ header .buttons-prefix-col,
 .accommodation-button {
   background-color: #90ccf4;
   color: #FAFDFF;
+  padding-left: 2% !important;
+}
+
+@media (min-width: 540px) {
+  .accommodation-button {
+    padding-left: 15px !important;
+  }
 }
 
 .accommodation-button:hover {
