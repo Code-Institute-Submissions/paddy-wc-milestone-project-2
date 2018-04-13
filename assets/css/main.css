@@ -15,14 +15,26 @@ header .list-inline-item:not(:last-child), footer .list-inline-item:not(:last-ch
   margin-right: 0;
 }
 
+.filter-col, .clear-button-col {
+  display: flex !important;
+}
+
 header .title-col,
 header .buttons-prefix-col,
 .filter-col,
 .clear-button-col {
   height: 100%;
-  display: flex !important;
   justify-content: center;
   flex-direction: column;
+}
+
+@media (min-width: 540px) {
+  header .title-col,
+  header .buttons-prefix-col,
+  .filter-col,
+  .clear-button-col {
+    display: flex !important;
+  }
 }
 
 .header-title {

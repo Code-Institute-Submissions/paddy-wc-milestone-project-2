@@ -14,6 +14,14 @@ $desktop-width: 922px;
   }
 }
 
+
+//to not override bootstrap display:none on >sm devices 
+@mixin bootstrapSmall {
+ @media ( min-width: 540px)	{
+   @content;
+ }
+}
+
 @mixin header-item() {
   text-align: center;
 }
@@ -75,7 +83,9 @@ header .list-inline-item:not(:last-child), footer .list-inline-item:not(:last-ch
   margin-right: 0;
 }
 
-
+.filter-col ,.clear-button-col{
+  display: flex !important;
+}
 
 header .title-col,
 header .buttons-prefix-col,
@@ -83,9 +93,12 @@ header .buttons-prefix-col,
 .clear-button-col{
   
   height: 100%;
-  display: flex !important;//to override bootstrap styles 
   justify-content: center;
   flex-direction: column;
+
+  @include bootstrapSmall(){
+    display: flex !important; //display none on xs devices
+  }
 }
 
 
