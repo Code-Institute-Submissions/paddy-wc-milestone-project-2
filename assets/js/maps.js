@@ -368,19 +368,22 @@ function mapInteraction(map) {
   //adds new yelp markers and cards then scrolls to first new card
   $(".food-and-drink-button").click(function () {
     addYelpMarkersAndCardsPromise(foodAndDrink).then(function(){
+      if(!isOnMobileDevice){
       scrollToNewFilterResults();
-});
+}});
   });
 
   $(".activities-button").click(function () {
     addYelpMarkersAndCardsPromise(activities).then(function(){
-      scrollToNewFilterResults();
-});
+      if(!isOnMobileDevice){
+        scrollToNewFilterResults();
+  }});
   });
   $(".accommodation-button").click(function () {
     addYelpMarkersAndCardsPromise(accommodation).then(function(){
-          scrollToNewFilterResults();
-    });
+      if(!isOnMobileDevice){
+        scrollToNewFilterResults();
+  }});
   });
 
 //used in filter buttons
