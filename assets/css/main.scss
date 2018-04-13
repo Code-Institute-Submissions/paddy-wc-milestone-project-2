@@ -77,8 +77,8 @@ header .list-inline-item:not(:last-child), footer .list-inline-item:not(:last-ch
 
 
 
-.title-col,
-.buttons-prefix-col,
+header .title-col,
+header .buttons-prefix-col,
 .filter-col , 
 .clear-button-col{
   
@@ -241,8 +241,16 @@ body .card-group>.aside-card {
 footer {
   height: 10vh;
   background-color: $title-background-color;
+
+  @include tablet(){
+    display: none !important;
+  }
+  @include desktop(){
+    display: none !important;
+  }
 }
 
 #footer-list{
   height:10vh;
+  
 }

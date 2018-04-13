@@ -15,8 +15,8 @@ header .list-inline-item:not(:last-child), footer .list-inline-item:not(:last-ch
   margin-right: 0;
 }
 
-.title-col,
-.buttons-prefix-col,
+header .title-col,
+header .buttons-prefix-col,
 .filter-col,
 .clear-button-col {
   height: 100%;
@@ -198,6 +198,18 @@ body .card-group > .aside-card {
 footer {
   height: 10vh;
   background-color: #929191;
+}
+
+@media (min-width: 768px) and (max-width: 921px) {
+  footer {
+    display: none !important;
+  }
+}
+
+@media (min-width: 922px) {
+  footer {
+    display: none !important;
+  }
 }
 
 #footer-list {

@@ -501,7 +501,7 @@ function addYelpMarkersAndCards(map, marker) {
         };
       })(marker, infoWindowContent, infoWindow));
    
-    console.log("total i: " + totalIInfowindowArray)
+    //console.log("total i: " + totalIInfowindowArray)
   }
 };
 
