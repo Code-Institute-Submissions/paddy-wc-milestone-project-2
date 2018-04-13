@@ -179,6 +179,10 @@ $(".clear-markers-button").click(function () {
   yelpCardsSet.clear();
   for (var member in fullYelp) delete fullYelp[member];
 
+  infowindowArray.length = 0;
+  infowindowSet.clear();
+  totalIInfowindowArray = 0;
+
   //clears card results and resets pushToCards iterators
   $("#cards-content .card-group").empty();
   iCardBody = 0;
@@ -358,7 +362,7 @@ function mapInteraction(map) {
 
   var marker;
 
- // addYelpMarkersAndCards(map, marker);
+ addYelpMarkersAndCards(map, marker);
 
   //filter buttons functionality
   //adds new yelp markers and cards then scrolls to first new card
