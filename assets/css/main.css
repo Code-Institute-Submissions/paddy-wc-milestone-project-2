@@ -40,6 +40,7 @@ header .buttons-prefix-col,
 .header-title {
   text-align: center;
   font-family: "EB Garamond", serif;
+  font-size: 18px;
 }
 
 @media (min-width: 540px) {
@@ -48,13 +49,13 @@ header .buttons-prefix-col,
   }
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .header-title {
     font-size: calc(1.5vmin + 1.5vmax);
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
   .header-title {
     font-size: calc(1.5vmin + 1.5vmax);
   }
@@ -63,6 +64,7 @@ header .buttons-prefix-col,
 #instructions-list {
   text-align: left;
   margin-top: 1em;
+  font-size: 7px;
 }
 
 @media (min-width: 540px) {
@@ -71,16 +73,20 @@ header .buttons-prefix-col,
   }
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   #instructions-list {
     font-size: calc(0.5vmin + 0.5vmax);
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
   #instructions-list {
     font-size: calc(0.5vmin + 0.5vmax);
   }
+}
+
+footer #instructions-list {
+  margin: 0;
 }
 
 .buttons-prefix-text {
@@ -90,17 +96,17 @@ header .buttons-prefix-col,
 
 @media (min-width: 540px) {
   .buttons-prefix-text {
-    font-size: calc(0.6vmin + 0.6vmax);
+    font-size: calc(0.5vmin + 0.5vmax);
   }
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .buttons-prefix-text {
-    font-size: calc(0.7vmin + 0.7vmax);
+    font-size: calc(0.5vmin + 0.5vmax);
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
   .buttons-prefix-text {
     font-size: calc(0.8vmin + 0.8vmax);
   }
@@ -124,13 +130,13 @@ header .buttons-prefix-col,
   }
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .filter-button-text {
     font-size: calc(1vmin + 1vmax);
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
   .filter-button-text {
     font-size: calc(1.2vmin + 1.2vmax);
   }
@@ -138,6 +144,24 @@ header .buttons-prefix-col,
 
 .clear-markers-button .filter-button-text {
   font-size: 2vh;
+}
+
+@media (min-width: 540px) {
+  .clear-markers-button .filter-button-text {
+    font-size: calc(0.7vmin + 0.7vmax);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .clear-markers-button .filter-button-text {
+    font-size: calc(1vmin + 1vmax);
+  }
+}
+
+@media (min-width: 1025px) {
+  .clear-markers-button .filter-button-text {
+    font-size: calc(1vmin + 1vmax);
+  }
 }
 
 .title-col {
@@ -202,13 +226,13 @@ header .buttons-prefix-col,
   height: 75vh;
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   #map {
     height: 85vh;
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
   #map {
     height: 85vh;
   }
@@ -227,30 +251,17 @@ body .card-group > .aside-card {
   height: 75vh;
   padding: 0;
   overflow-y: scroll;
-  display: none;
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   #cards-col {
     height: 85vh;
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 1025px) {
   #cards-col {
     height: 85vh;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 921px) {
-  #cards-col {
-    display: inline-block;
-  }
-}
-
-@media (min-width: 922px) {
-  #cards-col {
-    display: inline-block;
   }
 }
 
@@ -288,13 +299,19 @@ footer {
   background-color: #929191;
 }
 
-@media (min-width: 768px) and (max-width: 921px) {
+@media (min-width: 540px) {
   footer {
     display: none !important;
   }
 }
 
-@media (min-width: 922px) {
+@media (min-width: 768px) and (max-width: 1024px) {
+  footer {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1025px) {
   footer {
     display: none !important;
   }

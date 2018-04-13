@@ -1,6 +1,6 @@
 
 $tablet-width: 768px;
-$desktop-width: 922px;
+$desktop-width: 1025px;
 
 @mixin tablet {
   @media (min-width: $tablet-width) and (max-width: $desktop-width - 1px){
@@ -120,6 +120,8 @@ header .buttons-prefix-col,
  
   font-family: $title-font;
 
+  font-size:18px; //mobile online. Footer;
+
   @include responsive-font-size(1.3, 1.5, 1.5 )
 
 }
@@ -127,14 +129,25 @@ header .buttons-prefix-col,
 #instructions-list{
  text-align: left;
  margin-top: 1em;
+
+ font-size: 7px; //mobile online. Footer;
+
+ 
 @include responsive-font-size(0.4, 0.5, 0.5 )
 }
 
+
+ footer #instructions-list{
+ margin: 0;
+ }
+ 
+  
+ 
 .buttons-prefix-text {
   @include header-item();
   text-align: right;
  
-@include responsive-font-size(0.6, 0.7, 0.8 );
+@include responsive-font-size(0.5, 0.5, 0.8 );
 
 }
 
@@ -149,11 +162,12 @@ header .buttons-prefix-col,
   font-weight: 700;
 
   font-size: calc(1.2vmin + 1.2vmax); //only mobile devices
-  @include responsive-font-size(0.8, 1 ,1.2 )
+  @include responsive-font-size(0.8, 1 ,1.2 );
 }
 
 .clear-markers-button .filter-button-text {
   font-size: 2vh;
+  @include responsive-font-size(0.7,1, 1 );
 }
 
 .title-col {
@@ -233,16 +247,6 @@ body .card-group>.aside-card {
   @include body-height();
   padding: 0;
   overflow-y: scroll;
-  display: none;
-
-  @include tablet(){
-    display: inline-block;
-  }
-
-  
-  @include desktop(){
-    display: inline-block;
-  }
 }
 
 .aside-card {
@@ -265,6 +269,7 @@ body .card-group>.aside-card {
   font-weight: 700;
 }
 
+
 .card-subtitle{
   font-family: $title-font;
   font-weight: 500;
@@ -279,6 +284,11 @@ body .card-group>.aside-card {
 footer {
   height: 10vh;
   background-color: $title-background-color;
+
+
+  @include bootstrapSmall(){
+    display: none !important;
+  }
 
   @include tablet(){
     display: none !important;

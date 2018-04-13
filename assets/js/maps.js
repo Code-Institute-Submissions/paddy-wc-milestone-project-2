@@ -55,7 +55,7 @@ var getYelpData = function (latitude, longitude, cb) {
 //checks if user in on a mobile device
 //needs to be called every time if(onMobileDevice) is used
 function checkDevice() {
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
     isOnMobileDevice = true;
   }
   else {
