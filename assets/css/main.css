@@ -1,9 +1,11 @@
-header, footer {
+header,
+footer {
   height: 15vh;
   font-family: "Maitree", serif;
 }
 
-#header-list, #footer-list {
+#header-list,
+#footer-list {
   align-items: center;
   height: 15vh;
   width: 100%;
@@ -11,11 +13,13 @@ header, footer {
   margin-bottom: 0;
 }
 
-header .list-inline-item:not(:last-child), footer .list-inline-item:not(:last-child) {
+header .list-inline-item:not(:last-child),
+footer .list-inline-item:not(:last-child) {
   margin-right: 0;
 }
 
-.filter-col, .clear-button-col {
+.filter-col,
+.clear-button-col {
   display: flex !important;
 }
 
@@ -51,7 +55,7 @@ header .buttons-prefix-col,
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .header-title {
-    font-size: calc(1.5vmin + 1.5vmax);
+    font-size: calc(1.3vmin + 1.3vmax);
   }
 }
 
@@ -132,7 +136,7 @@ footer #instructions-list {
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .filter-button-text {
-    font-size: calc(1vmin + 1vmax);
+    font-size: calc(0.9vmin + 0.9vmax);
   }
 }
 
@@ -154,7 +158,7 @@ footer #instructions-list {
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .clear-markers-button .filter-button-text {
-    font-size: calc(1vmin + 1vmax);
+    font-size: calc(0.8vmin + 0.8vmax);
   }
 }
 
@@ -226,6 +230,12 @@ footer #instructions-list {
   height: 75vh;
 }
 
+@media (min-width: 540px) {
+  #map {
+    height: 85vh;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   #map {
     height: 85vh;
@@ -251,6 +261,12 @@ body .card-group > .aside-card {
   height: 75vh;
   padding: 0;
   overflow-y: scroll;
+}
+
+@media (min-width: 540px) {
+  #cards-col {
+    height: 85vh;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {

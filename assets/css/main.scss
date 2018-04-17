@@ -44,6 +44,9 @@ $desktop-width: 1025px;
 
 @mixin body-height() {
   height: 75vh;
+  @include bootstrapSmall(){
+    height: 85vh;
+  }
   @include tablet(){
     height: 85vh;
   }
@@ -75,13 +78,14 @@ $clear-search-font-color:#B9DBF5;
 $title-font: 'EB Garamond', serif;
 $other-header-font:   'Maitree', serif;
 
-header,footer {
+header,
+footer {
   @include header-height();
   font-family: $other-header-font;
 }
 
-
-#header-list, #footer-list {
+#header-list,
+#footer-list {
   align-items: center;
   @include header-height();
   width: 100%;
@@ -89,66 +93,50 @@ header,footer {
   margin-bottom: 0;
 }
 
-
-
-header .list-inline-item:not(:last-child), footer .list-inline-item:not(:last-child) {
+header .list-inline-item:not(:last-child),
+footer .list-inline-item:not(:last-child) {
   margin-right: 0;
 }
 
-.filter-col ,.clear-button-col{
+.filter-col,
+.clear-button-col {
   display: flex !important;
 }
 
 header .title-col,
 header .buttons-prefix-col,
-.filter-col , 
-.clear-button-col{
-  
+.filter-col,
+.clear-button-col {
   height: 100%;
   justify-content: center;
   flex-direction: column;
-
-  @include bootstrapSmall(){
+  @include bootstrapSmall() {
     display: flex !important; //display none on xs devices
   }
 }
 
-
-
 .header-title {
   @include header-item();
- 
   font-family: $title-font;
-
-  font-size:18px; //mobile online. Footer;
-
-  @include responsive-font-size(1.3, 1.5, 1.5 )
-
+  font-size: 18px; //mobile online. Footer;
+  @include responsive-font-size(1.3, 1.3, 1.5)
 }
 
-#instructions-list{
- text-align: left;
- margin-top: 1em;
-
- font-size: 7px; //mobile online. Footer;
-
- 
-@include responsive-font-size(0.4, 0.5, 0.5 )
+#instructions-list {
+  text-align: left;
+  margin-top: 1em;
+  font-size: 7px; //mobile online. Footer;
+  @include responsive-font-size(0.4, 0.5, 0.5)
 }
 
+footer #instructions-list {
+  margin: 0;
+}
 
- footer #instructions-list{
- margin: 0;
- }
- 
-  
- 
 .buttons-prefix-text {
   @include header-item();
   text-align: right;
- 
-@include responsive-font-size(0.5, 0.5, 0.8 );
-
+  @include responsive-font-size(0.5, 0.5, 0.8);
 }
 
 #filter-button-pressed {
@@ -160,14 +148,13 @@ header .buttons-prefix-col,
   @include header-item();
   font-family: $title-font;
   font-weight: 700;
-
   font-size: calc(1.2vmin + 1.2vmax); //only mobile devices
-  @include responsive-font-size(0.8, 1 ,1.2 );
+  @include responsive-font-size(0.8, 0.9, 1.2);
 }
 
 .clear-markers-button .filter-button-text {
   font-size: 2vh;
-  @include responsive-font-size(0.7,1, 1 );
+  @include responsive-font-size(0.7, 0.8, 1);
 }
 
 .title-col {
@@ -183,23 +170,19 @@ header .buttons-prefix-col,
 .accommodation-button {
   background-color: $accommodation-background-color;
   color: $accommodation-font-color;
-
-    
-  padding-left: 2% !important ;//prevents overflow on mobile
-
-  @include bootstrapSmall(){
+  padding-left: 2% !important; //prevents overflow on mobile
+  @include bootstrapSmall() {
     padding-left: 15px !important; //undoes the above change
   }
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
- 
 }
 
 .activities-button {
   background-color: $activities-background-color;
   color: $activities-font-color;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 }
@@ -207,16 +190,15 @@ header .buttons-prefix-col,
 .food-and-drink-button {
   background-color: $food-and-drink-background-color;
   color: $food-and-drink-font-color;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
- 
 }
 
 .clear-markers-button {
   background-color: $clear-search-results-background-color;
   color: $clear-search-font-color;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 }
@@ -225,23 +207,19 @@ header .buttons-prefix-col,
   padding: 0;
 }
 
-
 #map {
   width: 100%;
   @include body-height();
 }
 
-
-
 #highlight-card {
-  background-color:#daad86 !important; //overrides default card background color
+  background-color: #daad86 !important; //overrides default card background color
 }
 
 body .card-group>.aside-card {
   flex: none;
   width: 100%;
 }
-
 
 #cards-col {
   @include body-height();
@@ -250,8 +228,7 @@ body .card-group>.aside-card {
 }
 
 .aside-card {
-  background-color:#fbeec1 !important; //overrides bootstrap
-
+  background-color: #fbeec1 !important; //overrides bootstrap
 }
 
 .card .card-img-top {
@@ -261,16 +238,15 @@ body .card-group>.aside-card {
 .infobox-card {
   max-width: 50vw;
   border: none !important; //overrides bootstrap 
- margin-left: 10px;
+  margin-left: 10px;
 }
 
-.card-title{
+.card-title {
   font-family: $title-font;
   font-weight: 700;
 }
 
-
-.card-subtitle{
+.card-subtitle {
   font-family: $title-font;
   font-weight: 500;
 }
@@ -280,25 +256,21 @@ body .card-group>.aside-card {
   font-family: 'Overlock', cursive;
 }
 
-
 footer {
   height: 10vh;
   background-color: $title-background-color;
-
-
-  @include bootstrapSmall(){
+  @include bootstrapSmall() {
     display: none !important;
   }
-
-  @include tablet(){
+  @include tablet() {
     display: none !important;
   }
-  @include desktop(){
+  @include desktop() {
     display: none !important;
   }
 }
 
-#footer-list{
-  height:10vh;
+#footer-list {
+  height: 10vh;
   
 }

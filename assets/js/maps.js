@@ -54,14 +54,13 @@ var getYelpData = function (latitude, longitude, cb) {
 
 //checks if user in on a mobile device
 //needs to be called every time if(onMobileDevice) is used
+//code from: https://stackoverflow.com/questions/9048253/in-javascript-if-mobile-phone;
 function checkDevice() {
   if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
     isOnMobileDevice = true;
-  }
-  else {
+  } else {
     isOnMobileDevice = false;
-  }
-  ;
+  };
 }
 
 //creates search bar
@@ -165,7 +164,7 @@ let markersSet = new Set([]);
 $(".clear-markers-button").click(function () {
 
 
-  
+
 
   for (var i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
@@ -182,6 +181,7 @@ $(".clear-markers-button").click(function () {
   infowindowArray.length = 0;
   infowindowSet.clear();
   totalIInfowindowArray = 0;
+  pushToCardsCalled = -1;
 
   //clears card results and resets pushToCards iterators
   $("#cards-content .card-group").empty();
@@ -240,7 +240,7 @@ let viewOnMap = function (latitude, longitude) {
 
 //used in mobile functions
 let infowindowArray = [];
-let infowindowSet = new Set ([]);
+let infowindowSet = new Set([]);
 
 //full iterator for infowindow array
 //used in addInfoboxes(i)
@@ -248,6 +248,15 @@ let infowindowSet = new Set ([]);
 //except when markers are cleared
 let totalIInfowindowArray = 0;
 
+//used in pushToCardsOrInfoboxes function
+//iterated on with every new set of cards
+//only scroll to cards when value > 1
+//reset when clear search button pressed
+let pushToCardsCalled = -1;
+
+
+//used in pushToCardsOrInfoboxes
+let indexBeforeNewCards = 0;
 
 
 //Adds details of yelp results to sidebar cards
@@ -265,21 +274,17 @@ let pushToCardsOrInfoboxes = function (map) {
     }
   }
 
- 
+  //adds each response to infoboxArray user is on a mobile device
+  if (isOnMobileDevice) {
 
+    for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
 
+      infowindowSet.add(fullYelp[iCardBody].id);
 
-//adds each response to infoboxArray user is on a mobile device
-if (isOnMobileDevice){
+      if (infowindowSet.size > infowindowArray.length) {
 
-  for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
-
-    infowindowSet.add(fullYelp[iCardBody].id);
-
-    if (infowindowSet.size > infowindowArray.length){
-    
-    infowindowArray.push(
-    (`
+        infowindowArray.push(
+          (`
     <div class="card infobox-card card-${iCardBody}">
 
     <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
@@ -297,16 +302,21 @@ if (isOnMobileDevice){
     </div>
     </div>
     `));
+      }
+
     }
 
-}
+
+    //if user is not on mobile device
+    //push each response to a card
+  } else {
+
+     //index value of last card before loop starts
+     indexBeforeNewCards = iCardBody
 
 
-//if user is not on mobile device
-//push each response to a card
-}else{
-  for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
-    $("#cards-content .card-group").append(`
+    for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
+      $("#cards-content .card-group").append(`
     <div class="card aside-card card-${iCardBody}">
 
     <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
@@ -325,9 +335,38 @@ if (isOnMobileDevice){
     </div>
     </div>
     `)
+    }
+
+//ensures scrollToNewFilterResults isn't called for the first set of cards
+//value resets when clear search button pressed
+//only called when more than 10 new results.
+//stops function being called every time the users drags map
+pushToCardsCalled++;
+    if (pushToCardsCalled > 1 && (iCardBody-indexBeforeNewCards) > 10) {
+      scrollToNewCards();
+    }
   }
 }
-}
+
+
+
+//called when new cards added
+//not called for initial cards
+//scrolls to new cards
+function scrollToNewCards() {
+
+  //the index of the first new card
+  let indexOfFirstNewCard = indexBeforeNewCards + 1;
+
+  cardToScrollTo = `.card-${indexOfFirstNewCard}`; 
+  //console.log(cardToScrollTo);
+  $("#cards-col").animate({
+    scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
+    scrollLeft: 0
+  }, 1000);
+
+};
+
 
 
 
@@ -362,38 +401,27 @@ function mapInteraction(map) {
 
   var marker;
 
- addYelpMarkersAndCards(map, marker);
+  addYelpMarkersAndCards(map, marker);
 
   //filter buttons functionality
   //adds new yelp markers and cards then scrolls to first new card
   $(".food-and-drink-button").click(function () {
-    addYelpMarkersAndCardsPromise(foodAndDrink).then(function(){
-      if(!isOnMobileDevice){
-      scrollToNewFilterResults();
-}});
+    globalSearchQuery = foodAndDrink;
+    addYelpMarkersAndCards(map, marker);
+
   });
 
   $(".activities-button").click(function () {
-    addYelpMarkersAndCardsPromise(activities).then(function(){
-      if(!isOnMobileDevice){
-        scrollToNewFilterResults();
-  }});
+    globalSearchQuery = activitiesIcon;
+    addYelpMarkersAndCards(map, marker);
+
   });
   $(".accommodation-button").click(function () {
-    addYelpMarkersAndCardsPromise(accommodation).then(function(){
-      if(!isOnMobileDevice){
-        scrollToNewFilterResults();
-  }});
+    globalSearchQuery = accommodation;
+    addYelpMarkersAndCards(map, marker);
   });
 
-//used in filter buttons
-  function addYelpMarkersAndCardsPromise(filterTerm){
-    return new Promise(function(resolve, reject){
-        globalSearchQuery = filterTerm;
-        addYelpMarkersAndCards(map, marker);
-        resolve();
-    });
-  }
+
 
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
@@ -402,23 +430,6 @@ function mapInteraction(map) {
   });
 }
 
-
-//called when filter button pressed
-//scrolls to new cards
-//timeout allows for delay in GET request
-function scrollToNewFilterResults() {
-
-  //the index of the last card before the function is called
-  let indexOfFirstNewCard = iFullYelp;
- 
-    cardToScrollTo = `.card-${indexOfFirstNewCard-1}`; //-1 fixes bug where card is undefined 
-    console.log(cardToScrollTo);
-    $("#cards-col").animate({
-      scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
-      scrollLeft: 0
-    }, 1000);
- 
-};
 
 
 //Called when user filters results or changes location 
@@ -466,13 +477,14 @@ function addYelpMarkersAndCards(map, marker) {
 
 
 
-//click on marker functionality 
-//on mobile devices view infobox
-//otherwise view card
-      if (isOnMobileDevice){addInfoboxes(i)
+      //click on marker functionality 
+      //on mobile devices view infobox
+      //otherwise view card
+      if (isOnMobileDevice) {
+        addInfoboxes(i)
       } else {
-      //scrolls to that marker's card
-      marker.addListener('click', viewMarkerCard());
+        //scrolls to that marker's card
+        marker.addListener('click', viewMarkerCard());
       }
     }
 
@@ -492,15 +504,15 @@ function addYelpMarkersAndCards(map, marker) {
   //code structure partly from: https://stackoverflow.com/questions/11106671/google-maps-api-multiple-markers-with-infowindows
   function addInfoboxes(i) {
 
-      let infoWindowContent = infowindowArray[totalIInfowindowArray-1]; //-1 because totalIInfowindowArray++ happens before function is called
-      let infoWindow = new google.maps.InfoWindow();
-      google.maps.event.addListener(marker, 'click', (function (marker, InfoWindow, infoWindow) {
-        return function () {
-          infoWindow.setContent(infoWindowContent);
-          infoWindow.open(map, marker);
-        };
-      })(marker, infoWindowContent, infoWindow));
-   
+    let infoWindowContent = infowindowArray[totalIInfowindowArray - 1]; //-1 because totalIInfowindowArray++ happens before function is called
+    let infoWindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', (function (marker, InfoWindow, infoWindow) {
+      return function () {
+        infoWindow.setContent(infoWindowContent);
+        infoWindow.open(map, marker);
+      };
+    })(marker, infoWindowContent, infoWindow));
+
     //console.log("total i: " + totalIInfowindowArray)
   }
 };
