@@ -5,20 +5,38 @@ jQuery.ajaxPrefilter(function (options) {
   }
 });
 
-//initial centre of map
+//initial center of map
+//dublin city center
 var currentLat = 53.3498053;
 var currentLng = -6.2603097;
 
+//boolean value
+//true if on mobile device 
+//else false 
 var isOnMobileDevice;
+
+//checks if user in on a mobile device
+//sets value of isOnMobileDevice
+//code from: https://stackoverflow.com/questions/9048253/in-javascript-if-mobile-phone;
+function checkDevice() {
+  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    isOnMobileDevice = true;
+  } else {
+    isOnMobileDevice = false;
+  };
+}
+
 
 checkDevice();
 
-//filters terms for yelp search. 
+//filters terms for yelp search
+//chosen from list of possible categories: https://www.yelp.com/developers/documentation/v3/all_category_list
 var foodAndDrink = "food,bars";
 var activities = "streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours";
 var accommodation = "guesthouses,campgrounds,hostels,hotels";
 
-//current filter. Set as activities for map initialization
+//current filter
+//set as activities for map initialization
 var globalSearchQuery = activities;
 
 //icons to appear as markers on map
@@ -52,20 +70,11 @@ var getYelpData = function (latitude, longitude, cb) {
 
 };
 
-//checks if user in on a mobile device
-//needs to be called every time if(onMobileDevice) is used
-//code from: https://stackoverflow.com/questions/9048253/in-javascript-if-mobile-phone;
-function checkDevice() {
-  if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    isOnMobileDevice = true;
-  } else {
-    isOnMobileDevice = false;
-  };
-}
 
-//creates search bar
-//Code from Google API documentation. Extracted to global function for bug fixing. 
-function createSearchBar(map) {
+//creates searchbox
+//Code from Google API documentation: https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
+//Extracted to global function for bug fixing. 
+function createSearchbox(map) {
   var input = document.getElementById('pac-input');
   var searchBox = new google.maps.places.SearchBox(input);
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -114,29 +123,36 @@ function createSearchBar(map) {
     });
     map.fitBounds(bounds);
 
-
-    //my code. Clears markers and cards if searchBox is used
-    if (markers.length > 0) {
-
-      for (var i = 0; i < markersArray.length; i++) {
-        markersArray[i].setMap(null);
+    //my code
+    //clears markers and cards if searchBox is used
+    function clearMarkersAndCards() {
+      if (markers.length > 0) {
+        for (var i = 0; i < markersArray.length; i++) {
+          markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+        markersArrayViewOnMap.forEach(function (marker) {
+          marker.setMap(null);
+        });
+        markersSet.clear();
+        yelpCardsSet.clear();
+        for (var member in fullYelp)
+          delete fullYelp[member];
+        //clears card results and resets pushToCards iterators
+        $("#cards-content .card-group").empty();
+        iCardBody = 0;
+        iFullYelp = 0;
       }
-      markersArray.length = 0;
-      markersArrayViewOnMap.forEach(function (marker) {
-        marker.setMap(null);
-      });
-      markersSet.clear();
-      yelpCardsSet.clear();
-      for (var member in fullYelp) delete fullYelp[member];
-
-      //clears card results and resets pushToCards iterators
-      $("#cards-content .card-group").empty();
-      iCardBody = 0;
-      iFullYelp = 0;
     }
+
+    clearMarkersAndCards();
   });
+
+
 }
 
+//creates new map
+//initial code from: https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
 var generateNewMap = function (latitude, longitude) {
   return new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
@@ -148,36 +164,40 @@ var generateNewMap = function (latitude, longitude) {
   });
 }
 
-//Part of functions.  Need to be global in scope.
+//part of functions
+//need to be global in scope.
 var yelpResponse = {};
 var locations = [];
 
-//enables clear markers
+//enables clear markers functionality 
 var markersArray = [];
 
-//to check array entries against to prevent duplicates 
+//to check markersArray entries against 
+//to prevent duplicates 
 //final google marker clusters must use an array not a set
 let markersSet = new Set([]);
 
 
-//clears markers. Also clears marker cluster as part of addYelpMarkers function
+
+
+//clears markers
+//also clears markerCluster in addYelpMarkers function
 $(".clear-markers-button").click(function () {
 
-
-
-
+  //makes markers on map invisible 
   for (var i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
-
   }
   markersArray.length = 0;
   markersArrayViewOnMap.forEach(function (marker) {
     marker.setMap(null);
   });
+
+
+  //resets variables 
   markersSet.clear();
   yelpCardsSet.clear();
   for (var member in fullYelp) delete fullYelp[member];
-
   infowindowArray.length = 0;
   infowindowSet.clear();
   totalIInfowindowArray = 0;
@@ -189,28 +209,6 @@ $(".clear-markers-button").click(function () {
   iFullYelp = 0;
 });
 
-//iterators used in pushToCards
-//placed outside function to avoid resting 
-let iFullYelp = 0;
-let iCardBody = 0;
-
-
-let ifUndefinedReturnNA = function (valueToCheck) {
-  if (valueToCheck == null) {
-    return "N/A"
-  } else {
-    return valueToCheck;
-  }
-}
-
-//must enter fullYelp[iCardBody].categories as argument 
-let showAllCategories = function (business) {
-  let categoriesArray = [];
-  for (let i = 0; i < business.length; i++) {
-    categoriesArray.push(" " + business[i].title);
-  }
-  return categoriesArray;
-}
 
 
 //holds yelp data to be pushed to cards
@@ -258,9 +256,37 @@ let pushToCardsCalled = -1;
 //used in pushToCardsOrInfoboxes
 let indexBeforeNewCards = 0;
 
+//iterators used in pushToCardsOrInfoboxes
+//placed outside function to avoid resting 
+let iFullYelp = 0;
+let iCardBody = 0;
+
+
+
 
 //Adds details of yelp results to sidebar cards
 let pushToCardsOrInfoboxes = function (map) {
+
+
+  //print n/a rather than undefined 
+  let ifUndefinedReturnNA = function (valueToCheck) {
+    if (valueToCheck == null) {
+      return "N/A"
+    } else {
+      return valueToCheck;
+    }
+  }
+
+  //shows all business categories 
+  //must enter fullYelp[iCardBody].categories as argument 
+  let showAllCategories = function (business) {
+    let categoriesArray = [];
+    for (let i = 0; i < business.length; i++) {
+      categoriesArray.push(" " + business[i].title);
+    }
+    return categoriesArray;
+  }
+
 
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
 
@@ -269,12 +295,13 @@ let pushToCardsOrInfoboxes = function (map) {
     if (yelpCardsSet.size > Object.keys(fullYelp).length) {
       fullYelp[iFullYelp] = yelpResponse.businesses[z];
 
-      //Using iFullYelp iterator ensures that no index values are skipped
+      //using iFullYelp iterator ensures that no index values are skipped
+      //doesn't reset with every time pushToCardsOrInfobox is called
       iFullYelp++;
     }
   }
 
-  //adds each response to infoboxArray user is on a mobile device
+  //adds each response to infoboxArray if user is on a mobile device
   if (isOnMobileDevice) {
 
     for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
@@ -303,7 +330,6 @@ let pushToCardsOrInfoboxes = function (map) {
     </div>
     `));
       }
-
     }
 
 
@@ -311,8 +337,8 @@ let pushToCardsOrInfoboxes = function (map) {
     //push each response to a card
   } else {
 
-     //index value of last card before loop starts
-     indexBeforeNewCards = iCardBody
+    //index value of last card before loop starts
+    indexBeforeNewCards = iCardBody
 
 
     for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
@@ -337,17 +363,18 @@ let pushToCardsOrInfoboxes = function (map) {
     `)
     }
 
-//ensures scrollToNewFilterResults isn't called for the first set of cards
-//value resets when clear search button pressed
-//only called when more than 10 new results.
-//stops function being called every time the users drags map
-pushToCardsCalled++;
-    if (pushToCardsCalled > 1 && (iCardBody-indexBeforeNewCards) > 10) {
+
+
+    //only called when more than 10 new results to stop
+    //function being called every time the users drags map
+    //only calledwhen pushToCards > 1 to avoid scrollToNewCards
+    //being called on initial pushToCardsOrInfoboxes
+    pushToCardsCalled++;
+    if (pushToCardsCalled > 1 && (iCardBody - indexBeforeNewCards) > 10) {
       scrollToNewCards();
     }
   }
 }
-
 
 
 //called when new cards added
@@ -358,19 +385,15 @@ function scrollToNewCards() {
   //the index of the first new card
   let indexOfFirstNewCard = indexBeforeNewCards + 1;
 
-  cardToScrollTo = `.card-${indexOfFirstNewCard}`; 
-  //console.log(cardToScrollTo);
+  cardToScrollTo = `.card-${indexOfFirstNewCard}`;
   $("#cards-col").animate({
     scrollTop: $(cardToScrollTo).offset().top - $("#cards-col").offset().top + $("#cards-col").scrollTop(),
     scrollLeft: 0
   }, 1000);
-
 };
 
 
-
-
-//Adds coordinates of yelp results to locations array
+//adds coordinates of yelp results to locations[]
 let pushToLocations = function () {
   locations = [];
   for (var i = 0; i < yelpResponse.businesses.length; i++) {
@@ -382,14 +405,10 @@ let pushToLocations = function () {
 
 };
 
-
-
 //generates initial map with search bar
 function initMap() {
   map = generateNewMap(currentLat, currentLng);
-
-
-  createSearchBar(map);
+  createSearchbox(map);
   mapInteraction(map);
 };
 
@@ -399,6 +418,7 @@ function initMap() {
 //receive new yelp result upon location change
 function mapInteraction(map) {
 
+  //avoids bugs due to scope
   var marker;
 
   addYelpMarkersAndCards(map, marker);
@@ -408,7 +428,6 @@ function mapInteraction(map) {
   $(".food-and-drink-button").click(function () {
     globalSearchQuery = foodAndDrink;
     addYelpMarkersAndCards(map, marker);
-
   });
 
   $(".activities-button").click(function () {
@@ -422,7 +441,6 @@ function mapInteraction(map) {
   });
 
 
-
   //adds yelp markers when tiles are loaded
   //occurs after initial map is loaded and when location is changed
   map.addListener("tilesloaded", function () {
@@ -431,8 +449,7 @@ function mapInteraction(map) {
 }
 
 
-
-//Called when user filters results or changes location 
+//called when user filters results or changes location 
 function addYelpMarkersAndCards(map, marker) {
 
   //gets lat and lng values for current map location
@@ -440,16 +457,22 @@ function addYelpMarkersAndCards(map, marker) {
   currentLat = newPosition.lat();
   currentLng = newPosition.lng();
 
-  //sends GET request to yelp. Places results on map and on cards
+  //sends GET request to yelp
+  //places results on map and on cards/infoboxes
   getYelpData(currentLat, currentLng, function (data) {
 
+    //to determine if cards or infoboxes should be used
     checkDevice();
 
+    //callback from GET request
     yelpResponse = data;
 
+    //coordinates for map markers
     pushToLocations();
+
     pushToCardsOrInfoboxes(map);
 
+    //value determined below
     var iconToUse;
 
     if (globalSearchQuery === activities) {
@@ -463,6 +486,9 @@ function addYelpMarkersAndCards(map, marker) {
 
     for (let i = 0; i < locations.length; i++) {
 
+      //not  placed on map
+      //added to markersArray
+      //then placed on map as part of markersCluster
       marker = new google.maps.Marker({
         position: locations[i],
         icon: iconToUse,
@@ -476,8 +502,7 @@ function addYelpMarkersAndCards(map, marker) {
       };
 
 
-
-      //click on marker functionality 
+      //click on marker functionality:
       //on mobile devices view infobox
       //otherwise view card
       if (isOnMobileDevice) {
@@ -488,12 +513,14 @@ function addYelpMarkersAndCards(map, marker) {
       }
     }
 
-
+    //places markers on map 
+    //with markerCluster functionality 
     let markerCluster = new MarkerClusterer(map, markersArray, {
       imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     });
 
-    // Clears marker clusters. Needs to be same scope as declaration of markerCluster
+    // Clears marker clusters
+    //should be same scope as declaration of markerCluster
     $(".clear-markers-button").click(function () {
       markerCluster.clearMarkers();
     });
@@ -504,6 +531,7 @@ function addYelpMarkersAndCards(map, marker) {
   //code structure partly from: https://stackoverflow.com/questions/11106671/google-maps-api-multiple-markers-with-infowindows
   function addInfoboxes(i) {
 
+
     let infoWindowContent = infowindowArray[totalIInfowindowArray - 1]; //-1 because totalIInfowindowArray++ happens before function is called
     let infoWindow = new google.maps.InfoWindow();
     google.maps.event.addListener(marker, 'click', (function (marker, InfoWindow, infoWindow) {
@@ -513,13 +541,12 @@ function addYelpMarkersAndCards(map, marker) {
       };
     })(marker, infoWindowContent, infoWindow));
 
-    //console.log("total i: " + totalIInfowindowArray)
   }
 };
 
 //called when card is clicked
 //highlights and scrolls to that marker's card
-//removes highlighting of other cards
+//removes highlighting on other cards
 function viewMarkerCard() {
   return function () {
     let markerIndex = markersArray.indexOf(this);
