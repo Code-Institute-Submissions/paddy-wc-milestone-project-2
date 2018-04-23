@@ -28,7 +28,7 @@ function initMapDestinationExplorer () {
 
   // current filter
   // set as activities for map initialization
-  let globalSearchQuery = activities
+  let functionSearchQuery = activities
 
   // Get request for yelp API. Generated using "postman" app
   // added access-control-allow-origin to enable cors-anywhere
@@ -36,7 +36,7 @@ function initMapDestinationExplorer () {
     let settings = {
       'async': true,
       'crossDomain': true,
-      'url': `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${globalSearchQuery}`,
+      'url': `https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${functionSearchQuery}`,
       'method': 'GET',
       'headers': {
         'authorization': 'Bearer UTSSHcFmhNyctmBOeWKD2eeg9GV_LRkqsdjDa3Q_WkwvGywmY0cxtFDWQt1ib4lgRiE1y9l0_uRPdU6O4fY1rn164iomb6Y7_wR9G-Ii3WPWScwM5UWBZaPSz3LCWnYx',
@@ -73,7 +73,7 @@ function initMapDestinationExplorer () {
   }
 
   // part of functions
-  // need to be global in scope.
+  // need to be at function scope.
   let yelpResponse = {}
   let locations = []
 
@@ -111,7 +111,7 @@ function initMapDestinationExplorer () {
 
   // full iterator for infowindow array
   // used in addInfoboxes(i)
-  // global to ensure it is not reset
+  // function scope  to ensure it is not reset
   // except when markers are cleared
   let totalIInfowindowArray = 0
 
@@ -302,16 +302,16 @@ function initMapDestinationExplorer () {
     // filter buttons functionality
     // adds new yelp markers and cards then scrolls to first new card
     $('.food-and-drink-button').click(function () {
-      globalSearchQuery = foodAndDrink
+      functionSearchQuery = foodAndDrink
       addYelpMarkersAndCards(map, marker)
     })
 
     $('.activities-button').click(function () {
-      globalSearchQuery = activitiesIcon
+      functionSearchQuery = activitiesIcon
       addYelpMarkersAndCards(map, marker)
     })
     $('.accommodation-button').click(function () {
-      globalSearchQuery = accommodation
+      functionSearchQuery = accommodation
       addYelpMarkersAndCards(map, marker)
     })
 
@@ -343,9 +343,9 @@ function initMapDestinationExplorer () {
       // value determined below
       let iconToUse
 
-      if (globalSearchQuery === activities) {
+      if (functionSearchQuery === activities) {
         iconToUse = activitiesIcon
-      } else if (globalSearchQuery === accommodation) {
+      } else if (functionSearchQuery === accommodation) {
         iconToUse = accommodationIcon
       } else {
         iconToUse = foodIcon
@@ -424,7 +424,7 @@ function initMapDestinationExplorer () {
 
   // creates searchbox
   // Code from Google API documentation: https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
-  // Extracted to global function for bug fixing.
+  // extracted to function scope  for bug fixing.
   function createSearchbox (map) {
     let input = document.getElementById('pac-input')
     let searchBox = new google.maps.places.SearchBox(input)
