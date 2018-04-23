@@ -8,6 +8,13 @@ function initMapDestinationExplorer () {
     }
   }
 
+
+  //for testing jasmine 
+  let returnSum = function(x,y){
+    return x + y;
+  }
+
+
   // enables cors in get request
   jQuery.ajaxPrefilter(function (options) {
     if (options.crossDomain && jQuery.support.cors) {
@@ -500,4 +507,7 @@ function initMapDestinationExplorer () {
       clearMarkersAndCards()
     })
   }
+
+
+
 };
