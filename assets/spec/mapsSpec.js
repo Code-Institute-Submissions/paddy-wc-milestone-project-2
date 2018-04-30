@@ -59,9 +59,29 @@ describe("getYelpData function", function () {
 
   })
   it('should initially return 20 businesses ', function () {
-    // run assertions
+
     expect(businessesLength).toBe(20)
   });
 
 
+})
+
+
+describe("ifUndefinedReturnNA function", function () {
+  it("should exist", function () {
+    expect(ifUndefinedReturnNA).toBeDefined();
+  })
+
+  it("should return 'N/A' when undefined entered  ", function () {
+    let result = ifUndefinedReturnNA(undefined)
+    expect(result).toBeDefined()
+    expect(result).toBe('N/A')
+    
+  })
+
+  it("should return argument if argument is not undefined ", function(){
+    let argument = "argument"
+    let result = ifUndefinedReturnNA(argument)
+    expect(result).toBe(argument)
+  })
 })
