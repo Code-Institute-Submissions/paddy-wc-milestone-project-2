@@ -20,10 +20,7 @@ jQuery.ajaxPrefilter(function (options) {
   }
 })
 
-// initial center of map
-// dublin city center
-let currentLat = 53.3498053
-let currentLng = -6.2603097
+
 
 // filters terms for yelp search
 // chosen from list of possible categories: https://www.yelp.com/developers/documentation/v3/all_category_list
@@ -31,9 +28,6 @@ let foodAndDrink = 'food,bars'
 let activities = 'streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours'
 let accommodation = 'guesthouses,campgrounds,hostels,hotels'
 
-// current filter
-// set as activities for map initialization
-// let functionSearchQuery = activities
 
 // Get request for yelp API. Generated using "postman" app
 // added access-control-allow-origin to enable cors-anywhere
@@ -67,8 +61,9 @@ let activitiesIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYA
 let accommodationIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD4SURBVFhH7ZJBEoIwDEW5hCeChWek42l0pY6LlvsokVThpzTApLu+mYxN+/pTZmwqlRzny+vUOX+nojVvr0JO24cH1RY/yzfMBd+58KaidS6UzsaHDtGn9eFHLIdT6BQ8fllIhS6H/3363f0IHE79fAA+Yn6W8uMe63lIxOF8tHtQ7iwJCWvDIxiqDUA/5fygf+4WcRm6zx8/8MnbkhiYfSUzhR7zeUuiCoC5bx4IqD4KpXuBdsG6F6gCYO6bBwKqj0LpXqBdsO4FqgCY++aBgOqjULoXaBese4EqAOa+eSCg+lEoXTxO0vb+lrpgWa3zVx5XqTBN8wF05P4FG/6txAAAAABJRU5ErkJggg=='
 
 // creates new map
-// initial code from: https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
-let generateNewMap = function (latitude, longitude) {
+// initial center of map is Dublin city center
+// Code from: https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
+let generateNewMap = function (latitude= 53.3498053 , longitude= -6.2603097) {
   return new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
     center: {
@@ -294,7 +289,7 @@ let pushToLocations = function () {
 
 // generates initial map with search bar
 function initMapDestinationExplorer() {
-  map = generateNewMap(currentLat, currentLng)
+  map = generateNewMap()
   createSearchbox(map)
   mapInteraction(map)
 }
