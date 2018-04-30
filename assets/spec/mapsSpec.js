@@ -146,10 +146,62 @@ describe("pushToCardsOrInfoboxes function", function () {
     it("should add aside cards to #cards-content on non-mobile devices ", function () {
     
       let cardsContent = $("#cards-content").html()
-      console.log(cardsContent)
       expect(cardsContent).toContain('  <div class="card aside-card card-0">')
     })
 
 
   })
+})
+
+
+
+
+describe("pushToLocations function", function () {
+  //enables testing of asynchronous functions
+  //code source: https://metabroadcast.com/blog/asynchronous-testing-with-jasmine 
+  beforeEach(function (done) {
+    setTimeout(function () {
+      result = 'a different value';
+      done();
+    }, 4000);
+  });
+
+  let latitude = 53.3498053
+  let longitude = -6.2603097
+  let searchQuery = "food,bars";
+  let yelpResponse = {}
+  firstLocation = {}
+
+
+  it("should exist", function () {
+    expect(pushToLocations).toBeDefined();
+  })
+
+  getYelpData(latitude, longitude, searchQuery, function (data) {
+
+
+    yelpResponse = data
+
+    let locations = pushToLocations(yelpResponse)
+
+    let firstLocation= locations[0]
+
+    console.log(firstLocation)
+
+    let latType =  typeof firstLocation["lat"]
+
+    it("should return an array of lat and lng int values", function(){
+      expect(Object.keys(firstLocation)[0]).toBe("lat")
+      expect(Object.keys(firstLocation)[1]).toBe("lng")
+      expect(latType).toBe("number")
+    
+
+  })
+
+   
+    })
+   
+ 
+
+
 })
