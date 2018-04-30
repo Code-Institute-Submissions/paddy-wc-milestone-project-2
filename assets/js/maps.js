@@ -145,8 +145,8 @@ let viewOnMap = function (latitude, longitude) {
   map.setZoom(17)
 }
 
-// Adds details of yelp results to sidebar cards
-let pushToCardsOrInfoboxes = function (map, yelpResponse) {
+
+
   // print n/a rather than undefined
   let ifUndefinedReturnNA = function (valueToCheck) {
     if (valueToCheck == null) {
@@ -165,6 +165,10 @@ let pushToCardsOrInfoboxes = function (map, yelpResponse) {
     }
     return categoriesArray
   }
+  
+// Adds details of yelp results to sidebar cards
+let pushToCardsOrInfoboxes = function (map, yelpResponse) {
+
 
   // adds each yelp response to infoboxArray 
   //called if user is on mobile device 
