@@ -1,6 +1,5 @@
 describe('checkIfOnMobile function', function () {
 
-
   it("should exist", function () {
     expect(checkIfOnMobile).toBeDefined();
   })
@@ -20,8 +19,6 @@ describe('generateNewMap function', function () {
   })
 
 })
-
-
 
 
 describe("getYelpData function", function () {
@@ -49,18 +46,13 @@ describe("getYelpData function", function () {
   getYelpData(latitude, longitude, searchQuery, function (data) {
 
     yelpResponse = data
-    console.log(yelpResponse)
     businessesLength = yelpResponse.businesses.length
-    console.log(businessesLength)
 
 
   })
   it('should initially return 20 businesses ', function () {
-
     expect(businessesLength).toBe(20)
   });
-
-
 })
 
 
@@ -104,7 +96,6 @@ describe("showAllCategories function", function () {
     ]
 
     let sampleArrayLength = sampleArray.length
-
     let resultArray = showAllCategories(sampleArray)
     let resultArrayLength = resultArray.length
     expect(resultArrayLength).toBe(sampleArrayLength)
@@ -125,8 +116,6 @@ describe("pushToCardsOrInfoboxes function", function () {
   });
 
 
-
-
   it("should exist", function () {
     expect(pushToCardsOrInfoboxes).toBeDefined();
   })
@@ -144,17 +133,11 @@ describe("pushToCardsOrInfoboxes function", function () {
     pushToCardsOrInfoboxes(map, yelpResponse)
 
     it("should add aside cards to #cards-content on non-mobile devices ", function () {
-    
       let cardsContent = $("#cards-content").html()
       expect(cardsContent).toContain('  <div class="card aside-card card-0">')
     })
-
-
   })
 })
-
-
-
 
 describe("pushToLocations function", function () {
   //enables testing of asynchronous functions
@@ -179,29 +162,17 @@ describe("pushToLocations function", function () {
 
   getYelpData(latitude, longitude, searchQuery, function (data) {
 
-
     yelpResponse = data
-
     let locations = pushToLocations(yelpResponse)
-
     let firstLocation= locations[0]
-
-    console.log(firstLocation)
-
     let latType =  typeof firstLocation["lat"]
 
-    it("should return an array of lat and lng int values", function(){
+    it("should return an object with lat and lng int values", function(){
       expect(Object.keys(firstLocation)[0]).toBe("lat")
       expect(Object.keys(firstLocation)[1]).toBe("lng")
       expect(latType).toBe("number")
-    
-
   })
 
-   
     })
-   
- 
-
-
+  
 })
