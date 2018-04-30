@@ -33,7 +33,6 @@ let accommodation = 'guesthouses,campgrounds,hostels,hotels'
 // added access-control-allow-origin to enable cors-anywhere
 let getYelpData = function (latitude, longitude, searchQuery = activities, cb) {
 
-  console.log(searchQuery)
   let settings = {
     'async': true,
     'crossDomain': true,
@@ -72,7 +71,6 @@ let generateNewMap = function (latitude = 53.3498053, longitude = -6.2603097) {
 
 // part of functions
 // need to be at function scope.
-let yelpResponse = {}
 let locations = []
 
 // enables clear markers functionality
@@ -159,7 +157,7 @@ let viewOnMap = function (latitude, longitude) {
 }
 
 // Adds details of yelp results to sidebar cards
-let pushToCardsOrInfoboxes = function (map) {
+let pushToCardsOrInfoboxes = function (map, yelpResponse) {
   // print n/a rather than undefined
   let ifUndefinedReturnNA = function (valueToCheck) {
     if (valueToCheck == null) {
@@ -273,7 +271,7 @@ function scrollToNewCards() {
 };
 
 // adds coordinates of yelp results to locations[]
-let pushToLocations = function () {
+let pushToLocations = function (yelpResponse) {
   locations = []
   for (let i = 0; i < yelpResponse.businesses.length; i++) {
     locations.push({ // must be called "lat" and "lng"
@@ -339,9 +337,9 @@ function addYelpMarkersAndCards(map, marker, searchQuery) {
 
 
     // coordinates for map markers
-    pushToLocations()
+    pushToLocations(yelpResponse)
 
-    pushToCardsOrInfoboxes(map)
+    pushToCardsOrInfoboxes(map, yelpResponse)
 
     // icons to appear as markers on map
     let foodIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGTSURBVFhH7ZLPSsNAEIdz10I3Wyz6Lgp6EwR9GP+f9CiVbEKfo5rEk6BelF59EEUvehBEndlMQpwh3W71IuaDhcxvv5ndJg1aWkqyOPycZVF71U+lsxaUgu+i9t+7AJVOuO9bC5wCg/u+tcApMLjvWwucAoP7vrXAKTC471sLnAKD+761wCkwuO9bC1KjXlG4HPTnKGokPdEddNNYvVAU4DNmo6i3WNThXWrCW3zGjPsCEO6tlOhVihpBB13soQgvcI1Znqhtiipgb9/ONuqKIkkWq2OSUooaAS9HNzPqiCJ4g90Vm8XhG8zYSYd6CRfM3S2y8OM86i6TLhkN+gsgPtPgPYoFmQkP0IGBT/npfI9iC/5SPMjOqC2bTZhZkRu9BQe8F40qw1eN39t+80ivwaALu4dOojep7Ru5Uetw2E11OHwazGjbDQ6GAx7LAXzBn+shi7sbpDdS+lT6cTbsaGg+hMPGtYPH+Ppxj7SJ/OgCdWYd1F6gvcDfvUDZ6FqkNzKtJ6gfMmmR3si0Xst/Jwi+AL08M6wrFEz7AAAAAElFTkSuQmCC'
