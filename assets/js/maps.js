@@ -69,9 +69,7 @@ let generateNewMap = function (latitude = 53.3498053, longitude = -6.2603097) {
   })
 }
 
-// part of functions
-// need to be at function scope.
-let locations = []
+
 
 // enables clear markers functionality
 let markersArray = []
@@ -279,6 +277,8 @@ let pushToLocations = function (yelpResponse) {
       lng: yelpResponse.businesses[i].coordinates.longitude
     })
   }
+
+  return locations
 }
 
 // generates initial map with search bar
@@ -337,7 +337,7 @@ function addYelpMarkersAndCards(map, marker, searchQuery) {
 
 
     // coordinates for map markers
-    pushToLocations(yelpResponse)
+    locations = pushToLocations(yelpResponse)
 
     pushToCardsOrInfoboxes(map, yelpResponse)
 
