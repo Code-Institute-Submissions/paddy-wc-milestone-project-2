@@ -85,3 +85,27 @@ describe("ifUndefinedReturnNA function", function () {
     expect(result).toBe(argument)
   })
 })
+
+describe("showAllCategories function", function () {
+  it("should exist", function () {
+    expect(showAllCategories).toBeDefined();
+  })
+
+  it("should return an array the same length as its argument ",function(){
+   let  sampleArray= [
+      {alias: "desserts", title: "Desserts"},
+      {alias: "tea", title: "Tea Rooms"},
+      {alias: "breakfast_brunch", title: "Breakfast & Brunch"}
+      ]
+
+    let sampleArrayLength = sampleArray.length
+
+   let  resultArray = showAllCategories(sampleArray)
+    let resultArrayLength = resultArray.length
+    expect(resultArrayLength).toBe(sampleArrayLength)
+
+  })
+
+
+
+})
