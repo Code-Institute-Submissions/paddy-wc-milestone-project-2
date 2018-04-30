@@ -1,19 +1,69 @@
-// describe("sum function", function(){
-//   it("should return 3 when 2 and 1 entered", function(){
-//    // spyOn(initMapDestinationExplorer, "returnSum");
-//     //expect(initMapDestinationExplorer.returnSum).toHaveBeenCalled();
-//    // let result = initMapDestinationExplorer.returnSum(2,1);
-//    // expect(result).toBe(3)
-//   })
-// })
+describe('setTimeout gives correct value', function() {
+    var result = 'an initial value';
+  
+    beforeEach(function(done) {
+      setTimeout(function() {
+        result = 'a different value';
+        done();
+      }, 2500);
+    });
+  
+    it('can now be tested properly', function() {
+      // run assertions
+    });
+  });
 
 
-// describe('checkIfOnMobile function', function () {
-//   it('should return a boolean', function () {
+describe('checkIfOnMobile function', function () {
 
-//     let result = checkIfOnMobile();
-//     expect(result).toBe("true" || "false")
+
+    it("should exist", function(){
+        expect(checkIfOnMobile).toBeDefined();
+    })
+  it('should not return a value if not on mobile device', function () {
+
+    let result = checkIfOnMobile();
+    expect(result).toBeUndefined()
     
-//   })
-// })
+  })
+})
+
+
+describe('generateNewMap function', function(){
+
+    it("should exist", function(){
+        expect(generateNewMap).toBeDefined();
+    })
+
+})
+
+
+
+
+describe("getYelpData function", function(){
+
+
+
+    it("should exist", function(){
+        expect(getYelpData).toBeDefined();
+    })
+
+    it("should return a list of 20 businesses on initial call", function(){
+        latitude = 53.3498053
+        longitude = -6.2603097
+        searchQuery = "food,bars";
+        
+        getYelpData(latitude, longitude, searchQuery, function(data){
+            
+            yelpResponse = data
+            console.log(yelpResponse)
+            businessesLength = yelpResponse.businesses.length
+            console.log(businessesLength)
+            expect(businessesLength).toBe(20)
+           
+        })
+    })
+})
+
+
 

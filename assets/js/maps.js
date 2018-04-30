@@ -7,20 +7,12 @@ function checkIfOnMobile() {
 }
 
 
-//for testing jasmine 
-let returnSum = function (x, y) {
-  return x + y;
-}
-
-
 // enables cors in get request
 jQuery.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
     options.url = 'https://cors-anywhere.herokuapp.com/' + options.url
   }
 })
-
-
 
 // filters terms for yelp search
 // chosen from list of possible categories: https://www.yelp.com/developers/documentation/v3/all_category_list
