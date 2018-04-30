@@ -149,7 +149,6 @@ let viewOnMap = function (latitude, longitude) {
   })
 
   markersArrayViewOnMap.push(marker)
-
   map.setCenter(viewOnMapLatLng)
   map.setZoom(17)
 }
@@ -175,6 +174,75 @@ let pushToCardsOrInfoboxes = function (map, yelpResponse) {
     return categoriesArray
   }
 
+  // adds each yelp response to infoboxArray 
+  //called if user is on mobile device 
+  function pushToInfoboxes() {
+    {
+      for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
+        infowindowSet.add(fullYelp[iCardBody].id);
+        if (infowindowSet.size > infowindowArray.length) {
+          infowindowArray.push((`
+      <div class="card infobox-card card-${iCardBody}">
+  
+      <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
+      <div class="card-body">
+      
+      <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
+  
+      <p class="card-text">
+      Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
+      Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
+      </p>
+      <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
+  
+      </div>
+      </div>
+      `));
+        }
+      }
+
+    }
+  }
+
+  //creates card for each yelp result 
+  //called if not on mobile device 
+  function pushToCards() {
+    {
+      indexBeforeNewCards = iCardBody;
+      for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
+        $('#cards-content .card-group').append(`
+      <div class="card aside-card card-${iCardBody}">
+  
+      <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
+      <div class="card-body">
+      
+      <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
+  
+      <p class="card-text">
+      Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
+      Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
+      </p>
+      <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
+      <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
+  
+      </div>
+      </div>
+      `);
+      }
+      // only called when more than 10 new results to stop
+      // function being called every time the users drags map
+      // only called when pushToCards > 1 to avoid scrollToNewCards
+      // being called on initial pushToCardsOrInfoboxes
+      pushToCardsCalled++;
+      if (pushToCardsCalled > 1 && (iCardBody - indexBeforeNewCards) > 10) {
+        scrollToNewCards();
+      }
+    }
+  }
+
+
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
     // iff value is added to yelpCardsSet it is added to fullYelp
     yelpCardsSet.add(yelpResponse.businesses[z].id)
@@ -187,72 +255,12 @@ let pushToCardsOrInfoboxes = function (map, yelpResponse) {
     }
   }
 
-  // adds each response to infoboxArray if user is on a mobile device
-  if (checkIfOnMobile()) {
-    for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
-      infowindowSet.add(fullYelp[iCardBody].id)
-
-      if (infowindowSet.size > infowindowArray.length) {
-        infowindowArray.push(
-          (`
-    <div class="card infobox-card card-${iCardBody}">
-
-    <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
-    <div class="card-body">
-    
-    <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
-
-    <p class="card-text">
-    Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
-    Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
-    </p>
-    <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
-
-    </div>
-    </div>
-    `))
-      }
-    }
-
-    // if user is not on mobile device
-    // push each response to a card
-  } else {
-    // index value of last card before loop starts
-    indexBeforeNewCards = iCardBody
-
-    for (iCardBody; iCardBody < Object.keys(fullYelp).length; iCardBody++) {
-      $('#cards-content .card-group').append(`
-    <div class="card aside-card card-${iCardBody}">
-
-    <img class="card-img-top" src="${fullYelp[iCardBody].image_url}" alt="Business Image">
-    <div class="card-body">
-    
-    <h5 class="card-title">${fullYelp[iCardBody].name}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${showAllCategories(fullYelp[iCardBody].categories)}</h6>
-
-    <p class="card-text">
-    Yelp Rating: ${fullYelp[iCardBody].rating}/5<br>
-    Price: ${ifUndefinedReturnNA(fullYelp[iCardBody].price)} 
-    </p>
-    <a onclick="viewOnMap( ${fullYelp[iCardBody].coordinates.latitude}, ${fullYelp[iCardBody].coordinates.longitude})" href = "#" class="card-link viewOnMapLink">View on Map</a>
-    <a href="${fullYelp[iCardBody].url}" target= "_blank" class="card-link">Yelp Page</a>
-
-    </div>
-    </div>
-    `)
-    }
-
-    // only called when more than 10 new results to stop
-    // function being called every time the users drags map
-    // only calledwhen pushToCards > 1 to avoid scrollToNewCards
-    // being called on initial pushToCardsOrInfoboxes
-    pushToCardsCalled++
-    if (pushToCardsCalled > 1 && (iCardBody - indexBeforeNewCards) > 10) {
-      scrollToNewCards()
-    }
-  }
+  if (checkIfOnMobile()) pushToInfoboxes();
+  else pushToCards();
 }
+
+
+
 
 // called when new cards added
 // not called for initial cards
