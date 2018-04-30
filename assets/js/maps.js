@@ -111,7 +111,7 @@ $('.clear-markers-button').click(function () {
   for (let i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null)
   }
-  markersArray.length = 0
+  markersArray = []
   markersArrayViewOnMap.forEach(function (marker) {
     marker.setMap(null)
   })
