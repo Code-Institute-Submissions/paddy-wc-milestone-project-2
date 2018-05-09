@@ -6,7 +6,6 @@ function checkIfOnMobile() {
   }
 }
 
-
 // enables cors in get request
 jQuery.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
@@ -20,10 +19,9 @@ let foodAndDrink = 'food,bars'
 let activities = 'streetart,racetracks,sportsteams,theater,opera,museums,festivals,culturalcenter,countryclubs,castles,cabaret,gardens,galleries,active,tours'
 let accommodation = 'guesthouses,campgrounds,hostels,hotels'
 
-
 // Get request for yelp API. Generated using "postman" app
 // added access-control-allow-origin to enable cors-anywhere
-let getYelpData = function (latitude, longitude, searchQuery = activities, cb) {
+let getYelpData = function (latitude, longitude, searchQuery=activities, cb) {
 
   let settings = {
     'async': true,
@@ -60,8 +58,6 @@ let generateNewMap = function (latitude = 53.3498053, longitude = -6.2603097) {
     mapTypeId: 'roadmap'
   })
 }
-
-
 
 // enables clear markers functionality
 let markersArray = []
@@ -116,7 +112,7 @@ $('.clear-markers-button').click(function () {
     marker.setMap(null)
   })
 
-  // resets letiables
+  // resets iterables
   markersSet.clear()
   yelpCardsSet.clear()
   for (let member in fullYelp) delete fullYelp[member]
@@ -145,8 +141,6 @@ let viewOnMap = function (latitude, longitude) {
   map.setZoom(17)
 }
 
-
-
   // print n/a rather than undefined
   let ifUndefinedReturnNA = function (valueToCheck) {
     if (valueToCheck == null) {
@@ -168,7 +162,6 @@ let viewOnMap = function (latitude, longitude) {
   
 // Adds details of yelp results to sidebar cards
 let pushToCardsOrInfoboxes = function (map, yelpResponse) {
-
 
   // adds each yelp response to infoboxArray 
   //called if user is on mobile device 
@@ -238,7 +231,6 @@ let pushToCardsOrInfoboxes = function (map, yelpResponse) {
     }
   }
 
-
   for (let z = 0; z < yelpResponse.businesses.length; z++) {
     // iff value is added to yelpCardsSet it is added to fullYelp
     yelpCardsSet.add(yelpResponse.businesses[z].id)
@@ -254,9 +246,6 @@ let pushToCardsOrInfoboxes = function (map, yelpResponse) {
   if (checkIfOnMobile()) pushToInfoboxes();
   else pushToCards();
 }
-
-
-
 
 // called when new cards added
 // not called for initial cards
@@ -339,7 +328,6 @@ function addYelpMarkersAndCards(map, marker, searchQuery) {
     // callback from GET request
     yelpResponse = data
 
-
     // coordinates for map markers
     locations = pushToLocations(yelpResponse)
 
@@ -350,11 +338,8 @@ function addYelpMarkersAndCards(map, marker, searchQuery) {
     let activitiesIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEsSURBVFhH7ZRNisJAEIV75R28gloRshyX4nFkTjEKcwHxCEa9hD9Hicu5wliveQ5RelpiuhQhHxSE95KqSnd1u5a6FL1eZ51l32uRkjGHRtseFNQGfq9CNdr2FCInX7Tf/9gMhyM2UNK259IAir+kgdAWFFn2RdseP4QiM/w1Y/aUIbz96/+Cr6cnVCwUfN2G1WAwQRHd8x0lh2do8CjZsRL59A2ILCjhVCx8A+pRskMLLbkCU0pYgSk0eJTs0Inf+2IiY0rQxtT2lOzQQj8ots3zLiWHZ9+AepRsiBWCBq/aWHJiSw2N3t/WJCc2bNDgVYczObHjFjqeyYldOKELqjGa7IikTUJX5MB09QklfCSYrj5NE7QNvG8Dlw9TB9PfJ/RximD6lpYbnDsDu+iNTz9RmNwAAAAASUVORK5CYII='
     let accommodationIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD4SURBVFhH7ZJBEoIwDEW5hCeChWek42l0pY6LlvsokVThpzTApLu+mYxN+/pTZmwqlRzny+vUOX+nojVvr0JO24cH1RY/yzfMBd+58KaidS6UzsaHDtGn9eFHLIdT6BQ8fllIhS6H/3363f0IHE79fAA+Yn6W8uMe63lIxOF8tHtQ7iwJCWvDIxiqDUA/5fygf+4WcRm6zx8/8MnbkhiYfSUzhR7zeUuiCoC5bx4IqD4KpXuBdsG6F6gCYO6bBwKqj0LpXqBdsO4FqgCY++aBgOqjULoXaBese4EqAOa+eSCg+lEoXTxO0vb+lrpgWa3zVx5XqTBN8wF05P4FG/6txAAAAABJRU5ErkJggg=='
 
-
     // value determined below
     let iconToUse
-
-
 
     if (searchQuery === foodAndDrink) {
       iconToUse = foodIcon
@@ -509,7 +494,6 @@ function createSearchbox(map) {
         iFullYelp = 0
       }
     }
-
     clearMarkersAndCards()
   })
 }

@@ -4,25 +4,18 @@ describe('checkIfOnMobile function', function () {
     expect(checkIfOnMobile).toBeDefined();
   })
   it('should not return a value if not on mobile device', function () {
-
     let result = checkIfOnMobile();
     expect(result).toBeUndefined()
-
   })
 })
 
-
 describe('generateNewMap function', function () {
-
   it("should exist", function () {
     expect(generateNewMap).toBeDefined();
   })
-
 })
 
-
 describe("getYelpData function", function () {
-
   //enables testing of asynchronous functions
   //code source: https://metabroadcast.com/blog/asynchronous-testing-with-jasmine 
   beforeEach(function (done) {
@@ -32,11 +25,9 @@ describe("getYelpData function", function () {
     }, 2500);
   });
 
-
   it("should exist", function () {
     expect(getYelpData).toBeDefined();
   })
-
 
   let businessesLength = 50;
   let latitude = 53.3498053
@@ -47,14 +38,11 @@ describe("getYelpData function", function () {
 
     yelpResponse = data
     businessesLength = yelpResponse.businesses.length
-
-
   })
   it('should initially return 20 businesses ', function () {
     expect(businessesLength).toBe(20)
   });
 })
-
 
 describe("ifUndefinedReturnNA function", function () {
   it("should exist", function () {
@@ -65,7 +53,6 @@ describe("ifUndefinedReturnNA function", function () {
     let result = ifUndefinedReturnNA(undefined)
     expect(result).toBeDefined()
     expect(result).toBe('N/A')
-
   })
 
   it("should return argument if argument is not undefined ", function () {
@@ -99,9 +86,7 @@ describe("showAllCategories function", function () {
     let resultArray = showAllCategories(sampleArray)
     let resultArrayLength = resultArray.length
     expect(resultArrayLength).toBe(sampleArrayLength)
-
   })
-
 })
 
 
@@ -115,11 +100,9 @@ describe("pushToCardsOrInfoboxes function", function () {
     }, 3500);
   });
 
-
   it("should exist", function () {
     expect(pushToCardsOrInfoboxes).toBeDefined();
   })
-
 
   let businessesLength = 50;
   let latitude = 53.3498053
@@ -140,7 +123,7 @@ describe("pushToCardsOrInfoboxes function", function () {
 })
 
 describe("pushToLocations function", function () {
-  //enables testing of asynchronous functions
+  //enables testing of asynchronous functionsx
   //code source: https://metabroadcast.com/blog/asynchronous-testing-with-jasmine 
   beforeEach(function (done) {
     setTimeout(function () {
@@ -172,7 +155,5 @@ describe("pushToLocations function", function () {
       expect(Object.keys(firstLocation)[1]).toBe("lng")
       expect(latType).toBe("number")
   })
-
     })
-  
 })
