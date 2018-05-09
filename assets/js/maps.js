@@ -369,7 +369,7 @@ function addYelpMarkersAndCards(map, marker, searchQuery) {
       // on mobile devices view infobox
       // otherwise view card
       if (checkIfOnMobile()) {
-        addInfoboxes(i)
+        addInfowindows(i)
       } else {
         // scrolls to that marker's card
         marker.addListener('click', viewMarkerCard())
@@ -392,7 +392,7 @@ function addYelpMarkersAndCards(map, marker, searchQuery) {
   // adds an infobox to every new marker
   // called on mobile devices
   // code structure partly from: https://stackoverflow.com/questions/11106671/google-maps-api-multiple-markers-with-infowindows
-  function addInfoboxes(i) {
+  function addInfowindows(i) {
     let infoWindowContent = infowindowArray[totalIInfowindowArray - 1] // -1 because totalIInfowindowArray++ happens before function is called
     let infoWindow = new google.maps.InfoWindow()
     google.maps.event.addListener(marker, 'click', (function (marker, InfoWindow, infoWindow) {
