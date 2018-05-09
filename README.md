@@ -31,7 +31,7 @@ By using the **Google Maps API** to display the map and enable the search box fu
 ## Tech Used
 
 ### Some of the tech used includes:
--**HTML**, **CSS** and **JavaScript**
+- **HTML**, **CSS** and **JavaScript**
     * Basic languages used for website
     * CSS code written in **SCSS**
 - [**Bootstrap**](http://getbootstrap.com/)
@@ -43,7 +43,7 @@ By using the **Google Maps API** to display the map and enable the search box fu
 - [**Google Maps API**](https://cloud.google.com/maps-platform/)
     * To display the map and markers, and to enable search box functionality 
 - [**Yelp Fusion API**](https://www.yelp.ie/developers/documentation/v3)
-    * Uses businesses search endpoint (https://www.yelp.ie/developers/documentation/v3/business_search) to get information on local businesses
+    * Uses [businesses search endpoint](https://www.yelp.ie/developers/documentation/v3/business_search) to get information on local businesses
 - [**CORS Anywhere**](https://github.com/Rob--W/cors-anywhere)
     * As the Yelp API does not have CORS functionality, CORS anywhere is used as a proxy request. This adds CORS headers to the request
 - [**Node.js**](https://nodejs.org/en/)
