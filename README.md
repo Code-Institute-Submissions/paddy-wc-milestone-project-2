@@ -71,6 +71,9 @@ By using the [Google Maps API](https://cloud.google.com/maps-platform/) to displ
 3. Make your changes
 4. Submit a pull request 
 
+## Deployment
+The site is hosted on [GitHub Pages](https://paddywc.github.io/milestone-project-2/). The source of this code is the [gh-pages branch](https://github.com/Paddywc/milestone-project-2/tree/gh-pages) of the project GitHub repository. It mirrors the master branch in every way, with the exception of some imports; the leading slash is removed for HTML imports from the project directory (“project-assets/..” rather than “/project-assets/..”). 
+
 ## Credits
 - The sources for all non-original code are displayed in comments above the relevant code
 - The checkIfOnMobile() function was taken from [Nahuel Barrios on Stack Overflow](https://stackoverflow.com/questions/9048253/in-javascript-if-mobile-phone). The original code also tests for tablets, but this was removed from the website’s code as tablets should have the same functionality as desktops
