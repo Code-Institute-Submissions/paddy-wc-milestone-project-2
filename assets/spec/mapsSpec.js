@@ -170,7 +170,7 @@ describe("pushToLocations function", function() {
     let latType = typeof firstLocation["lat"];
     expect(Object.keys(firstLocation)[0]).toBe("lat");
     expect(Object.keys(firstLocation)[1]).toBe("lng");
-    expect(latType).toBe("number")
+    expect(latType).toBe("number");
   });
 
 });

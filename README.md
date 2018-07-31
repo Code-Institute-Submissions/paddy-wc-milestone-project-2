@@ -67,10 +67,9 @@ By using the [Google Maps API](https://cloud.google.com/maps-platform/) to displ
 
 ### Getting the code up and running 
 1. Clone or fork this GitHub repository 
-2. Ensure you have Node.js installed. If you do not, install it by following [this guide](https://nodejs.org/en/)
-3. Compile any SCSS code to CSS. Use [**Easy Sass**](https://marketplace.visualstudio.com/items?itemName=spook.easysass) if using Visual Code Studio. If using Cloud9, write $ sass --watch main.scss in the terminal
-4. Make your changes
-5. Submit a pull request 
+2. Compile any SCSS code to CSS. Use [**Easy Sass**](https://marketplace.visualstudio.com/items?itemName=spook.easysass) if using Visual Code Studio. If using Cloud9, write $ sass --watch main.scss in the terminal
+3. Make your changes
+4. Submit a pull request 
 
 ## Credits
 - The sources for all non-original code are displayed in comments above the relevant code
