@@ -260,7 +260,7 @@ footer {
   background-color: $title-background-color;
   @include bootstrapSmall() {
     display: none !important;
-  }
+  }  
   @include tablet() {
     display: none !important;
   }

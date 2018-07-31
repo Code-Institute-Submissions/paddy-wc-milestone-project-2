@@ -109,7 +109,7 @@ describe("pushToCardsOrInfoboxes function", function () {
   let longitude = -6.2603097
   let searchQuery = "food,bars";
   let yelpResponse = {}
- let  map = ""
+let  map = ""
   getYelpData(latitude, longitude, searchQuery, function (data) {
 
     yelpResponse = data

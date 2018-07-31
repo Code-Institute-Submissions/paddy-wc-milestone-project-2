@@ -61,7 +61,7 @@ By using the **Google Maps API** to display the map and enable the search box fu
     * Mozilla Firefox
     * Safari 
     * Opera
-- Additional Jasmine testing was performed and can be found in assets/spec/mapsSpec.js
+- Additional Jasmine testing was performed and can be found in assets/spec/mapsSpec.js. To start Jasmine tests, un-comment out the Jasmine imports at the beginning and end of index.html.
 
 ## Contributing
 
